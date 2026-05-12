@@ -1,0 +1,1176 @@
+/* =========================================================
+   GreenPoint Ag — base styles
+   Mobile-first, vanilla CSS, no frameworks.
+========================================================== */
+
+:root {
+  /* Brand palette (from Figma) */
+  --c-white:        #ffffff;
+  --c-green:        #5d9741;
+  --c-green-dark:   #4a7d34;
+  --c-green-light:  #7AC143;
+  --c-black:        #070906;
+  --c-beige:        #dddbcb;
+  --c-cream:        #e5e2d9;
+  --c-cream-lt:     #f7f7f2;
+  --c-text:         #1a1c18;
+  --c-text-muted:   #4a4a4a;
+
+  /* Typography */
+  --font-sans: "Open Sans", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+
+  /* Modular scale */
+  --fs-xs:   0.75rem;    /* 12 */
+  --fs-sm:   0.875rem;   /* 14 */
+  --fs-base: 1rem;       /* 16 */
+  --fs-md:   1.125rem;   /* 18 */
+  --fs-lg:   1.5rem;     /* 24 */
+  --fs-xl:   1.875rem;   /* 30 */
+  --fs-2xl:  2.25rem;    /* 36 */
+  --fs-3xl:  2.5rem;     /* 40 */
+  --fs-display: clamp(2.25rem, 5.5vw, 4rem);
+
+  /* Spacing rhythm */
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2rem;
+  --space-5: 3rem;
+  --space-6: 4rem;
+  --space-7: 6rem;
+
+  /* Layout */
+  --container: 1320px;
+  --gutter: clamp(1rem, 4vw, 2.5rem);
+
+  /* Misc */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-pill: 999px;
+
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.06);
+  --shadow-md: 0 8px 24px rgba(0,0,0,.08);
+  --shadow-lift: 0 12px 30px -12px rgba(7, 9, 6, .25);
+
+  --ease-out:        cubic-bezier(.2,.7,.2,1);
+  --ease-out-quart:  cubic-bezier(.25,1,.5,1);
+  --ease-out-expo:   cubic-bezier(.16,1,.3,1);
+}
+
+/* Brand-tinted focus ring used on every interactive element */
+:focus-visible {
+  outline: 2px solid var(--c-green);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+/* On dark surfaces (header, footer, connect), use a brighter ring */
+.site-header :focus-visible,
+.hero__topbar :focus-visible,
+.connect :focus-visible,
+.footer :focus-visible {
+  outline-color: var(--c-cream);
+}
+
+/* -------- reset / globals -------- */
+*, *::before, *::after { box-sizing: border-box; }
+html { font-size: 100%; }                /* 16px base */
+@media (min-width: 64em) {                /* 1024 */
+  html { font-size: 112.5%; }            /* 18px */
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  color: var(--c-text);
+  background: var(--c-white);
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+}
+
+img, svg { display: block; max-width: 100%; }
+img { height: auto; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; border: 0; background: transparent; cursor: pointer; }
+input { font: inherit; }
+ul { list-style: none; padding: 0; margin: 0; }
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0);
+  white-space: nowrap; border: 0;
+}
+
+/* -------- Stacking baseline --------
+   The hero banner image is `position: fixed; z-index: 0` and lives in
+   the viewport's top 0..var(--hero-h) range for the entire page life.
+   Non-positioned in-flow elements paint BELOW positioned z:0 elements
+   in the CSS paint order, so any unpositioned top-level section that
+   overlaps the image's vertical range will let the banner show through.
+   This rule ensures every top-level page section paints above it. */
+main > *,
+body > footer {
+  position: relative;
+}
+
+/* -------- buttons -------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: capitalize;
+  line-height: 1;
+  white-space: nowrap;
+  transition: background-color .25s var(--ease-out),
+              color .25s var(--ease-out),
+              border-color .25s var(--ease-out),
+              transform .25s var(--ease-out-quart),
+              box-shadow .25s var(--ease-out-quart);
+}
+.btn svg {
+  width: 1rem;
+  height: 1rem;
+  flex: 0 0 auto;
+  transition: transform .25s var(--ease-out-quart);
+}
+.btn:hover svg { transform: translateX(3px); }
+.btn:active { transform: translateY(1px) !important; box-shadow: none; }
+
+/* -------- Letter-stagger label (set up by JS) --------
+   Each .btn's text is split into per-character spans, with a duplicate
+   set positioned just below. On hover/focus, both rows translate up by
+   one row height with a small per-character delay, producing a
+   sequential "letter scroll" reveal. */
+.btn__label {
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  line-height: 1;
+  vertical-align: middle;
+}
+.btn__chars {
+  display: inline-flex;
+  white-space: pre;
+}
+.btn__chars--clone {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+}
+.btn__char {
+  display: inline-block;
+  will-change: transform;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .btn__char {
+    transition: transform .5s var(--ease-out-quart);
+    transition-delay: calc(var(--i, 0) * 22ms);
+  }
+  .btn:hover .btn__char,
+  .btn:focus-visible .btn__char {
+    transform: translateY(-100%);
+  }
+}
+
+.btn--green {
+  background: var(--c-green);
+  color: var(--c-white);
+  border-radius: var(--radius-md);
+  padding: 1rem 2rem;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .btn--green:hover {
+    background: var(--c-green-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lift);
+  }
+  .btn--outline-dark:hover,
+  .btn--outline-light:hover { transform: translateY(-2px); }
+}
+.btn--green:hover { background: var(--c-green-dark); }
+
+.btn--outline-dark {
+  border: 1px solid var(--c-black);
+  color: var(--c-black);
+}
+.btn--outline-dark:hover { background: var(--c-black); color: var(--c-white); }
+
+.btn--outline-light {
+  border: 1px solid var(--c-white);
+  color: var(--c-white);
+}
+.btn--outline-light:hover { background: var(--c-white); color: var(--c-black); }
+
+/* -------- text-link with arrow -------- */
+.card-link {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  font-weight: 700;
+  font-size: .75rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--c-black);
+  transition: gap .2s var(--ease-out), color .2s var(--ease-out);
+}
+.card-link svg { width: .875rem; height: .875rem; }
+.card-link:hover { gap: .75rem; color: var(--c-green); }
+.card-link--light { color: var(--c-white); }
+.card-link--light:hover { color: var(--c-beige); }
+.card-link--end { margin-left: auto; }
+
+/* =========================================================
+   HEADER (announcement strip only)
+========================================================== */
+
+.site-header {
+  position: relative;
+  z-index: 50;
+  background: var(--c-black);
+  color: var(--c-white);
+  transition: box-shadow .3s var(--ease-out);
+}
+.site-header.is-scrolled { box-shadow: 0 4px 16px rgba(0, 0, 0, .18); }
+
+/* Announcement bar — arrows pushed to the page edges
+   so they line up with the logo (left) and the Customer
+   Login button (right) below. */
+.announcement {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: .5rem var(--gutter);
+  font-size: .8125rem;
+  background: var(--c-black);
+}
+.announcement__text {
+  flex: 1;
+  margin: 0;
+  text-align: center;
+  font-weight: 400;
+  transition: opacity .25s var(--ease-out), transform .35s var(--ease-out-quart);
+  will-change: opacity, transform;
+}
+.announcement__nav {
+  display: grid;
+  place-items: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  color: var(--c-white);
+  opacity: .65;
+  flex-shrink: 0;
+  transition: opacity .2s var(--ease-out), transform .25s var(--ease-out-quart);
+}
+.announcement__nav:hover { opacity: 1; }
+.announcement__nav[data-direction="prev"]:hover { transform: translateX(-2px); }
+.announcement__nav[data-direction="next"]:hover { transform: translateX(2px); }
+.announcement__nav svg { width: 1rem; height: 1rem; }
+
+/* Announcement text supports slide+fade transitions (driven by JS) */
+.announcement__text.is-swap-out {
+  opacity: 0;
+  transform: translateX(-12px);
+}
+.announcement__text.is-swap-in {
+  opacity: 0;
+  transform: translateX(12px);
+}
+
+/* Utility bar (community/locations/etc + zip pill) */
+/* Transparent now — it overlays the banner image below. */
+.utility-bar {
+  background: transparent;
+  display: flex;
+  justify-content: flex-end;
+}
+.utility-bar__inner {
+  display: none;          /* hidden on mobile, shown on desktop */
+  align-items: stretch;
+  margin-right: var(--gutter);
+  background: var(--c-white);
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+  overflow: hidden;
+}
+
+.utility-bar__link {
+  display: inline-flex;
+  align-items: center;
+  padding: .5rem 1rem;
+  font-size: .625rem;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--c-black);
+  transition: color .2s var(--ease-out);
+}
+.utility-bar__link:first-of-type { padding-left: 1.25rem; }
+.utility-bar__link:hover { color: var(--c-green); }
+
+/* Zip search pill (green) */
+.zip-search {
+  display: inline-flex;
+  align-items: center;
+  gap: .625rem;
+  margin: .25rem .5rem .25rem 0;
+  padding: .25rem .75rem;
+  background: var(--c-green);
+  color: var(--c-white);
+  border-radius: var(--radius-pill);
+}
+.zip-search__label {
+  font-size: .625rem;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+.zip-search__input {
+  width: 5.5rem;
+  padding: 0 0 2px;
+  font-size: .625rem;
+  color: var(--c-white);
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--c-white);
+  outline: none;
+}
+.zip-search__input::placeholder { color: rgba(255,255,255,.85); }
+.zip-search__input:focus { border-bottom-color: var(--c-beige); }
+.zip-search__submit {
+  display: grid;
+  place-items: center;
+  width: 1rem;
+  height: 1rem;
+  color: var(--c-white);
+}
+
+/* Primary nav (logo + links + login) — transparent now;
+   sits inside .hero__topbar overlaying the banner image. */
+.primary-nav {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 1rem;
+  padding: 0 var(--gutter);
+  min-height: 84px;
+  background: transparent;
+}
+.primary-nav__logo .logo { width: 235px; height: auto; display: block; }
+
+.primary-nav__nav { display: none; }
+.primary-nav__list {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: .25rem;
+  height: 100%;
+}
+.primary-nav__list a {
+  display: inline-flex;
+  align-items: center;
+  height: 100%;
+  padding: 1.5rem 1rem;
+  font-size: .875rem;
+  font-weight: 600;
+  color: var(--c-white);
+  position: relative;
+  transition: color .2s var(--ease-out);
+}
+.primary-nav__list a::after {
+  content: "";
+  position: absolute;
+  left: 1rem; right: 1rem; bottom: 1.25rem;
+  height: 2px;
+  background: var(--c-green);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .25s var(--ease-out);
+}
+.primary-nav__list a:hover { color: var(--c-green); }
+.primary-nav__list a:hover::after { transform: scaleX(1); }
+
+.primary-nav__cta { display: none; }
+
+/* Mobile menu toggle */
+.primary-nav__toggle {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  padding: 8px;
+  margin-left: auto;
+}
+.primary-nav__toggle span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: var(--c-white);
+  border-radius: 2px;
+  transition: transform .25s var(--ease-out), opacity .2s;
+}
+.primary-nav__toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.primary-nav__toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.primary-nav__toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* Mobile menu panel */
+@media (max-width: 63.99em) {
+  .primary-nav__nav {
+    display: block;
+    grid-column: 1 / -1;
+    overflow: hidden;
+    max-height: 0;
+    /* Solid dark backdrop so the menu items are legible
+       even though the topbar's gradient has faded out by here */
+    background: rgba(7, 9, 6, 0.9);
+    transition: max-height .35s var(--ease-out);
+  }
+  .primary-nav__nav.is-open { max-height: 60vh; }
+  .primary-nav__list {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0 var(--gutter) 1rem;
+  }
+  .primary-nav__list a {
+    width: 100%;
+    height: auto;
+    padding: 1rem 0;
+    border-top: 1px solid rgba(255,255,255,.08);
+  }
+  .primary-nav__list a::after { display: none; }
+}
+
+/* Desktop nav */
+@media (min-width: 64em) {
+  .utility-bar__inner { display: flex; }
+  .primary-nav__toggle { display: none; }
+  .primary-nav__nav { display: block; }
+  .primary-nav__list { gap: 0; }
+  .primary-nav__cta { display: inline-flex; }
+}
+
+/* =========================================================
+   HERO
+========================================================== */
+
+.hero {
+  position: relative;
+  background: var(--c-white);   /* white extends edge-to-edge under text */
+  /* Hero-image height is shared between .hero__media (fixed backdrop)
+     and the padding-top below that reserves flow space matching it. */
+  --hero-h: clamp(480px, 72vh, 1100px);
+  /* The fixed image starts at viewport top:0, but .hero starts in flow
+     *after* the announcement strip. Subtract the announcement height
+     so the curve (and content) line up with the image's visual bottom
+     instead of trailing it by the announcement strip's height. */
+  padding-top: calc(var(--hero-h) - var(--announce-height, 32px));
+}
+@media (min-width: 48em) {
+  .hero { --hero-h: clamp(560px, 80vh, 1100px); }
+}
+@media (min-width: 64em) {
+  .hero { --hero-h: clamp(640px, 85vh, 1100px); }
+}
+
+.hero__media {
+  /* Fixed to the viewport. Acts as a stationary backdrop while the
+     rest of the page scrolls over it. Sections below have opaque
+     backgrounds, so the image is naturally hidden once the user
+     has scrolled past the hero's flow area. */
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  width: 100%;
+  height: var(--hero-h);
+  overflow: hidden;
+  /* Soft fallback gradient that evokes farmland — visible while
+     the photo loads or if it fails entirely. */
+  background:
+    linear-gradient(180deg, #c9b78b 0%, #94a368 50%, #5d8045 100%);
+}
+.hero__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.04);
+  will-change: transform;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .hero__media img {
+    animation: hero-drift 22s var(--ease-out-quart) forwards;
+  }
+}
+@keyframes hero-drift {
+  0%   { transform: scale(1.12) translate3d(-1%, .5%, 0); }
+  100% { transform: scale(1.02) translate3d(0, 0, 0); }
+}
+/* Lighter overall overlay; the .hero__topbar adds its own
+   stronger gradient locally where the nav sits, so the
+   banner itself only needs a touch of darkening.
+   Subtly darkens as user scrolls past the hero, reinforcing the
+   image's transition into a backdrop. */
+.hero__media-overlay {
+  position: absolute; inset: 0;
+  background: rgba(7, 9, 6, calc(.08 + var(--hero-progress, 0) * .22));
+  transition: background-color .15s linear;
+  will-change: background-color;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero__media-overlay { background: rgba(7, 9, 6, .08); }
+}
+
+/* Nav overlay — fixed to the top of the viewport so it sticks while
+   the page scrolls. JS slides its `top` value down to sit under the
+   announcement strip at rest, then locks it to 0 once the
+   announcement scrolls past. */
+.hero__topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 60;
+  background: linear-gradient(180deg,
+    rgba(7, 9, 6, .55) 0%,
+    rgba(7, 9, 6, .30) 65%,
+    rgba(7, 9, 6, 0)   100%);
+  transition: background-color .35s var(--ease-out),
+              box-shadow .35s var(--ease-out);
+}
+
+/* Scrolled state: dark-on-image overlay → light-mode bar.
+   Topbar background flips to white, utility pill flips to green with
+   white text, zip pill flips to black, primary nav text becomes dark,
+   and the logo swaps from white to colored (green leaf, black text). */
+.hero__topbar.is-stuck {
+  background: var(--c-white);
+  box-shadow: 0 8px 24px -10px rgba(7, 9, 6, .15);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+/* Utility pill flips to green */
+.utility-bar__inner,
+.utility-bar__link,
+.zip-search,
+.primary-nav__list a,
+.primary-nav__toggle span,
+.primary-nav__logo path {
+  transition: background-color .35s var(--ease-out),
+              color .35s var(--ease-out),
+              fill .35s var(--ease-out);
+}
+.hero__topbar.is-stuck .utility-bar__inner {
+  background: var(--c-green);
+}
+.hero__topbar.is-stuck .utility-bar__link { color: var(--c-white); }
+.hero__topbar.is-stuck .utility-bar__link:hover { color: var(--c-cream); }
+/* Zip search flips to black pill */
+.hero__topbar.is-stuck .zip-search { background: var(--c-black); }
+/* Primary nav links go dark */
+.hero__topbar.is-stuck .primary-nav__list a { color: var(--c-black); }
+.hero__topbar.is-stuck .primary-nav__list a:hover { color: var(--c-green); }
+/* Hamburger bars go dark */
+.hero__topbar.is-stuck .primary-nav__toggle span { background: var(--c-black); }
+/* Logo: every path flips to brand green when scrolled. */
+.hero__topbar.is-stuck .primary-nav__logo path {
+  fill: var(--c-green);
+}
+/* Lighter highlight-leaf vectors take the secondary brand green. */
+.hero__topbar.is-stuck .primary-nav__logo path[d^="M111.785"],
+.hero__topbar.is-stuck .primary-nav__logo path[d^="M125.07"],
+.hero__topbar.is-stuck .primary-nav__logo path[d^="M131.536"],
+.hero__topbar.is-stuck .primary-nav__logo path[d^="M106.462"],
+.hero__topbar.is-stuck .primary-nav__logo path[d^="M44.4518"],
+.hero__topbar.is-stuck .primary-nav__logo path[d^="M146.87"],
+.hero__topbar.is-stuck .primary-nav__logo path[d^="M159.622"] {
+  fill: var(--c-green-light);
+}
+/* Focus ring shifts to brand green on the light surface */
+.hero__topbar.is-stuck :focus-visible { outline-color: var(--c-green); }
+
+.hero__curve {
+  display: block;
+  width: 100%;
+  /* Drawn a hair taller than its overlap with the image so the
+     bottom always extends one pixel into the white area below,
+     killing the subpixel-rounding seam that appears at certain
+     viewport widths. */
+  height: 41px;
+  margin-top: -40px;
+  margin-bottom: -1px;
+  position: relative;
+  /* Sits below the sticky topbar (z:60) so the nav always wins when
+     the curve scrolls into the same viewport region. */
+  z-index: 50;
+}
+.hero__content {
+  position: relative;
+  z-index: 2;
+  /* Full-bleed solid white panel so it visually covers the sticky
+     banner image as it rises into the viewport. Children already
+     handle their own centering (heading via flex, body via margin,
+     btn via text-align) so the container can span full width. */
+  background: var(--c-white);
+  /* Roughly 10% more vertical breathing room above the heading
+     than the previous 1rem allowance. */
+  padding: clamp(2rem, 6vh, 4.5rem) var(--gutter) 4rem;
+  text-align: center;
+}
+.hero__heading {
+  display: flex;
+  flex-wrap: wrap;             /* allow wrap on narrow viewports */
+  justify-content: center;
+  align-items: baseline;
+  gap: .15em .35em;
+  margin: 0 0 1.25rem;
+  font-size: clamp(1.75rem, 5.5vw, 3.4rem);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  color: var(--c-green);
+}
+/* On wider screens, force one line — the design intent. */
+@media (min-width: 30em) {
+  .hero__heading { flex-wrap: nowrap; white-space: nowrap; }
+}
+.hero__heading--solid { font-weight: 600; }
+.hero__heading--light { font-weight: 300; }
+
+/* Word-by-word stagger: solid word lands first, light word follows.
+   Driven by the hero__heading's own .reveal lifecycle so it stays in
+   sync with the page's reveal-on-scroll system. */
+@media (prefers-reduced-motion: no-preference) {
+  /* Override the parent reveal transform: children carry the motion */
+  .hero__heading.reveal { transform: none !important; }
+  .hero__heading .hero__heading--solid,
+  .hero__heading .hero__heading--light {
+    display: inline-block;
+    transition: opacity .65s var(--ease-out-quart),
+                transform .8s var(--ease-out-quart);
+  }
+  .hero__heading.is-pending .hero__heading--solid,
+  .hero__heading.is-pending .hero__heading--light {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  .hero__heading .hero__heading--light { transition-delay: 140ms; }
+  .hero__heading.is-visible .hero__heading--solid,
+  .hero__heading.is-visible .hero__heading--light {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.hero__body {
+  max-width: 60rem;
+  margin: 0 auto 1rem;
+  font-size: clamp(1rem, 1.2vw + .5rem, 1.25rem);
+  line-height: 1.4;
+  color: var(--c-black);
+}
+.hero__body--bold {
+  font-weight: 700;
+  margin-bottom: 2rem;
+}
+
+/* =========================================================
+   FEATURES WRAPPER  (shared bg.jpg watermark behind
+   the services bento grid AND the expert insights)
+========================================================== */
+.features-bg {
+  position: relative;
+  background:
+    /* fades: white at top blending out of hero, white at bottom blending into locator */
+    linear-gradient(180deg,
+      #fff 0%,
+      rgba(255,255,255,.55) 6%,
+      rgba(255,255,255,.55) 94%,
+      #fff 100%),
+    url("img/bg.jpg") center / cover no-repeat;
+}
+
+/* =========================================================
+   SERVICES — bento grid
+========================================================== */
+
+.services {
+  padding: 0 var(--gutter);
+  background: transparent;
+  position: relative;
+}
+.services__grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 1rem 0;
+}
+
+@media (min-width: 48em) {
+  .services__grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+}
+
+/* Service card — default is transparent.
+   The beige fill on the third card was a hover-state demo;
+   now all four cards animate to beige on hover. */
+.service-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2rem;
+  min-height: 320px;
+  padding: 1.5rem clamp(1.25rem, 4vw, 4rem);
+  background: transparent;
+  border-radius: var(--radius-md);
+  transition:
+    background-color .35s var(--ease-out-quart),
+    transform .35s var(--ease-out-quart),
+    box-shadow .35s var(--ease-out-quart);
+}
+@media (min-width: 48em) {
+  .service-card { min-height: 384px; }
+}
+
+@media (hover: hover) {
+  .service-card:hover {
+    background: var(--c-beige);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .service-card:hover { transform: translateY(-3px); }
+  }
+}
+/* Keyboard focus parity */
+.service-card:focus-within { background: var(--c-beige); }
+
+.service-card__inner {
+  position: relative;
+  padding-top: 2.25rem;
+}
+/* Animated green accent rule (replaces static border-top so we can
+   transition it). Scales from left on hover/focus. */
+.service-card__inner::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 48px;
+  height: 3px;
+  background: var(--c-green);
+  transform-origin: left center;
+  transition: width .45s var(--ease-out-expo),
+              background-color .25s var(--ease-out);
+}
+@media (hover: hover) {
+  .service-card:hover .service-card__inner::before,
+  .service-card:focus-within .service-card__inner::before {
+    width: 100%;
+    background: var(--c-green-dark);
+  }
+}
+
+.service-card__title {
+  margin: 0 0 .75rem;
+  font-size: 1.5rem;
+  font-weight: 400;
+  line-height: 1.2;
+  color: var(--c-black);
+}
+.service-card__body {
+  max-width: 20rem;
+  margin: 0;
+  font-size: .875rem;
+  line-height: 1.55;
+  color: var(--c-black);
+}
+
+/* =========================================================
+   EXPERT INSIGHTS
+========================================================== */
+
+.insights {
+  /* Collapsed bottom padding so insights flows directly into the
+     locator + connect block without a visible "section gap." */
+  padding: clamp(3rem, 6vw, 6rem) var(--gutter) 1rem;
+  background: transparent;
+  position: relative;
+}
+.insights__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  max-width: var(--container);
+  margin: 0 auto 2rem;
+}
+.insights__title {
+  margin: 0;
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-weight: 400;
+  letter-spacing: -.02em;
+  color: var(--c-green);
+}
+
+.insights__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  max-width: var(--container);
+  margin: 0 auto;
+}
+@media (min-width: 48em) {
+  .insights__grid { grid-template-columns: 1fr 1fr; }
+}
+@media (min-width: 64em) {
+  .insights__grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* -----------------------------------------------------------
+   Story card — unified default + hover
+   Default: white card with image at top, dark text below.
+   Hover:   image fills card, dark overlay, white text,
+            excerpt slides into view.
+   Touch-only devices keep the default state (no flicker).
+----------------------------------------------------------- */
+.story {
+  position: relative;
+  min-height: 480px;
+  border: 1px solid var(--c-beige);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--c-cream);   /* fallback under the image */
+  transition:
+    transform .3s var(--ease-out),
+    border-color .3s var(--ease-out),
+    box-shadow .3s var(--ease-out);
+}
+
+/* Image — always full-bleed, sits behind everything */
+.story__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  transition: transform .6s var(--ease-out);
+}
+
+/* Dark gradient — invisible by default, fades in on hover */
+.story__shade {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(180deg, rgba(0,0,0,.20) 0%, rgba(0,0,0,.78) 100%);
+  opacity: 0;
+  transition: opacity .4s var(--ease-out);
+  pointer-events: none;
+}
+
+/* Body — a white panel anchored to the bottom that covers
+   the lower portion of the card by default. On hover it
+   grows to fill the card and turns transparent. */
+.story__body {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.5rem;
+  height: calc(100% - 211px);
+  background: var(--c-white);
+  color: var(--c-black);
+  transition:
+    height .45s var(--ease-out),
+    background-color .35s var(--ease-out),
+    color .35s var(--ease-out),
+    padding .35s var(--ease-out);
+}
+
+.story__title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 400;
+  line-height: 1.3;
+  letter-spacing: -.02em;
+  color: inherit;
+}
+
+.story__date {
+  margin: 0;
+  font-size: .75rem;
+  font-weight: 700;
+  line-height: 1.5;
+  color: inherit;
+}
+
+/* Excerpt — collapsed by default, expands on hover */
+.story__excerpt {
+  max-height: 0;
+  margin: 0;
+  overflow: hidden;
+  opacity: 0;
+  font-size: .875rem;
+  line-height: 1.6;
+  color: inherit;
+  transition:
+    max-height .45s var(--ease-out),
+    opacity .3s var(--ease-out);
+}
+
+.story__link {
+  margin-top: auto;           /* pin Explore to the bottom of the body */
+  color: inherit;
+}
+.story__link:hover { color: inherit; opacity: .8; }
+
+/* ---- Hover state — only on pointer devices ---- */
+@media (hover: hover) {
+  .story:hover {
+    transform: translateY(-4px);
+    border-color: transparent;
+    box-shadow: var(--shadow-md);
+  }
+  .story:hover .story__bg     { transform: scale(1.04); }
+  .story:hover .story__shade  { opacity: 1; }
+  .story:hover .story__body {
+    height: 100%;
+    background: transparent;
+    color: var(--c-white);
+    padding: 2rem 1.5rem;
+  }
+  .story:hover .story__excerpt {
+    max-height: 16em;
+    opacity: 1;
+    transition:
+      max-height .45s var(--ease-out),
+      opacity .35s .1s var(--ease-out);
+  }
+  /* Also support keyboard focus inside the card */
+  .story:focus-within {
+    transform: translateY(-4px);
+    border-color: transparent;
+    box-shadow: var(--shadow-md);
+  }
+  .story:focus-within .story__shade  { opacity: 1; }
+  .story:focus-within .story__body {
+    height: 100%;
+    background: transparent;
+    color: var(--c-white);
+    padding: 2rem 1.5rem;
+  }
+  .story:focus-within .story__excerpt {
+    max-height: 16em;
+    opacity: 1;
+  }
+}
+
+/* =========================================================
+   LOCATOR (Find A Location bar)
+========================================================== */
+.locator {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  /* Full-bleed white surface with the content area kept constrained
+     to var(--container). The inline padding expands beyond gutter when
+     the viewport exceeds the container, centering content in 1320px. */
+  padding: 1.25rem max(var(--gutter), calc((100% - var(--container)) / 2));
+  margin: 0;
+  /* Positioned + opaque so it covers the fixed hero banner image
+     where they overlap. Non-positioned in-flow elements paint
+     BELOW positioned z:0 elements in the CSS paint order. */
+  position: relative;
+  background: var(--c-white);
+}
+.locator__heading {
+  margin: 0;
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  font-weight: 400;
+  letter-spacing: -.015em;
+  color: var(--c-green);
+  flex: 1 1 auto;
+}
+
+@media (min-width: 48em) {
+  .locator { gap: 4rem; justify-content: space-between; }
+}
+
+/* =========================================================
+   CONNECT (Sustain section)
+========================================================== */
+.connect {
+  position: relative;
+  overflow: hidden;
+  min-height: 380px;
+  color: var(--c-white);
+  isolation: isolate;
+  /* Fallback in case the image doesn't load */
+  background:
+    linear-gradient(120deg, #1a2419 0%, #2b3a26 60%, #4a6638 100%);
+}
+.connect__bg {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  transform: scale(1.06);
+  transition: transform 1.6s var(--ease-out-quart);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .connect:hover .connect__bg { transform: scale(1.02); }
+}
+.connect__overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(90deg, rgba(0,0,0,.65) 0%, rgba(0,0,0,.15) 80%);
+  z-index: 1;
+}
+.connect__inner {
+  position: relative;
+  z-index: 2;
+  max-width: var(--container);
+  margin: 0 auto;
+  /* Tighter bottom padding so the dark connect banner sits flush
+     against the green footer with no perceived gap. */
+  padding: clamp(3rem, 6vw, 4.5rem) var(--gutter) clamp(2rem, 3.5vw, 2.75rem);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.25rem;
+}
+.connect__heading {
+  margin: 0;
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+.connect__body {
+  margin: 0;
+  max-width: 44rem;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: rgba(255,255,255,.92);
+}
+
+/* =========================================================
+   FOOTER
+========================================================== */
+.footer {
+  /* Positioned so the green bg covers the fixed hero banner image
+     where the tall footer overlaps the image's 0..85vh strip. */
+  position: relative;
+  background: var(--c-green);
+  color: var(--c-white);
+}
+.footer__inner {
+  margin: 0 auto;
+  /* Bulked up to balance the visual weight of the fixed hero banner
+     above — meaningfully taller than a typical footer. */
+  padding: clamp(5rem, 11vw, 9rem) var(--gutter);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+  justify-items: start;
+}
+@media (min-width: 48em) {
+  .footer__inner {
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 4rem;
+    justify-items: stretch;
+  }
+}
+.footer__logo .logo { width: 300px; height: auto; display: block; }
+
+.footer__links {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: .5rem 3rem;
+  width: 100%;
+}
+@media (min-width: 30em) {
+  .footer__links { grid-template-columns: 1fr 1fr; }
+}
+.footer__col a {
+  display: inline-block;
+  padding: .25rem 0;
+  font-size: .875rem;
+  line-height: 1.7;
+  color: var(--c-white);
+  white-space: nowrap;
+  transition: opacity .2s;
+}
+.footer__col a:hover { opacity: .75; text-decoration: underline; }
+
+.footer__social {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 1.25rem;
+  align-items: center;
+}
+.footer__social a {
+  display: grid;
+  place-items: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  color: var(--c-white);
+  transition: opacity .2s, transform .2s;
+}
+.footer__social svg { width: 100%; height: 100%; }
+.footer__social a:hover { opacity: .75; transform: translateY(-2px); }
+
+/* =========================================================
+   ENTRANCE ANIMATIONS
+   Content is ALWAYS visible by default. JS adds .is-pending
+   when it observes an element, which hides it; then .is-visible
+   is added when the element enters the viewport. This means
+   no-JS users (and screenshot tools) always see the content.
+========================================================== */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal {
+    transition: opacity .7s var(--ease-out-quart), transform .7s var(--ease-out-quart);
+  }
+  .reveal.is-pending {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* ---- Hero stagger: heading → body → bold tagline → CTA ---- */
+  .hero__content .reveal:nth-child(1) { transition-delay: 60ms; }
+  .hero__content .reveal:nth-child(2) { transition-delay: 180ms; }
+  .hero__content .reveal:nth-child(3) { transition-delay: 280ms; }
+  .hero__content .reveal:nth-child(4) { transition-delay: 380ms; }
+
+  /* ---- Service cards: ripple in from top-left ---- */
+  .services__grid .service-card.reveal:nth-child(1) { transition-delay: 0ms; }
+  .services__grid .service-card.reveal:nth-child(2) { transition-delay: 90ms; }
+  .services__grid .service-card.reveal:nth-child(3) { transition-delay: 180ms; }
+  .services__grid .service-card.reveal:nth-child(4) { transition-delay: 270ms; }
+
+  /* ---- Story cards: left-to-right ---- */
+  .insights__grid .story.reveal:nth-child(1) { transition-delay: 0ms; }
+  .insights__grid .story.reveal:nth-child(2) { transition-delay: 120ms; }
+  .insights__grid .story.reveal:nth-child(3) { transition-delay: 240ms; }
+}

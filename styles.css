@@ -358,11 +358,11 @@ body > footer {
   grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: 1rem;
-  padding: 0 var(--gutter);
+  padding: 0 var(--gutter) 8px;
   min-height: 84px;
   background: transparent;
 }
-.primary-nav__logo .logo { width: 235px; height: auto; display: block; }
+.primary-nav__logo .logo { width: 165px; height: auto; display: block; }
 
 .primary-nav__nav { display: none; }
 .primary-nav__list {
@@ -406,7 +406,10 @@ body > footer {
   gap: 5px;
   width: 40px;
   height: 40px;
-  padding: 8px;
+  /* Right padding is zero so the hamburger bars sit flush at the gutter
+     edge, mirroring the logo's left position. Hit target stays 40x40 by
+     extending the left padding to absorb the missing right padding. */
+  padding: 8px 0 8px 16px;
   margin-left: auto;
   /* Sits above the full-screen overlay so the close (X) stays tappable. */
   position: relative;
@@ -426,6 +429,12 @@ body > footer {
 
 /* Mobile menu — full-screen overlay */
 @media (max-width: 63.99em) {
+  /* On mobile, only the logo and toggle are in flow (the nav is fixed,
+     the cta is display:none). Drop the third grid track so the gap
+     between col 2 and col 3 doesn't push the toggle inward and break the
+     left/right symmetry with the gutter. */
+  .primary-nav { grid-template-columns: auto 1fr; }
+
   .primary-nav__nav {
     display: block;
     position: fixed;
@@ -549,7 +558,8 @@ body > footer {
   background:
     linear-gradient(180deg, #c9b78b 0%, #94a368 50%, #5d8045 100%);
 }
-.hero__media img {
+.hero__media img,
+.hero__media video {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -560,6 +570,10 @@ body > footer {
   .hero__media img {
     animation: hero-drift 22s var(--ease-out-quart) forwards;
   }
+}
+@media (prefers-reduced-motion: reduce) {
+  /* Pause video for users who prefer reduced motion — poster stays. */
+  .hero__media video { display: none; }
 }
 @keyframes hero-drift {
   0%   { transform: scale(1.12) translate3d(-1%, .5%, 0); }
@@ -1156,7 +1170,7 @@ body > footer {
     text-align: left;
   }
 }
-.footer__logo .logo { width: 300px; height: auto; display: block; }
+.footer__logo .logo { width: 255px; height: auto; display: block; }
 
 .footer__links {
   display: grid;

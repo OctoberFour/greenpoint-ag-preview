@@ -85,6 +85,16 @@
       navWrap.classList.remove('is-open');
       navToggle.setAttribute('aria-expanded', 'false');
     });
+
+    /* Close on Escape — standard overlay/dialog affordance. */
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && navWrap.classList.contains('is-open')) {
+        navWrap.classList.remove('is-open');
+        navToggle.setAttribute('aria-expanded', 'false');
+        navToggle.setAttribute('aria-label', 'Open menu');
+        navToggle.focus();
+      }
+    });
   }
 
   /* -------- Announcement carousel -------- */

@@ -408,6 +408,9 @@ body > footer {
   height: 40px;
   padding: 8px;
   margin-left: auto;
+  /* Sits above the full-screen overlay so the close (X) stays tappable. */
+  position: relative;
+  z-index: 5;
 }
 .primary-nav__toggle span {
   display: block;
@@ -421,31 +424,80 @@ body > footer {
 .primary-nav__toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
 .primary-nav__toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-/* Mobile menu panel */
+/* Mobile menu — full-screen overlay */
 @media (max-width: 63.99em) {
   .primary-nav__nav {
     display: block;
-    grid-column: 1 / -1;
-    overflow: hidden;
-    max-height: 0;
-    /* Solid dark backdrop so the menu items are legible
-       even though the topbar's gradient has faded out by here */
-    background: rgba(7, 9, 6, 0.9);
-    transition: max-height .35s var(--ease-out);
+    position: fixed;
+    inset: 0;
+    /* Solid dark backdrop with a hint of blur so anything bleeding
+       through the edges still feels intentional. */
+    background: rgba(7, 9, 6, .96);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    /* Hidden by default — fade + slight downward slide on enter. */
+    opacity: 0;
+    transform: translateY(-12px);
+    pointer-events: none;
+    transition: opacity .3s var(--ease-out),
+                transform .4s var(--ease-out-quart);
+    /* Below the toggle (z:5) inside the shared topbar stacking context
+       so the hamburger/close button stays tappable. */
+    z-index: 1;
+    overflow-y: auto;
   }
-  .primary-nav__nav.is-open { max-height: 60vh; }
+  .primary-nav__nav.is-open {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+  }
   .primary-nav__list {
     flex-direction: column;
     align-items: stretch;
-    padding: 0 var(--gutter) 1rem;
+    justify-content: center;
+    gap: 0;
+    height: 100%;
+    padding: 6rem var(--gutter) 4rem;
   }
+  .primary-nav__list li {
+    /* Stagger items in from below as the panel opens. */
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity .35s var(--ease-out),
+                transform .45s var(--ease-out-quart);
+    transition-delay: 0ms;
+  }
+  .primary-nav__nav.is-open .primary-nav__list li {
+    opacity: 1;
+    transform: none;
+  }
+  .primary-nav__nav.is-open .primary-nav__list li:nth-child(1) { transition-delay: 80ms; }
+  .primary-nav__nav.is-open .primary-nav__list li:nth-child(2) { transition-delay: 120ms; }
+  .primary-nav__nav.is-open .primary-nav__list li:nth-child(3) { transition-delay: 160ms; }
+  .primary-nav__nav.is-open .primary-nav__list li:nth-child(4) { transition-delay: 200ms; }
+  .primary-nav__nav.is-open .primary-nav__list li:nth-child(5) { transition-delay: 240ms; }
+  .primary-nav__nav.is-open .primary-nav__list li:nth-child(6) { transition-delay: 280ms; }
   .primary-nav__list a {
     width: 100%;
     height: auto;
-    padding: 1rem 0;
-    border-top: 1px solid rgba(255,255,255,.08);
+    padding: 1.1rem 0;
+    font-size: 1.75rem;
+    font-weight: 300;
+    letter-spacing: -.005em;
+    color: var(--c-white);
+    border-top: 1px solid rgba(255, 255, 255, .14);
+  }
+  .primary-nav__list li:last-child a {
+    border-bottom: 1px solid rgba(255, 255, 255, .14);
   }
   .primary-nav__list a::after { display: none; }
+  /* The is-stuck topbar normally flips link color to black for the
+     light desktop bar; on the dark mobile overlay that turns links
+     invisible until hover. Force white inside the open overlay. */
+  .hero__topbar.is-stuck .primary-nav__nav .primary-nav__list a { color: var(--c-white); }
+  .hero__topbar.is-stuck .primary-nav__nav .primary-nav__list a:hover { color: var(--c-green); }
+  /* Lock body scroll while the overlay is open. */
+  body:has(.primary-nav__nav.is-open) { overflow: hidden; }
 }
 
 /* Desktop nav */
@@ -553,8 +605,10 @@ body > footer {
 .hero__topbar.is-stuck {
   background: var(--c-white);
   box-shadow: 0 8px 24px -10px rgba(7, 9, 6, .15);
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
+  /* No backdrop-filter here: it would create a containing block for any
+     position:fixed descendant (e.g. the mobile menu overlay), clipping
+     it to the topbar's bounds. The solid white bg also makes the blur
+     effectively invisible. */
 }
 /* Utility pill flips to green */
 .utility-bar__inner,
@@ -1088,7 +1142,10 @@ body > footer {
   display: grid;
   grid-template-columns: 1fr;
   gap: 3rem;
-  justify-items: start;
+  /* Mobile: center logo + social row; links keep 2 cols but the block
+     itself centers under the logo. */
+  justify-items: center;
+  text-align: center;
 }
 @media (min-width: 48em) {
   .footer__inner {
@@ -1096,6 +1153,7 @@ body > footer {
     align-items: center;
     gap: 4rem;
     justify-items: stretch;
+    text-align: left;
   }
 }
 .footer__logo .logo { width: 300px; height: auto; display: block; }
@@ -1125,6 +1183,12 @@ body > footer {
   flex-wrap: wrap;
   gap: 1rem 1.25rem;
   align-items: center;
+  /* Center the icon row on mobile; left-align gets restored at the
+     2-col footer breakpoint to fit the auto/1fr/auto layout. */
+  justify-content: center;
+}
+@media (min-width: 48em) {
+  .footer__social { justify-content: flex-start; }
 }
 .footer__social a {
   display: grid;

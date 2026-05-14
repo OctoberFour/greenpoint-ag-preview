@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>John Smith, Regional Agronomist — GreenPoint Ag</title>
+  <meta name="description" content="Meet John Smith, a regional agronomist at GreenPoint Ag." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <div data-partial="header"></div>
+
+  <main id="main" tabindex="-1">
+
+    <div data-partial="topbar"></div>
+
+    <section class="page-hero" aria-labelledby="page-title">
+      <div class="page-hero__media">
+        <img src="images/farmer-portrait-smiling.jpg"
+             alt="Two agronomists consulting beside a sprayer" />
+      </div>
+      <div class="page-hero__overlay" aria-hidden="true"></div>
+      <div class="page-hero__inner">
+        <h1 class="page-hero__title" id="page-title">About GreenPoint Ag</h1>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="profile-h">
+      <div class="section__inner">
+        <div class="feature-media" style="align-items:start;">
+          <div class="feature-media__body">
+            <h2 id="profile-h" class="section__title section__title--dark" style="font-size:clamp(1.875rem,3.4vw,2.5rem); margin-bottom:.25rem;">
+              John Smith
+            </h2>
+            <p style="margin:0 0 1rem; font-weight:600;">Regional Agronomist</p>
+            <p style="margin:0 0 1.5rem;">
+              <a href="mailto:jsmith@greenpointag.com" class="card-link" style="font-size:.8125rem; text-transform:none; letter-spacing:0; font-weight:600; color:var(--c-green);">
+                jsmith@greenpointag.com
+              </a>
+            </p>
+
+            <p class="section__lede">
+              At GreenPoint Ag, we are a farmer&#x2011;owned agricultural input supplier, resulting
+              from three financially strong businesses coming together to better serve farmers and
+              rural communities of the Southern U.S.
+            </p>
+            <p class="section__lede">
+              We are a top 7 wholesale and retail agronomy company with over $1 billion in sales.
+              We service farms and rural businesses with crop nutrients, crop protection products,
+              seed and professional products. We also offer seed treatment, field scouting, soil
+              sampling, tissue sampling, custom application and a full array of ag technology
+              services through AccuField.
+            </p>
+            <p class="section__lede">
+              GreenPoint Ag operates 101 retail and wholesale agronomy locations in Alabama,
+              Arkansas, Florida, Georgia, Kentucky, Louisiana, Mississippi, Missouri, Tennessee and
+              Texas. Based in Decatur, Alabama, we also have a regional office in LaVergne,
+              Tennessee.
+            </p>
+            <p class="section__lede">
+              Our parent companies include Alabama Farmers Cooperative (AFC), Tennessee Farmers
+              Cooperative (TFC), WinField United, Tipton Farmers Cooperative, and Tri&#x2011;County
+              Farmers Association.
+            </p>
+
+            <p style="margin-top:1.5rem;">
+              <a href="about.html" class="card-link">
+                <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M11 7H3m0 0 3.5 3.5M3 7l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Back
+              </a>
+            </p>
+          </div>
+
+          <div class="feature-media__media" style="aspect-ratio:4 / 5;">
+            <img src="images/agronomists-soil-sampling.jpg"
+                 alt="Portrait of John Smith" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <div data-partial="footer"></div>
+
+  <script src="partials.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

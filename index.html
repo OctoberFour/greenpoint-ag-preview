@@ -15,6 +15,8 @@
 </head>
 <body>
 
+  <a class="skip-link" href="#main">Skip to main content</a>
+
   <!-- =========================================================
        HEADER
   ========================================================== -->
@@ -22,29 +24,38 @@
 
     <!-- Announcement strip -->
     <div class="announcement" aria-label="Announcements">
-      <button class="announcement__nav" aria-label="Previous announcement" data-direction="prev">
+      <button type="button" class="announcement__nav" aria-label="Previous announcement" data-direction="prev">
         <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 12 6 8l4-4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
       <p class="announcement__text" id="announcement-text">This is an announcement section</p>
-      <button class="announcement__nav" aria-label="Next announcement" data-direction="next">
+      <button type="button" class="announcement__nav" aria-label="Next announcement" data-direction="next">
         <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 4 4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
     </div>
   </header>
 
-  <main>
+  <main id="main" tabindex="-1">
 
     <!-- =========================================================
          HERO
     ========================================================== -->
     <section class="hero" aria-labelledby="hero-heading">
       <div class="hero__media">
-        <video class="hero__video"
+        <video class="hero__video" id="hero-video"
                src="video/banner.mp4"
                autoplay muted loop playsinline preload="auto"
                poster="img/banner.jpg"
                aria-label="Combine harvester moving across a farm field"></video>
         <div class="hero__media-overlay" aria-hidden="true"></div>
+        <button type="button" class="hero__pause" id="hero-pause"
+                aria-label="Pause background video" aria-pressed="false">
+          <svg class="hero__pause-pause" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+            <path d="M5 3v10M11 3v10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+          <svg class="hero__pause-play" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+            <path d="M5 3v10l8-5z" fill="currentColor"/>
+          </svg>
+        </button>
       </div>
 
       <!-- Nav overlay — sits on top of the banner image -->
@@ -54,9 +65,9 @@
         <div class="utility-bar" aria-label="Utility navigation">
           <div class="utility-bar__inner">
             <a href="#" class="utility-bar__link">Community</a>
-            <a href="#" class="utility-bar__link">Locations</a>
-            <a href="#" class="utility-bar__link">Contact Us</a>
-            <a href="#" class="utility-bar__link">Careers</a>
+            <a href="locations.html" class="utility-bar__link">Locations</a>
+            <a href="contact.html" class="utility-bar__link">Contact Us</a>
+            <a href="careers.html" class="utility-bar__link">Careers</a>
             <form class="zip-search" role="search" aria-label="Find by zip code">
               <span class="zip-search__label">Zip Code</span>
               <input class="zip-search__input" type="text" inputmode="numeric" pattern="[0-9]{5}" maxlength="5" placeholder="Enter Here" aria-label="Zip code" />
@@ -69,7 +80,7 @@
 
         <!-- Primary nav -->
         <div class="primary-nav">
-          <a href="#" class="primary-nav__logo" aria-label="GreenPoint Ag home">
+          <a href="index.html" class="primary-nav__logo" aria-label="GreenPoint Ag home">
         <svg class="logo" viewBox="44 9 129 72" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <path d="M44.4518 78.8923L171.857 79.949L43.8716 81.0057L44.4518 78.8923Z" fill="white"/>
           <path d="M52.6019 76.1761C51.2495 76.1761 50.1823 75.8848 49.3976 75.3018C48.6129 74.7193 48.333 74.0188 48.5583 73.2043L50.4367 66.4041C50.6654 65.5767 51.3358 64.8724 52.4476 64.2924C53.5586 63.7124 54.7845 63.4216 56.1251 63.4216C57.4658 63.4216 58.5425 63.7137 59.3216 64.2967C60.1007 64.8797 60.3767 65.5819 60.1497 66.4041L59.7571 67.8265H56.5792L56.9826 66.3649C57.0649 66.0663 56.9627 65.8108 56.675 65.5987C56.3877 65.3874 56.0007 65.2811 55.5141 65.2811C55.0275 65.2811 54.5851 65.3874 54.1856 65.5987C53.7866 65.8112 53.5461 66.0663 53.4633 66.3649L51.5797 73.185C51.497 73.4823 51.5975 73.7361 51.8804 73.9452C52.163 74.1535 52.5473 74.2584 53.0335 74.2584C53.5196 74.2584 53.9651 74.1535 54.3689 73.9452C54.7723 73.7374 55.0158 73.4844 55.0977 73.1871L55.7737 70.7385H54.0717L54.5934 68.8497H59.4737L58.2713 73.2043C58.0425 74.0321 57.3722 74.7352 56.262 75.3109C55.151 75.8887 53.9313 76.1761 52.6019 76.1761Z" fill="white"/>
@@ -95,17 +106,17 @@
       </a>
 
       <!-- Mobile menu toggle -->
-      <button class="primary-nav__toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="primary-nav-list">
+      <button type="button" class="primary-nav__toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="primary-nav-list">
         <span></span><span></span><span></span>
       </button>
 
       <nav class="primary-nav__nav" aria-label="Primary">
         <ul class="primary-nav__list" id="primary-nav-list">
-          <li><a href="#">About</a></li>
-          <li><a href="#">Agronomy</a></li>
-          <li><a href="#">Pro Products</a></li>
-          <li><a href="#">Services</a></li>
-          <li><a href="#">News</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="services.html">Agronomy</a></li>
+          <li><a href="services.html">Pro Products</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="news.html">News</a></li>
           <li><a href="#">Events</a></li>
         </ul>
       </nav>
@@ -133,7 +144,7 @@
         <p class="hero__body hero__body--bold">
           We&rsquo;re here to help you succeed &mdash; year after year.
         </p>
-        <a href="#" class="btn btn--outline-dark">Who We Are</a>
+        <a href="about.html" class="btn btn--outline-dark">Who We Are</a>
       </div>
     </section>
 
@@ -152,7 +163,7 @@
             <h3 class="service-card__title">Seed Solutions</h3>
             <p class="service-card__body">We provide deep knowledge of local crops based on unbiased research and in&#x2011;field experience. Recommendations are backed by 100+ regional variety crop trials led by agronomists.</p>
           </div>
-          <a href="#" class="card-link">
+          <a href="services.html" class="card-link">
             Explore
             <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M3 7h8m0 0L7.5 3.5M11 7l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
@@ -163,7 +174,7 @@
             <h3 class="service-card__title">Crop Protection</h3>
             <p class="service-card__body">With our diverse southeastern crops, you need a partner who is on top of the latest developments in protection. We have the knowledge to protect from weeds, diseases and pests.</p>
           </div>
-          <a href="#" class="card-link">
+          <a href="services.html" class="card-link">
             Explore
             <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M3 7h8m0 0L7.5 3.5M11 7l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
@@ -174,7 +185,7 @@
             <h3 class="service-card__title">Crop Nutrition</h3>
             <p class="service-card__body">We deliver the product you need, when you need it. We&rsquo;ve made investments in facilities with high&#x2011;speed blending systems and 24-hour automated fertilizer loadout as needed.</p>
           </div>
-          <a href="#" class="card-link">
+          <a href="services.html" class="card-link">
             Explore
             <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M3 7h8m0 0L7.5 3.5M11 7l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
@@ -185,7 +196,7 @@
             <h3 class="service-card__title">Agronomy</h3>
             <p class="service-card__body">We conduct more than 100 trials each year with one goal in mind, helping producers be successful. Conducting research emphasizing transparency and grower needs.</p>
           </div>
-          <a href="#" class="card-link">
+          <a href="services.html" class="card-link">
             Explore
             <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M3 7h8m0 0L7.5 3.5M11 7l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
@@ -200,7 +211,7 @@
     <section class="insights" aria-labelledby="insights-heading">
       <div class="insights__head">
         <h2 id="insights-heading" class="insights__title">Expert Insights</h2>
-        <a href="#" class="card-link card-link--end">
+        <a href="news.html" class="card-link card-link--end">
           See all insights
           <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M3 7h8m0 0L7.5 3.5M11 7l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
@@ -211,7 +222,7 @@
         <article class="story">
           <!-- IMAGE: Swap for real GreenPoint Ag editorial imagery -->
           <img class="story__bg"
-               src="https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=1200&q=80&auto=format&fit=crop"
+               src="images/night-harvest-watching.jpg"
                alt="" loading="lazy" />
           <div class="story__shade" aria-hidden="true"></div>
           <div class="story__body">
@@ -220,7 +231,7 @@
             <p class="story__excerpt">
               Missouri&rsquo;s farmers face mounting pressure from rising input costs, volatile commodity markets, and uncertain trade conditions. Without timely intervention from Congress, the state&rsquo;s agricultural economy and the rural communities it sustains could face lasting damage&hellip;
             </p>
-            <a href="#" class="card-link story__link">
+            <a href="news-story.html" class="card-link story__link">
               Explore
               <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M3 7h8m0 0L7.5 3.5M11 7l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </a>
@@ -229,7 +240,7 @@
 
         <article class="story">
           <img class="story__bg"
-               src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=1200&q=80&auto=format&fit=crop"
+               src="images/handshake-sunset-truck.jpg"
                alt="" loading="lazy" />
           <div class="story__shade" aria-hidden="true"></div>
           <div class="story__body">
@@ -238,7 +249,7 @@
             <p class="story__excerpt">
               Across the country, multi&#x2011;generational farm families are navigating one of the most challenging economic environments in decades. From higher operating costs to commodity price swings, today&rsquo;s producers are being asked to weather more risk than ever before&hellip;
             </p>
-            <a href="#" class="card-link story__link">
+            <a href="news-story.html" class="card-link story__link">
               Explore
               <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M3 7h8m0 0L7.5 3.5M11 7l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </a>
@@ -247,7 +258,7 @@
 
         <article class="story">
           <img class="story__bg"
-               src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=1200&q=80&auto=format&fit=crop"
+               src="images/team-thumbsup.jpg"
                alt="" loading="lazy" />
           <div class="story__shade" aria-hidden="true"></div>
           <div class="story__body">
@@ -256,7 +267,7 @@
             <p class="story__excerpt">
               GreenPoint Ag welcomed row&#x2011;crop farmers and agricultural professionals from across nine states to Nashville for the 2025 Southern Agronomy Summit. The January 7&ndash;9 event, themed &ldquo;Rooted in Resilience,&rdquo; brought together over 200 growers for three days of education, collaboration, and insight from leading industry experts&hellip;
             </p>
-            <a href="#" class="card-link story__link">
+            <a href="news-story.html" class="card-link story__link">
               Explore
               <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M3 7h8m0 0L7.5 3.5M11 7l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </a>
@@ -273,7 +284,7 @@
     ========================================================== -->
     <section class="locator" aria-labelledby="locator-heading">
       <h2 id="locator-heading" class="locator__heading">Find A Location Near Your Farm</h2>
-      <a href="#" class="btn btn--outline-dark">See Our Locations</a>
+      <a href="locations.html" class="btn btn--outline-dark">See Our Locations</a>
     </section>
 
     <!-- =========================================================
@@ -300,7 +311,7 @@
     <div class="footer__inner">
 
       <div class="footer__brand">
-        <a href="#" class="footer__logo" aria-label="GreenPoint Ag home">
+        <a href="index.html" class="footer__logo" aria-label="GreenPoint Ag home">
           <svg class="logo" viewBox="44 9 129 72" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <path d="M44.4518 78.8923L171.857 79.949L43.8716 81.0057L44.4518 78.8923Z" fill="white"/>
             <path d="M52.6019 76.1761C51.2495 76.1761 50.1823 75.8848 49.3976 75.3018C48.6129 74.7193 48.333 74.0188 48.5583 73.2043L50.4367 66.4041C50.6654 65.5767 51.3358 64.8724 52.4476 64.2924C53.5586 63.7124 54.7845 63.4216 56.1251 63.4216C57.4658 63.4216 58.5425 63.7137 59.3216 64.2967C60.1007 64.8797 60.3767 65.5819 60.1497 66.4041L59.7571 67.8265H56.5792L56.9826 66.3649C57.0649 66.0663 56.9627 65.8108 56.675 65.5987C56.3877 65.3874 56.0007 65.2811 55.5141 65.2811C55.0275 65.2811 54.5851 65.3874 54.1856 65.5987C53.7866 65.8112 53.5461 66.0663 53.4633 66.3649L51.5797 73.185C51.497 73.4823 51.5975 73.7361 51.8804 73.9452C52.163 74.1535 52.5473 74.2584 53.0335 74.2584C53.5196 74.2584 53.9651 74.1535 54.3689 73.9452C54.7723 73.7374 55.0158 73.4844 55.0977 73.1871L55.7737 70.7385H54.0717L54.5934 68.8497H59.4737L58.2713 73.2043C58.0425 74.0321 57.3722 74.7352 56.262 75.3109C55.151 75.8887 53.9313 76.1761 52.6019 76.1761Z" fill="white"/>
@@ -328,10 +339,10 @@
 
       <div class="footer__links">
         <ul class="footer__col">
-          <li><a href="#">About Us</a></li>
-          <li><a href="#">Contact Us</a></li>
-          <li><a href="#">Careers</a></li>
-          <li><a href="#">Find Your Location</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+          <li><a href="careers.html">Careers</a></li>
+          <li><a href="locations.html">Find Your Location</a></li>
         </ul>
         <ul class="footer__col">
           <li><a href="#">Customer Login</a></li>
@@ -354,6 +365,9 @@
         <li><a href="#" aria-label="Weather"><svg viewBox="0 0 22 17" fill="none" aria-hidden="true"><path fill="currentColor" stroke="currentColor" stroke-width="0.5" d="M6.10059 0.25C6.49122 0.25001 6.81616 0.56173 6.81641 0.957031V1.87109C6.81641 2.19062 6.60306 2.45196 6.31543 2.54199C7.34101 2.60281 8.24974 3.09571 8.85254 3.83789C8.99558 4.01404 9.11941 4.20592 9.22559 4.4082C9.40704 4.27509 9.59795 4.15344 9.79688 4.0459C10.5002 3.6658 11.3082 3.4502 12.167 3.4502C14.1235 3.4502 15.8116 4.57349 16.6035 6.19922C19.4622 6.32045 21.75 8.62972 21.75 11.4717C21.7498 14.3922 19.335 16.75 16.3662 16.75H7.9668C4.99903 16.75 2.58321 14.3923 2.58301 11.4717C2.58301 10.3257 2.95539 9.264 3.58789 8.39844C3.00836 7.81819 2.63435 7.03665 2.58789 6.16992C2.50511 6.47295 2.22734 6.69226 1.90039 6.69238H0.966797C0.575892 6.69227 0.250101 6.38142 0.25 5.98633C0.25 5.59056 0.575504 5.27843 0.966797 5.27832H1.90039C2.22684 5.27844 2.50444 5.49747 2.58789 5.7998C2.68273 4.04701 4.10876 2.64793 5.88379 2.54199C5.59651 2.45159 5.38379 2.19034 5.38379 1.87109V0.957031C5.38403 0.561402 5.70934 0.25 6.10059 0.25ZM12.167 4.86426C11.3 4.86429 10.511 5.17249 9.90137 5.68359L9.89941 5.68555L9.87598 5.70508C9.48975 6.03514 9.17918 6.44547 8.97168 6.91113V6.91211L8.73047 7.4502L8.66602 7.5957L8.50684 7.59863L7.90625 7.60742C5.74752 7.63927 4.0166 9.36232 4.0166 11.4717C4.01674 13.6014 5.78069 15.3359 7.9668 15.3359H16.3662C18.5531 15.3359 20.3172 13.6016 20.3174 11.4717C20.3174 9.3624 18.5855 7.63937 16.4268 7.60742L15.8271 7.59863L15.667 7.5957L15.6025 7.4502L15.3623 6.91211H15.3613C14.824 5.70723 13.5959 4.86426 12.167 4.86426ZM6.10059 3.9502C4.94449 3.95022 4.0166 4.86653 4.0166 5.98633C4.01666 6.52094 4.22776 7.00609 4.5752 7.37109C5.44333 6.67941 6.53582 6.24984 7.72852 6.19922C7.84765 5.9536 7.98635 5.71939 8.14453 5.49902L8.03516 5.23145C7.72932 4.48123 6.97896 3.9502 6.10059 3.9502ZM1.72559 1.69336C2.00472 1.41995 2.45483 1.42019 2.73438 1.69238L2.73535 1.69336L3.39551 2.33984L3.4873 2.45117C3.67186 2.72631 3.64199 3.1009 3.39551 3.34277C3.15081 3.58249 2.77441 3.61302 2.49707 3.43262L2.38477 3.34277L1.72559 2.69629C1.44243 2.41981 1.44323 1.96995 1.72559 1.69336ZM9.46582 1.69238C9.74538 1.42028 10.1955 1.41995 10.4746 1.69336C10.757 1.97008 10.7581 2.42085 10.4746 2.69727L10.4736 2.69629L9.81445 3.3418L9.81543 3.34277C9.5361 3.6178 9.08434 3.61672 8.80469 3.34277C8.52294 3.0664 8.52382 2.61638 8.80469 2.33984L9.46484 1.69336L9.46582 1.69238Z"/></svg></a></li>
       </ul>
 
+    </div>
+    <div class="footer__cybernautic" aria-hidden="true">
+      <img src="images/cybernautic-logo.svg" alt="" />
     </div>
   </footer>
 

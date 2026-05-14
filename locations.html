@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Meet Your Local Agronomy Team — GreenPoint Ag</title>
+  <meta name="description" content="Find a GreenPoint Ag location near you — retail, pro products, wholesale, and member co-ops across the Southeast." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <div data-partial="header"></div>
+
+  <main id="main" tabindex="-1">
+
+    <div data-partial="topbar"></div>
+
+    <section class="page-hero page-hero--dark" aria-labelledby="page-title">
+      <div class="page-hero__media">
+        <img src="images/combine-golden-dust.jpg"
+             alt="Aerial of farm fields and a road heading to a country town" />
+      </div>
+      <div class="page-hero__overlay page-hero__overlay--strong" aria-hidden="true"></div>
+      <div class="page-hero__inner page-hero__inner--lead">
+        <h1 class="page-hero__title" id="page-title">Meet Your Local Agronomy Team</h1>
+        <p class="page-hero__body">
+          Every acre comes with different challenges. Connect with your local GreenPoint Ag
+          team for practical recommendations, proven products, and support tailored to your
+          operation.
+        </p>
+        <p class="page-hero__cta">
+          <a href="#find" class="btn btn--green">Find a Location Near You</a>
+        </p>
+      </div>
+    </section>
+
+    <!-- Search by zip + filter -->
+    <section class="section section--tight" aria-labelledby="find-h" id="find">
+      <div class="section__inner">
+        <h2 id="find-h" class="section__title section__title--dark" style="margin-bottom:.25rem;">Find A Location</h2>
+        <p class="section__lede" style="margin-top: .5rem;">
+          Connect with a GreenPoint Ag team near your operation.
+        </p>
+        <form class="loc-search loc-search--left" role="search" aria-label="Search locations">
+          <label class="loc-search__field">
+            <span class="loc-search__label">City, zip, or name</span>
+            <input type="search" id="loc-search-query" placeholder="Search by city, zip, or name" />
+          </label>
+          <label class="loc-search__field">
+            <span class="loc-search__label">Category</span>
+            <select id="loc-search-category">
+              <option>All Categories</option>
+              <option>Retail Location</option>
+              <option>Pro Products</option>
+              <option>Wholesale</option>
+              <option>Member Co-op</option>
+            </select>
+          </label>
+          <button type="submit">Search</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Map + result list -->
+    <section class="section section--tight" aria-labelledby="map-h">
+      <h2 id="map-h" class="visually-hidden">Map and locations</h2>
+      <div class="section__inner">
+        <div class="loc-layout">
+          <aside class="loc-results" aria-label="Search results">
+            <div class="loc-result">
+              <p class="loc-result__category">Retail Location</p>
+              <h3 class="loc-result__name">GreenPoint Ag &mdash; Decatur</h3>
+              <p class="loc-result__line">1025 GreenPoint Drive</p>
+              <p class="loc-result__line">Decatur, AL 35601</p>
+              <p class="loc-result__phone">(256) 555&#x2011;0100</p>
+              <div class="loc-result__actions">
+                <a href="#" class="btn btn--green btn--sm">Directions</a>
+                <a href="location.html" class="btn btn--outline-dark btn--sm">Details</a>
+              </div>
+            </div>
+            <div class="loc-result">
+              <p class="loc-result__category">Wholesale</p>
+              <h3 class="loc-result__name">Simple Grower Solutions</h3>
+              <p class="loc-result__line">230 Highbank Road</p>
+              <p class="loc-result__line">Urban, AL 36345</p>
+              <p class="loc-result__phone">(256) 555&#x2011;0200</p>
+              <p class="loc-result__hours">Open &middot; Closes 5:00 PM</p>
+              <div class="loc-result__actions">
+                <a href="#" class="btn btn--green btn--sm">Directions</a>
+                <a href="location.html" class="btn btn--outline-dark btn--sm">Details</a>
+              </div>
+            </div>
+            <div class="loc-result">
+              <p class="loc-result__category">Pro Products</p>
+              <h3 class="loc-result__name">GreenPoint Ag &mdash; Florence</h3>
+              <p class="loc-result__line">789 Crop Lane</p>
+              <p class="loc-result__line">Florence, AL 35630</p>
+              <p class="loc-result__phone">(256) 555&#x2011;0300</p>
+              <div class="loc-result__actions">
+                <a href="#" class="btn btn--green btn--sm">Directions</a>
+                <a href="location.html" class="btn btn--outline-dark btn--sm">Details</a>
+              </div>
+            </div>
+          </aside>
+
+          <div class="loc-map">
+            <div id="loc-map" role="region" aria-label="Map of GreenPoint Ag locations across the Southeast"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <div data-partial="footer"></div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+          integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script>
+    (function () {
+      var el = document.getElementById('loc-map');
+      if (!el || typeof L === 'undefined') return;
+
+      var map = L.map(el, {
+        scrollWheelZoom: false,
+        zoomControl: true
+      }).setView([32.8067, -86.7911], 7);
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 18,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      }).addTo(map);
+
+      // All locations are in Alabama
+      var locations = [
+        { name: 'GreenPoint Ag — Decatur',       cat: 'Retail Location', street: '1025 GreenPoint Drive',  city: 'Decatur, AL 35601',      phone: '(256) 555-0100', lat: 34.6059, lng: -86.9833, active: true },
+        { name: 'Simple Grower Solutions — Urban', cat: 'Wholesale',     street: '230 Highbank Road',      city: 'Urban, AL 36345',         phone: '(256) 555-0200', lat: 31.2350, lng: -85.4390 },
+        { name: 'GreenPoint Ag — Florence',      cat: 'Pro Products',    street: '789 Crop Lane',          city: 'Florence, AL 35630',      phone: '(256) 555-0300', lat: 34.7998, lng: -87.6773 },
+        { name: 'GreenPoint Ag — Huntsville',    cat: 'Retail Location', street: '450 Farm Road',          city: 'Huntsville, AL 35801',    phone: '(256) 555-0400', lat: 34.7304, lng: -86.5861 },
+        { name: 'GreenPoint Ag — Birmingham',    cat: 'Pro Products',    street: '210 Industrial Pkwy',    city: 'Birmingham, AL 35203',    phone: '(205) 555-0500', lat: 33.5186, lng: -86.8104 },
+        { name: 'GreenPoint Ag — Montgomery',    cat: 'Retail Location', street: '4421 Wetumpka Hwy',      city: 'Montgomery, AL 36110',    phone: '(334) 555-0600', lat: 32.3668, lng: -86.3000 },
+        { name: 'GreenPoint Ag — Mobile',        cat: 'Wholesale',       street: '3300 Halls Mill Road',   city: 'Mobile, AL 36606',        phone: '(251) 555-0700', lat: 30.6954, lng: -88.0399 },
+        { name: 'GreenPoint Ag — Tuscaloosa',    cat: 'Retail Location', street: '1850 Skyland Blvd E',    city: 'Tuscaloosa, AL 35405',    phone: '(205) 555-0800', lat: 33.2098, lng: -87.5692 },
+        { name: 'GreenPoint Ag — Athens',        cat: 'Member Co-op',    street: '321 Market Street',      city: 'Athens, AL 35611',        phone: '(256) 555-0900', lat: 34.8030, lng: -86.9716 },
+        { name: 'GreenPoint Ag — Auburn',        cat: 'Pro Products',    street: '1640 Opelika Road',      city: 'Auburn, AL 36830',        phone: '(334) 555-1000', lat: 32.6099, lng: -85.4808 },
+        { name: 'GreenPoint Ag — Dothan',        cat: 'Retail Location', street: '2701 Ross Clark Circle', city: 'Dothan, AL 36301',        phone: '(334) 555-1100', lat: 31.2232, lng: -85.3905 },
+        { name: 'GreenPoint Ag — Cullman',       cat: 'Pro Products',    street: '890 Energy Way',         city: 'Cullman, AL 35055',       phone: '(256) 555-1200', lat: 34.1748, lng: -86.8436 }
+      ];
+
+      function pinHtml(active) {
+        return '<span class="gp-pin' + (active ? ' gp-pin--active' : '') + '"></span>';
+      }
+
+      function popupHtml(loc) {
+        var telDigits = loc.phone.replace(/[^0-9]/g, '');
+        var dirUrl = 'https://www.google.com/maps/dir/?api=1&destination=' + loc.lat + ',' + loc.lng;
+        return ''
+          + '<div class="gp-popup">'
+          + '<p class="gp-popup__category">' + loc.cat + '</p>'
+          + '<h3 class="gp-popup__name">' + loc.name + '</h3>'
+          + '<p class="gp-popup__line">' + loc.street + '</p>'
+          + '<p class="gp-popup__line">' + loc.city + '</p>'
+          + '<p class="gp-popup__phone"><a href="tel:' + telDigits + '">' + loc.phone + '</a></p>'
+          + '<div class="gp-popup__actions">'
+          +   '<a class="btn btn--sm btn--green" href="' + dirUrl + '" target="_blank" rel="noopener">Directions</a>'
+          +   '<a class="btn btn--sm btn--outline-dark" href="tel:' + telDigits + '">Call</a>'
+          + '</div>'
+          + '</div>';
+      }
+
+      locations.forEach(function (loc) {
+        var icon = L.divIcon({
+          className: 'gp-marker',
+          html: pinHtml(loc.active),
+          iconSize: loc.active ? [22, 22] : [16, 16],
+          iconAnchor: loc.active ? [11, 11] : [8, 8]
+        });
+        var marker = L.marker([loc.lat, loc.lng], { icon: icon }).addTo(map);
+        marker.bindPopup(popupHtml(loc), { minWidth: 220, maxWidth: 260 });
+      });
+    })();
+  </script>
+  <script src="partials.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

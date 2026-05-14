@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Page Builder — GreenPoint Ag</title>
+  <meta name="description" content="Canonical interior page template — hero, text, media features, card grid, video, logo grid, and stats." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap">
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <div data-partial="header"></div>
+
+  <main id="main" tabindex="-1">
+
+    <div data-partial="topbar"></div>
+
+    <!-- Page hero -->
+    <section class="page-hero" aria-labelledby="page-title">
+      <div class="page-hero__media">
+        <img src="images/corn-harvest-night.jpg"
+             alt="Cotton harvest in progress" />
+      </div>
+      <div class="page-hero__overlay" aria-hidden="true"></div>
+      <div class="page-hero__inner">
+        <p class="page-hero__eyebrow">Reference</p>
+        <h1 class="page-hero__title" id="page-title">Page Builder</h1>
+      </div>
+    </section>
+
+    <!-- Single-column text -->
+    <section class="section" aria-labelledby="text-h">
+      <div class="section__inner text-block">
+        <h2 id="text-h" class="section__title">Single-Column Text (H2 Title)</h2>
+        <p class="section__lede">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+        </p>
+        <p class="section__lede">
+          Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+        </p>
+      </div>
+    </section>
+
+    <!-- Video feature (image + text) -->
+    <section class="section section--tight" aria-labelledby="feature-h">
+      <div class="section__inner">
+        <div class="feature-media">
+          <div class="feature-media__media">
+            <img src="images/blue-cotton-picker-field.jpg"
+                 alt="Combine harvester at work" />
+            <button class="video-play" type="button" aria-label="Play video">
+              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 3v10l9-5z"/></svg>
+            </button>
+          </div>
+          <div class="feature-media__body">
+            <h2 id="feature-h" class="section__title">Video Feature (H2)</h2>
+            <p class="section__lede">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Card grid (3×2) -->
+    <section class="section" aria-labelledby="grid-h">
+      <div class="section__inner">
+        <h2 id="grid-h" class="section__title section__title--center" style="margin-bottom:2.5rem;">Grid AMSD</h2>
+        <div class="card-grid">
+          <article class="media-card">
+            <div class="media-card__media"><img src="images/agronomists-watching-picker.jpg" alt="" loading="lazy" /></div>
+            <div class="media-card__body">
+              <p class="media-card__subtitle">Subtitle</p>
+              <h3 class="media-card__title">Grid Title</h3>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            </div>
+          </article>
+          <article class="media-card">
+            <div class="media-card__media"><img src="images/agronomists-watching-picker.jpg" alt="" loading="lazy" /></div>
+            <div class="media-card__body">
+              <p class="media-card__subtitle">Subtitle</p>
+              <h3 class="media-card__title">Grid Title</h3>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            </div>
+          </article>
+          <article class="media-card">
+            <div class="media-card__media"><img src="images/agronomists-watching-picker.jpg" alt="" loading="lazy" /></div>
+            <div class="media-card__body">
+              <p class="media-card__subtitle">Subtitle</p>
+              <h3 class="media-card__title">Grid Title</h3>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            </div>
+          </article>
+          <article class="media-card">
+            <div class="media-card__media"><img src="images/agronomists-watching-picker.jpg" alt="" loading="lazy" /></div>
+            <div class="media-card__body">
+              <p class="media-card__subtitle">Subtitle</p>
+              <h3 class="media-card__title">Grid Title</h3>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            </div>
+          </article>
+          <article class="media-card">
+            <div class="media-card__media"><img src="images/agronomists-watching-picker.jpg" alt="" loading="lazy" /></div>
+            <div class="media-card__body">
+              <p class="media-card__subtitle">Subtitle</p>
+              <h3 class="media-card__title">Grid Title</h3>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            </div>
+          </article>
+          <article class="media-card">
+            <div class="media-card__media"><img src="images/agronomists-watching-picker.jpg" alt="" loading="lazy" /></div>
+            <div class="media-card__body">
+              <p class="media-card__subtitle">Subtitle</p>
+              <h3 class="media-card__title">Grid Title</h3>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Full-screen video -->
+    <section class="section section--tight" aria-labelledby="video-h">
+      <div class="section__inner">
+        <h2 id="video-h" class="section__title section__title--center" style="margin-bottom:2rem;">Full Screen Video</h2>
+        <div class="video-block">
+          <img src="images/combine-sunrise-silhouette.jpg"
+               alt="Combine at dusk" />
+          <div class="video-block__overlay" aria-hidden="true"></div>
+          <button class="video-play" type="button" aria-label="Play video">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 3v10l9-5z"/></svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Logo grid -->
+    <section class="section section--tight" aria-labelledby="logos-h">
+      <div class="section__inner">
+        <h2 id="logos-h" class="section__title section__title--center" style="margin-bottom:2.5rem;">Logo Grid</h2>
+        <div class="logo-grid">
+          <a href="#" class="logo-grid__item"><span class="logo-grid__mark"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#3b82f6" d="M5 12l3 3 8-8 3 3-11 11-6-6z"/></svg></span>OdexaLabs</a>
+          <a href="#" class="logo-grid__item"><span class="logo-grid__mark"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#ef4444" d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg></span>Kintsugi</a>
+          <a href="#" class="logo-grid__item"><span class="logo-grid__mark"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="#a855f7"/></svg></span>Magnolia</a>
+          <a href="#" class="logo-grid__item"><span class="logo-grid__mark"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#0f172a" d="M2 12c4-6 8-6 10 0s6 6 10 0c-4 6-8 6-10 0s-6-6-10 0z"/></svg></span>Warpspeed</a>
+          <a href="#" class="logo-grid__item"><span class="logo-grid__mark"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#10b981" d="M5 12l3 3 8-8 3 3-11 11-6-6z"/></svg></span>OdexaLabs</a>
+          <a href="#" class="logo-grid__item"><span class="logo-grid__mark"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#ec4899" d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg></span>Kintsugi</a>
+          <a href="#" class="logo-grid__item"><span class="logo-grid__mark"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="#6366f1"/></svg></span>Magnolia</a>
+          <a href="#" class="logo-grid__item"><span class="logo-grid__mark"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#0ea5e9" d="M2 12c4-6 8-6 10 0s6 6 10 0c-4 6-8 6-10 0s-6-6-10 0z"/></svg></span>Sisyphus</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats -->
+    <section class="section section--beige" aria-labelledby="stats-h">
+      <div class="section__inner">
+        <h2 id="stats-h" class="section__title section__title--center section__title--dark" style="margin-bottom:2.5rem;">Stats Area</h2>
+        <div class="stats">
+          <div><span class="stat__value">400+</span><span class="stat__label">Projects completed</span></div>
+          <div><span class="stat__value">600%</span><span class="stat__label">Return on investment</span></div>
+          <div><span class="stat__value">10k</span><span class="stat__label">Crops Serviced</span></div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <div data-partial="footer"></div>
+
+  <script src="partials.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

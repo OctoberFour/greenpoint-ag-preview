@@ -187,7 +187,20 @@
       '.hero__heading, .hero__body, .hero__content .btn, ' +
       '.service-card, .story, .insights__title, ' +
       '.locator__heading, .locator .btn, ' +
-      '.connect__heading, .connect__body, .connect .btn'
+      '.connect__heading, .connect__body, .connect .btn, ' +
+      /* Interior pages */
+      '.page-hero__eyebrow, .page-hero__title, ' +
+      '.section__title, .section__lede, ' +
+      '.feature-media__media, .feature-media__body, ' +
+      '.media-card, .staff-card, ' +
+      '.video-block, .logo-grid__item, ' +
+      '.stats > *, .accordion__item, ' +
+      '.form__field, .form .btn, ' +
+      /* New modules from page-changes PDF */
+      '.icon-card, .insight-card, .photo-tile, ' +
+      '.timeline__item, .value-card, .core-value, .role-tile, .opps-tile, .celebrate__item, .video-card, ' +
+      '.contact-card, .loc-result, ' +
+      '.page-hero__body, .page-hero__cta'
     );
 
     const io = new IntersectionObserver(function (entries) {
@@ -205,13 +218,17 @@
       io.observe(el);
     });
 
-    /* Safety net: any element still pending after 1.5s reveals itself.
-       Protects against edge cases where IO doesn't fire (e.g. element
-       starts already past the threshold offset). */
+    /* Safety net: after 1.5s, reveal any pending element that's
+       currently in the viewport. Anything still below the fold stays
+       pending so it can animate when the user actually scrolls to it. */
     setTimeout(function () {
+      const vh = window.innerHeight || document.documentElement.clientHeight;
       document.querySelectorAll('.reveal.is-pending').forEach(function (el) {
-        el.classList.remove('is-pending');
-        el.classList.add('is-visible');
+        const r = el.getBoundingClientRect();
+        if (r.top < vh && r.bottom > 0) {
+          el.classList.remove('is-pending');
+          el.classList.add('is-visible');
+        }
       });
     }, 1500);
   }
@@ -300,5 +317,37 @@
   /* Initial paint */
   updateHeroProgress();
   updateNav();
+
+  /* -------- Hero video pause toggle --------
+     A focusable control to stop the auto-playing, looping banner
+     video. Honors prefers-reduced-motion (auto-pause + hide the
+     control via CSS) and persists user choice across pages. */
+  const heroVideo = document.getElementById('hero-video');
+  const heroPause = document.getElementById('hero-pause');
+  if (heroVideo && heroPause) {
+    const storageKey = 'gp-hero-video-paused';
+    function setPaused(paused) {
+      if (paused) {
+        heroVideo.pause();
+        heroPause.setAttribute('aria-pressed', 'true');
+        heroPause.setAttribute('aria-label', 'Play background video');
+      } else {
+        heroVideo.play().catch(function () { /* autoplay may be blocked; ignore */ });
+        heroPause.setAttribute('aria-pressed', 'false');
+        heroPause.setAttribute('aria-label', 'Pause background video');
+      }
+      try { localStorage.setItem(storageKey, paused ? '1' : '0'); } catch (e) { /* ignore */ }
+    }
+    /* Restore last preference (default: playing). */
+    try {
+      if (localStorage.getItem(storageKey) === '1') setPaused(true);
+    } catch (e) { /* ignore */ }
+    /* Reduced-motion: auto-pause regardless of stored preference. */
+    if (prefersReducedMotion) setPaused(true);
+
+    heroPause.addEventListener('click', function () {
+      setPaused(heroPause.getAttribute('aria-pressed') !== 'true');
+    });
+  }
 
 })();

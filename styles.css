@@ -387,6 +387,11 @@ body > footer {
   background: transparent;
 }
 .primary-nav__logo .logo { width: 165px; height: auto; display: block; }
+@media (max-width: 48em) {
+  /* Shrink on mobile so the logo doesn't crowd the announcement
+     strip stacked above it. */
+  .primary-nav__logo .logo { width: 120px; }
+}
 
 .primary-nav__nav { display: none; }
 .primary-nav__list {

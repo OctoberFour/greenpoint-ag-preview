@@ -19,7 +19,7 @@
 
     <div data-partial="topbar"></div>
 
-    <section class="page-hero page-hero--dark" aria-labelledby="page-title">
+    <section class="page-hero page-hero--dark has-topo-bg has-topo-bg--light page-hero--topo-right" aria-labelledby="page-title">
       <div class="page-hero__media">
         <img src="images/harvester-pov-sunset.jpg"
              alt="Combine working a field at golden hour" />
@@ -38,8 +38,31 @@
       </div>
     </section>
 
+    <!-- Intro — centered, mirrors the services page intro pattern -->
+    <section class="section section--center has-intro-gradient" aria-labelledby="careers-intro-h">
+      <div class="section__inner">
+        <h2 id="careers-intro-h" class="section__title section__title--dark">Good People. Vital Work.</h2>
+        <p class="section__lede">
+          At GreenPoint Ag, we&rsquo;re looking for good people who help us become great in the
+          eyes of our farmers and members. We are <mark>committed to farmers&rsquo; success</mark>,
+          because that&rsquo;s the only way we succeed.
+        </p>
+        <p class="section__lede">
+          Our team works across <mark>104 communities in ten southeastern states</mark>, serving
+          growers and rural businesses with the products, expertise, and partnership that keep
+          their operations &mdash; and their communities &mdash; moving forward.
+        </p>
+        <p class="section__lede">
+          If you share a passion for rural America and the farmers who are so vital to its health,
+          then we&rsquo;d like to talk with you. GreenPoint Ag is an Equal Opportunity Employer
+          seeking hardworking, passionate team players who can thrive in one of today&rsquo;s
+          most vital industries.
+        </p>
+      </div>
+    </section>
+
     <!-- Working Here videos -->
-    <section class="section" aria-labelledby="videos-h">
+    <section class="section section--cream working-here has-topo-bg" aria-labelledby="videos-h">
       <div class="section__inner">
         <h2 id="videos-h" class="section__title section__title--dark" style="margin-bottom:.5rem;">Working Here</h2>
         <p class="section__lede" style="margin: 0 0 2rem;">
@@ -74,7 +97,7 @@
     <!-- Opportunities — bento with full imagery + text overlay -->
     <section class="opps" aria-labelledby="roles-h" id="openings">
       <div class="opps__bg" aria-hidden="true">
-        <img src="images/combine-golden-dust.jpg" alt="" />
+        <img src="images/aerial-field-drone.webp" alt="" />
       </div>
       <div class="section__inner opps__inner">
         <h2 id="roles-h" class="opps__heading">Opportunities at GreenPoint Ag</h2>
@@ -148,9 +171,8 @@
 
           <article class="core-value">
             <span class="core-value__icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-                <path d="M12 2 4 5v6c0 5 3.4 9 8 11 4.6-2 8-6 8-11V5l-8-3Z"/>
-                <path d="M12 8.5v6M9 11.5h6"/>
+              <svg viewBox="0 0 640 640" fill="currentColor" aria-hidden="true" focusable="false">
+                <path d="M128 78.5C128 158.9 193.1 224 273.5 224L288 224L288 288C288 305.7 302.3 320 320 320C337.7 320 352 305.7 352 288L352 224L366.5 224C446.9 224 512 158.9 512 78.5C512 70.5 505.5 64 497.5 64L448 64C395.7 64 349.2 89.1 320 128C290.8 89.1 244.3 64 192 64L142.5 64C134.5 64 128 70.5 128 78.5zM141.3 405.4L98.7 448L64 448C46.3 448 32 462.3 32 480L32 544C32 561.7 46.3 576 64 576L384.5 576C413.5 576 441.8 566.7 465.2 549.5L591.8 456.2C609.6 443.1 613.4 418.1 600.3 400.3C587.2 382.5 562.2 378.7 544.4 391.8L424.6 480L312 480C298.7 480 288 469.3 288 456C288 442.7 298.7 432 312 432L384 432C401.7 432 416 417.7 416 400C416 382.3 401.7 368 384 368L231.8 368C197.9 368 165.3 381.5 141.3 405.5z"/>
               </svg>
             </span>
             <h3 class="core-value__title">Safety &amp; Stewardship</h3>
@@ -159,11 +181,8 @@
 
           <article class="core-value">
             <span class="core-value__icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-                <circle cx="11" cy="13" r="8"/>
-                <circle cx="11" cy="13" r="4.5"/>
-                <circle cx="11" cy="13" r="1.4" fill="currentColor" stroke="none"/>
-                <path d="M16 8l5-5m-3 0h3v3"/>
+              <svg viewBox="0 0 640 640" fill="currentColor" aria-hidden="true" focusable="false">
+                <path d="M300.9 117.2L184.3 246.8C179.7 251.9 179.9 259.8 184.8 264.7C215.3 295.2 264.8 295.2 295.3 264.7L327.1 232.9C331.3 228.7 336.6 226.4 342 226C348.8 225.4 355.8 227.7 361 232.9L537.6 408L608 352L608 64L496 128L472.2 112.1C456.4 101.6 437.9 96 418.9 96L348.5 96C347.4 96 346.2 96 345.1 96.1C328.2 97 312.3 104.6 300.9 117.2zM148.6 214.7L255.4 96L215.8 96C190.3 96 165.9 106.1 147.9 124.1L32 256L32 608L176 472L188.4 482.3C211.4 501.5 240.4 512 270.3 512L286 512L279 505C269.6 495.6 269.6 480.4 279 471.1C288.4 461.8 303.6 461.7 312.9 471.1L353.9 512.1L362.9 512.1C382 512.1 400.7 507.8 417.7 499.8L391 473C381.6 463.6 381.6 448.4 391 439.1C400.4 429.8 415.6 429.7 424.9 439.1L456.9 471.1L474.4 453.6C483.3 444.7 485.9 431.8 482 420.5L344.1 283.7L329.2 298.6C279.9 347.9 200.1 347.9 150.8 298.6C127.8 275.6 126.9 238.7 148.6 214.6z"/>
               </svg>
             </span>
             <h3 class="core-value__title">Customer Focus</h3>
@@ -172,10 +191,8 @@
 
           <article class="core-value">
             <span class="core-value__icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-                <path d="m11 17 3.5-3.5 2.5 2.5 4-4-4-4-3 2-3.5-1-4.5 4 3 3 2-2 3 3-1.5 1.5z"/>
-                <path d="M14.5 13.5 17 16"/>
-                <path d="M8.5 9.5 11 12"/>
+              <svg viewBox="0 0 640 640" fill="currentColor" aria-hidden="true" focusable="false">
+                <path d="M320 64C355.3 64 384 92.7 384 128C384 163.3 355.3 192 320 192C284.7 192 256 163.3 256 128C256 92.7 284.7 64 320 64zM416 376C416 401 403.3 423 384 435.9L384 528C384 554.5 362.5 576 336 576L304 576C277.5 576 256 554.5 256 528L256 435.9C236.7 423 224 401 224 376L224 336C224 283 267 240 320 240C373 240 416 283 416 336L416 376zM160 96C190.9 96 216 121.1 216 152C216 182.9 190.9 208 160 208C129.1 208 104 182.9 104 152C104 121.1 129.1 96 160 96zM176 336L176 368C176 400.5 188.1 430.1 208 452.7L208 528C208 529.2 208 530.5 208.1 531.7C199.6 539.3 188.4 544 176 544L144 544C117.5 544 96 522.5 96 496L96 439.4C76.9 428.4 64 407.7 64 384L64 352C64 299 107 256 160 256C172.7 256 184.8 258.5 195.9 262.9C183.3 284.3 176 309.3 176 336zM432 528L432 452.7C451.9 430.2 464 400.5 464 368L464 336C464 309.3 456.7 284.4 444.1 262.9C455.2 258.4 467.3 256 480 256C533 256 576 299 576 352L576 384C576 407.7 563.1 428.4 544 439.4L544 496C544 522.5 522.5 544 496 544L464 544C451.7 544 440.4 539.4 431.9 531.7C431.9 530.5 432 529.2 432 528zM480 96C510.9 96 536 121.1 536 152C536 182.9 510.9 208 480 208C449.1 208 424 182.9 424 152C424 121.1 449.1 96 480 96z"/>
               </svg>
             </span>
             <h3 class="core-value__title">Teamwork</h3>
@@ -184,12 +201,8 @@
 
           <article class="core-value">
             <span class="core-value__icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-                <path d="M8 21c-2.5-3-4-6.5-4-10 0-3.5 1.5-6.5 3.5-8.5"/>
-                <path d="M16 21c2.5-3 4-6.5 4-10 0-3.5-1.5-6.5-3.5-8.5"/>
-                <path d="M8 21h8"/>
-                <path d="M6 7c1 1.5 2.5 2.5 4 2.5M6 11c1.5 1.5 3 2.5 4.5 2.5M7 15c1 1 2 1.5 3 1.5"/>
-                <path d="M18 7c-1 1.5-2.5 2.5-4 2.5M18 11c-1.5 1.5-3 2.5-4.5 2.5M17 15c-1 1-2 1.5-3 1.5"/>
+              <svg viewBox="0 0 640 640" fill="currentColor" aria-hidden="true" focusable="false">
+                <path d="M320.2 11.2L227.6 192.6L26.5 224.6L170.4 368.7L138.7 569.9L320.2 477.6L501.7 569.9L470 368.7L613.9 224.6L412.8 192.6L320.2 11.2z"/>
               </svg>
             </span>
             <h3 class="core-value__title">Pursuit of Excellence</h3>
@@ -200,57 +213,8 @@
       </div>
     </section>
 
-    <!-- Things We Celebrate — numbered values grid + landscape footer -->
-    <section class="celebrate" aria-labelledby="celebrate-h">
-      <div class="section__inner celebrate__inner">
-        <p id="celebrate-h" class="celebrate__eyebrow">Things We Celebrate</p>
-        <ol class="celebrate__grid">
-
-          <li class="celebrate__item">
-            <span class="celebrate__num">01</span>
-            <h3 class="celebrate__title">Curiosity</h3>
-            <p class="celebrate__body">Better answers start with better questions. We hire people who stay interested in what comes next &mdash; in the field, in the warehouse, in the office.</p>
-          </li>
-
-          <li class="celebrate__item">
-            <span class="celebrate__num">02</span>
-            <h3 class="celebrate__title">Staying Hungry</h3>
-            <p class="celebrate__body">Markets shift. Conditions change. We never assume yesterday&rsquo;s answer is good enough for tomorrow&rsquo;s acre.</p>
-          </li>
-
-          <li class="celebrate__item">
-            <span class="celebrate__num">03</span>
-            <h3 class="celebrate__title">Taking Ownership</h3>
-            <p class="celebrate__body">Every recommendation, every season, every load. We own what we put our name on &mdash; and we make it right when we don&rsquo;t.</p>
-          </li>
-
-          <li class="celebrate__item">
-            <span class="celebrate__num">04</span>
-            <h3 class="celebrate__title">Humble &amp; Kind</h3>
-            <p class="celebrate__body">Confidence without ego. We listen first, work hard, and treat people the way we&rsquo;d want our own family treated.</p>
-          </li>
-
-          <li class="celebrate__item">
-            <span class="celebrate__num">05</span>
-            <h3 class="celebrate__title">Y&rsquo;all Means All</h3>
-            <p class="celebrate__body">Every grower, every acre, every teammate. The door is wide open &mdash; and we work to keep it that way.</p>
-          </li>
-
-          <li class="celebrate__item">
-            <span class="celebrate__num">06</span>
-            <h3 class="celebrate__title">Play for the Team</h3>
-            <p class="celebrate__body">We win together. Credit moves freely; the work goes deep and lasts longer than any single season.</p>
-          </li>
-
-        </ol>
-      </div>
-      <div class="celebrate__media" aria-hidden="true">
-        <img src="images/cotton-bales-birds.jpg" alt="" loading="lazy" />
-      </div>
-    </section>
-
     <!-- CTA -->
-    <section class="section section--tight section--dark" aria-labelledby="cta-h">
+    <section class="section section--tight section--dark has-topo-bg has-topo-bg--light cta-topo-full" aria-labelledby="cta-h">
       <div class="section__inner cta-bar">
         <h2 id="cta-h" class="cta-bar__heading">Ready to Make a Difference?</h2>
         <a href="#" class="btn btn--outline-on-dark">View Open Positions</a>

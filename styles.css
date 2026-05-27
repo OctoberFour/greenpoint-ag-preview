@@ -683,7 +683,7 @@ body > footer {
    white text, zip pill flips to black, primary nav text becomes dark,
    and the logo swaps from white to colored (green leaf, black text). */
 .hero__topbar.is-stuck {
-  background: var(--c-white);
+  background: #e7e7e6;
   box-shadow: 0 8px 24px -10px rgba(7, 9, 6, .15);
   /* No backdrop-filter here: it would create a containing block for any
      position:fixed descendant (e.g. the mobile menu overlay), clipping
@@ -821,12 +821,13 @@ body > footer {
 .features-bg {
   position: relative;
   background:
-    /* fades: white at top blending out of hero, white at bottom blending into locator */
+    /* fade white at top to blend out of the hero, then hold a darker
+       wash all the way to the bottom edge so the image cuts cleanly
+       into the white .locator bar below. */
     linear-gradient(180deg,
       #fff 0%,
-      rgba(255,255,255,.55) 6%,
-      rgba(255,255,255,.55) 94%,
-      #fff 100%),
+      rgba(255,255,255,.10) 6%,
+      rgba(255,255,255,.10) 100%),
     url("img/bg.jpg") center / cover no-repeat;
 }
 
@@ -894,14 +895,14 @@ body > footer {
   position: relative;
   padding-top: 2.25rem;
 }
-/* Animated green accent rule (replaces static border-top so we can
-   transition it). Scales from left on hover/focus. */
+/* Animated green accent rule. Full width by default, retracts to a
+   short tick on hover/focus. */
 .service-card__inner::before {
   content: "";
   position: absolute;
   top: 0;
   left: 0;
-  width: 48px;
+  width: 100%;
   height: 3px;
   background: var(--c-green);
   transform-origin: left center;
@@ -911,7 +912,7 @@ body > footer {
 @media (hover: hover) {
   .service-card:hover .service-card__inner::before,
   .service-card:focus-within .service-card__inner::before {
-    width: 100%;
+    width: 48px;
     background: var(--c-green);
   }
 }
@@ -936,9 +937,7 @@ body > footer {
 ========================================================== */
 
 .insights {
-  /* Collapsed bottom padding so insights flows directly into the
-     locator + connect block without a visible "section gap." */
-  padding: clamp(3rem, 6vw, 6rem) var(--gutter) 1rem;
+  padding: clamp(3rem, 6vw, 6rem) var(--gutter) 80px;
   background: transparent;
   position: relative;
 }
@@ -1130,9 +1129,13 @@ body > footer {
   margin: 0;
   /* Positioned + opaque so it covers the fixed hero banner image
      where they overlap. Non-positioned in-flow elements paint
-     BELOW positioned z:0 elements in the CSS paint order. */
+     BELOW positioned z:0 elements in the CSS paint order.
+     isolation: isolate + overflow: hidden create a clean clipping
+     context for the .has-topo-bg pseudo-element. */
   position: relative;
   background: var(--c-white);
+  isolation: isolate;
+  overflow: hidden;
 }
 .locator__heading {
   margin: 0;
@@ -1148,12 +1151,140 @@ body > footer {
 }
 
 /* =========================================================
+   TOPOGRAPHY PATTERN ACCENT  (.has-topo-bg)
+
+   Reusable decorative accent. Drop the class on any section
+   that has `position: relative; overflow: hidden; isolation: isolate`
+   (or rely on the existing stacking context).
+
+   By default the pattern bleeds off the right edge of the section.
+   Use a modifier (--tl / --tr / --bl / --br) to anchor to a corner.
+   Color of the pattern lines = brand dark green via CSS mask.
+========================================================== */
+.has-topo-bg::after {
+  content: "";
+  position: absolute;
+  top: -25%;
+  right: -8%;
+  width: 55%;
+  height: 150%;
+  background-image: url("images/topography-pattern.svg");
+  background-repeat: repeat;
+  background-size: 380px 380px;
+  opacity: .35;
+  pointer-events: none;
+  z-index: -1;
+  -webkit-mask-image: radial-gradient(ellipse at top right, #000 0%, rgba(0,0,0,.6) 45%, transparent 85%);
+          mask-image: radial-gradient(ellipse at top right, #000 0%, rgba(0,0,0,.6) 45%, transparent 85%);
+}
+/* Corner-anchor variants for future use */
+.has-topo-bg--tl::after { top: -25%; right: auto; left: -8%;  bottom: auto; }
+.has-topo-bg--tr::after { top: -25%; right: -8%; left: auto;  bottom: auto; }
+.has-topo-bg--bl::after { top: auto;  bottom: -25%; left: -8%;  right: auto; }
+.has-topo-bg--br::after { top: auto;  bottom: -25%; right: -8%; left: auto; }
+
+/* Light-on-dark variant — uses the white-fill SVG so the pattern
+   shows up against a dark photo or dark section. */
+.has-topo-bg--light::after {
+  background-image: url("images/topography-pattern-light.svg");
+}
+
+/* Hero-specific positioning. When .has-topo-bg sits on a .page-hero,
+   anchor a moderate block to the bottom-left corner (matching the
+   Nutrien hallmark spot) and slot z-index between the dark overlay
+   and the title block. */
+.page-hero.has-topo-bg::after {
+  top: auto;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 20%;
+  z-index: 1;
+  opacity: .25;
+  -webkit-mask-image: linear-gradient(to top, #000 0%, transparent 100%);
+          mask-image: linear-gradient(to top, #000 0%, transparent 100%);
+}
+
+/* Careers CTA — topo pattern fills the entire dark CTA strip,
+   no gradient mask. */
+.cta-topo-full.has-topo-bg {
+  isolation: isolate;
+  overflow: hidden;
+}
+.cta-topo-full.has-topo-bg::after {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  opacity: .2;
+  -webkit-mask-image: none;
+          mask-image: none;
+}
+.cta-topo-full > .section__inner { position: relative; z-index: 1; }
+
+/* Bottom-corner variants — pattern anchored in a bottom corner of a
+   section, fading diagonally (45°) toward the opposite top corner.
+   Used on the last section above the footer site-wide, alternating
+   sides from page to page so the rhythm doesn't repeat. */
+.has-topo-bg--corner-br,
+.has-topo-bg--corner-bl {
+  position: relative;       /* contain the absolutely-positioned ::after */
+  isolation: isolate;
+  overflow: hidden;
+}
+.has-topo-bg--corner-br::after {
+  top: auto;
+  bottom: 0;
+  right: 0;
+  left: auto;
+  width: 60%;
+  height: 90%;
+  opacity: .3;
+  z-index: -1;
+  -webkit-mask-image: linear-gradient(315deg, #000 0%, transparent 70%);
+          mask-image: linear-gradient(315deg, #000 0%, transparent 70%);
+}
+.has-topo-bg--corner-bl::after {
+  top: auto;
+  bottom: 0;
+  left: 0;
+  right: auto;
+  width: 60%;
+  height: 90%;
+  opacity: .3;
+  z-index: -1;
+  -webkit-mask-image: linear-gradient(45deg, #000 0%, transparent 70%);
+          mask-image: linear-gradient(45deg, #000 0%, transparent 70%);
+}
+
+/* News hero variant — pattern enters from the right at full height
+   and fades out toward the left. Overrides the default bottom-band
+   placement above for any .page-hero that carries this modifier. */
+.page-hero--topo-right.has-topo-bg::after {
+  top: 0;
+  bottom: 0;
+  left: auto;
+  right: 0;
+  width: 55%;
+  height: 100%;
+  z-index: 1;
+  opacity: .3;
+  -webkit-mask-image: linear-gradient(to left, #000 0%, transparent 100%);
+          mask-image: linear-gradient(to left, #000 0%, transparent 100%);
+}
+
+
+/* =========================================================
    CONNECT (Sustain section)
 ========================================================== */
 .connect {
   position: relative;
   overflow: hidden;
-  min-height: 380px;
+  min-height: 450px;
   color: var(--c-white);
   isolation: isolate;
   /* Fallback in case the image doesn't load */
@@ -1216,9 +1347,7 @@ body > footer {
 }
 .footer__inner {
   margin: 0 auto;
-  /* Bulked up to balance the visual weight of the fixed hero banner
-     above — meaningfully taller than a typical footer. */
-  padding: clamp(5rem, 11vw, 9rem) var(--gutter);
+  padding: clamp(2rem, 4vw, 3rem) var(--gutter);
   display: grid;
   grid-template-columns: 1fr;
   gap: 3rem;
@@ -1242,7 +1371,7 @@ body > footer {
   }
   .footer__social { margin-left: auto; }
 }
-.footer__logo .logo { width: 255px; height: auto; display: block; }
+.footer__logo .logo { width: 217px; height: auto; display: block; }
 
 .footer__links {
   display: grid;
@@ -1268,7 +1397,7 @@ body > footer {
 .footer__social {
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem 1.25rem;
+  gap: .5rem .625rem;
   align-items: center;
   /* Center the icon row on mobile; left-align gets restored at the
      2-col footer breakpoint to fit the auto/1fr/auto layout. */
@@ -1280,8 +1409,8 @@ body > footer {
 .footer__social a {
   display: grid;
   place-items: center;
-  width: 1.25rem;
-  height: 1.25rem;
+  width: 18px;
+  height: 18px;
   color: var(--c-white);
   transition: opacity .2s, transform .2s;
 }
@@ -1463,6 +1592,14 @@ body > footer {
   color: var(--c-text);
 }
 .section__lede + .section__lede { margin-top: 1rem; }
+/* Standard site-wide gap between a section title and the lede that
+   follows it. Keep the spacing consistent across all pages. */
+.section__title + .section__lede { margin-top: .5rem; }
+.section__lede mark {
+  background: transparent;
+  color: var(--c-green);
+  font-weight: 700;
+}
 
 /* ---------- Single-column text module ---------- */
 .text-block {
@@ -2764,6 +2901,13 @@ body > footer {
   text-transform: uppercase;
   color: var(--c-text-muted);
 }
+.insight-card__meta-sep,
+.article__meta-sep {
+  display: inline-block;
+  margin: 0 .35em;
+  color: var(--c-green);
+  opacity: .6;
+}
 .insight-card__title {
   margin: 0 0 .5rem;
   font-size: 1.125rem;
@@ -3022,6 +3166,200 @@ body > footer {
   line-height: 1.55;
   color: var(--c-text-muted);
 }
+
+/* ---------- Horizontal "at a glance" timeline ----------
+   Same visual vocabulary as the vertical timeline above:
+   brand-green dots ringed in white, green year labels, the
+   same title/body type, and a gradient spine. The spine just
+   runs horizontally instead of vertically, with cards
+   alternating above and below in a zigzag.
+   ------------------------------------------------------ */
+/* Frame holds the scrollable track plus prev/next arrow buttons. */
+.timeline-h-frame {
+  --timeline-h-height: 380px; /* matches .timeline-h min-height; spine sits at 50% */
+  position: relative;
+  margin-top: 2.5rem;
+  padding-inline: 56px; /* leaves room for the absolutely-positioned arrows */
+}
+.timeline-h-scroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x proximity;
+  /* Native scrollbar is hidden — replaced by the custom centered bar below. */
+  scrollbar-width: none;
+}
+.timeline-h-scroll::-webkit-scrollbar { display: none; }
+.timeline-h-scroll:focus-visible {
+  outline: 2px solid var(--c-green);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+/* Custom narrow, centered scrollbar that replaces the native one.
+   Sits below the timeline with a generous gap. */
+.timeline-h__scrollbar {
+  position: relative;
+  width: 220px;
+  max-width: 60%;
+  height: 4px;
+  margin: 5rem auto 0; /* 5rem = 80px gap between content and the bar */
+  background: rgba(93,151,65,.18);
+  border-radius: 999px;
+}
+.timeline-h__scrollbar-thumb {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  background: var(--c-green);
+  border-radius: 999px;
+  cursor: grab;
+  touch-action: none;
+  transition: background-color .2s ease;
+  will-change: transform, width;
+}
+.timeline-h__scrollbar-thumb:hover { background: var(--c-green-dark); }
+.timeline-h__scrollbar-thumb:active { cursor: grabbing; background: var(--c-green-dark); }
+
+/* Prev / next arrow buttons. Anchored on the spine (vertical center
+   of the track, accounting for the scrollbar padding-bottom). */
+.timeline-h__nav {
+  position: absolute;
+  /* Anchor on the timeline spine — half of the track's height, regardless
+     of the custom scrollbar that sits below the track. */
+  top: calc(var(--timeline-h-height, 380px) / 2);
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 1.5px solid var(--c-green);
+  border-radius: 50%;
+  background: var(--c-white);
+  color: var(--c-green);
+  cursor: pointer;
+  transform: translateY(-50%);
+  transition: background-color .2s ease, color .2s ease, border-color .2s ease, opacity .2s ease;
+  z-index: 2;
+}
+.timeline-h__nav svg {
+  width: 18px;
+  height: 18px;
+  display: block;
+}
+.timeline-h__nav--prev { left: 0; }
+.timeline-h__nav--next { right: 0; }
+.timeline-h__nav:hover:not(:disabled),
+.timeline-h__nav:focus-visible:not(:disabled) {
+  background: var(--c-green);
+  color: var(--c-white);
+  outline: none;
+}
+.timeline-h__nav:focus-visible {
+  box-shadow: 0 0 0 3px rgba(93,151,65,.25);
+}
+.timeline-h__nav:disabled {
+  opacity: .35;
+  cursor: default;
+}
+.timeline-h {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  min-height: var(--timeline-h-height, 380px);
+  min-width: max-content;
+}
+.timeline-h::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--c-green) 0%, rgba(93,151,65,.15) 100%);
+  transform: translateY(-1px);
+  z-index: 0;
+}
+.timeline-h__item {
+  position: relative;
+  flex: 1 0 240px;
+  min-width: 240px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  scroll-snap-align: start;
+}
+.timeline-h__dot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 18px;
+  height: 18px;
+  background: var(--c-green);
+  border: 4px solid var(--c-white);
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px var(--c-green);
+  z-index: 1;
+}
+.timeline-h__card {
+  position: absolute;
+  left: 1rem;
+  right: 1rem;
+  text-align: center;
+}
+.timeline-h__item--top .timeline-h__card {
+  bottom: calc(50% + 26px);
+}
+.timeline-h__item--bottom .timeline-h__card {
+  top: calc(50% + 26px);
+}
+.timeline-h__year {
+  display: block;
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--c-green);
+  margin-bottom: .2rem;
+}
+.timeline-h__title {
+  margin: 0 0 .3rem;
+  font-size: .875rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+.timeline-h__body {
+  margin: 0;
+  font-size: .75rem;
+  line-height: 1.45;
+  color: var(--c-text-muted);
+}
+
+/* Optional connector tick from each dot up/down to its card
+   — keeps the eye anchored even with a bit of breathing room. */
+.timeline-h__item::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  width: 2px;
+  height: 18px;
+  background: var(--c-green);
+  transform: translateX(-1px);
+  z-index: 0;
+}
+.timeline-h__item--top::before    { bottom: calc(50% + 8px); }
+.timeline-h__item--bottom::before { top: calc(50% + 8px); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .timeline-h-scroll { scroll-behavior: smooth; }
+}
+
 
 /* Centered values card grid (white bg) */
 .values-card-grid {
@@ -3347,6 +3685,8 @@ body > footer {
   text-transform: uppercase;
   color: var(--c-text-muted);
 }
+/* When the filter sits inside a green section, flip label text white. */
+.section--green .news-filter__label { color: var(--c-white); }
 .news-filter__select {
   box-sizing: border-box;
   height: 2.75rem;
@@ -3833,16 +4173,139 @@ body > footer {
 @keyframes bento-float { 0%, 100% { transform: translateY(0); }
                           50%    { transform: translateY(-10px); } }
 
-/* FAQ section — narrow, centered column */
+/* FAQ section — full content width, matching other sections */
 .faq-section__inner {
-  max-width: 700px;
+  max-width: var(--container);
   margin-inline: auto;
 }
 .faq-section .accordion--pill { text-align: left; }
 
+/* When .has-topo-bg sits on .faq-section, position the pattern
+   as a full-width band across the BOTTOM 35% of the section. */
+.faq-section.has-topo-bg {
+  isolation: isolate;
+  overflow: hidden;
+}
+.faq-section.has-topo-bg::after {
+  top: auto;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 35%;
+  opacity: .25;
+  z-index: -1;
+  -webkit-mask-image: linear-gradient(to top, #000 0%, transparent 100%);
+          mask-image: linear-gradient(to top, #000 0%, transparent 100%);
+}
+
+/* Careers "Working Here" — pattern covers the right 50% of the
+   section at full height, sitting behind the heading + video grid. */
+.working-here.has-topo-bg {
+  isolation: isolate;
+  overflow: hidden;
+}
+.working-here.has-topo-bg::after {
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: auto;
+  width: 50%;
+  height: 100%;
+  opacity: .25;
+  z-index: -1;
+  -webkit-mask-image: linear-gradient(to left, #000 0%, transparent 100%);
+          mask-image: linear-gradient(to left, #000 0%, transparent 100%);
+}
+
+/* Services "Innovation in Practice" — pattern on the right side at
+   full height, fading toward the left. Matches the page-hero--topo-right
+   treatment used on the About and Careers banners. */
+.innovation.has-topo-bg {
+  isolation: isolate;
+  overflow: hidden;
+}
+.innovation.has-topo-bg::after {
+  top: 0;
+  bottom: 0;
+  left: auto;
+  right: 0;
+  width: 55%;
+  height: 100%;
+  opacity: .3;
+  z-index: -1;
+  -webkit-mask-image: linear-gradient(to left, #000 0%, transparent 100%);
+          mask-image: linear-gradient(to left, #000 0%, transparent 100%);
+}
+
+/* About "Milestones at a Glance" — pattern band across the top of
+   the section, sitting behind the heading and lede. Fades downward. */
+.history-glance.has-topo-bg {
+  isolation: isolate;
+  overflow: hidden;
+}
+.history-glance.has-topo-bg::after {
+  top: 0;
+  bottom: auto;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 35%;
+  opacity: .25;
+  z-index: -1;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 100%);
+          mask-image: linear-gradient(to bottom, #000 0%, transparent 100%);
+}
+
+/* News stories — pattern band across the top 35% of the section
+   behind the article grid. */
+.news-stories.has-topo-bg {
+  isolation: isolate;
+  overflow: hidden;
+}
+.news-stories.has-topo-bg::after {
+  top: 0;
+  bottom: auto;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 25%;
+  opacity: .25;
+  z-index: -1;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 100%);
+          mask-image: linear-gradient(to bottom, #000 0%, transparent 100%);
+}
+
 /* ============================================================
    ABOUT page — story section (left text + right content image)
    ============================================================ */
+/* Thin gradient bar at the top of an intro section — dark green on
+   the left, fading through brand green to transparent on the right,
+   about 3/4 of the screen wide. Reusable across pages. */
+.has-intro-gradient::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 75%;
+  height: 16px;
+  background: linear-gradient(to right,
+    var(--c-green-dark) 0%,
+    var(--c-green) 55%,
+    rgba(93,151,65,0) 100%);
+  pointer-events: none;
+}
+/* Right-anchored variant — dark green on the right edge, fading
+   through brand green to transparent on the left. */
+.has-intro-gradient--right::before {
+  left: auto;
+  right: 0;
+  background: linear-gradient(to left,
+    var(--c-green-dark) 0%,
+    var(--c-green) 55%,
+    rgba(93,151,65,0) 100%);
+}
+
 .about-story__inner {
   display: grid;
   grid-template-columns: 1fr;
@@ -3853,6 +4316,9 @@ body > footer {
   .about-story__inner {
     grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
     gap: clamp(2.5rem, 5vw, 4.5rem);
+  }
+  .about-story__inner--even {
+    grid-template-columns: 1fr 1fr;
   }
 }
 .about-story__text { min-width: 0; }
@@ -3876,6 +4342,28 @@ body > footer {
 }
 @media (max-width: 56em) {
   .about-story__media { aspect-ratio: 4 / 3; max-width: 36rem; }
+}
+
+/* Multiply-blended variant — image's light areas drop into the
+   white section background so the photo reads as part of the page
+   rather than a hard-edged card. Aspect ratio is unlocked so the
+   full image (including any map content) renders uncropped.
+   Declared AFTER the base .about-story__media rules so the
+   overrides win on source order. */
+.about-story__media--multiply {
+  box-shadow: none;
+  border-radius: 0;
+  overflow: visible;
+  aspect-ratio: auto;
+  max-width: 100%;
+}
+.about-story__media--multiply img {
+  mix-blend-mode: multiply;
+  height: auto;
+  object-fit: contain;
+}
+@media (max-width: 56em) {
+  .about-story__media--multiply { aspect-ratio: auto; max-width: 100%; }
 }
 
 /* Timeline reveal — slide each event in from its side at ≥48em,
@@ -4001,21 +4489,35 @@ body > footer {
   isolation: isolate;
   overflow: hidden;
 }
-.mission__bg { position: absolute; inset: 0; z-index: -2; }
+.mission__bg {
+  position: absolute; inset: 0; z-index: -2;
+  /* Solid brand-dark-green backdrop so any reduction in image
+     opacity reveals green, not the page's white background. */
+  background: var(--c-green-dark);
+}
 .mission__bg img {
   width: 100%; height: 100%;
   object-fit: cover; display: block;
-  filter: brightness(.6) saturate(.95);
+  filter: grayscale(1) brightness(.7);
   transform: scale(1.04);
   transition: transform 9s linear;
 }
 .mission:hover .mission__bg img { transform: scale(1.08); }
 .mission__shade {
-  position: absolute; inset: 0; z-index: -1;
-  background: linear-gradient(180deg,
-    rgba(0,0,0,.55) 0%,
-    rgba(0,0,0,.45) 50%,
-    rgba(0,0,0,.65) 100%);
+  position: absolute;
+  top: 0; bottom: 0; left: 0;
+  width: 50%;
+  z-index: 1;
+  /* Tiled topography pattern on the dark-green base. Uses the
+     light (white-fill) SVG variant so the contour lines actually
+     read against the matching brand-green background. Covers
+     the left 50% of the section (behind the title/lede column). */
+  background-image: url("images/topography-pattern-light.svg");
+  background-repeat: repeat;
+  background-size: 600px 600px;
+  opacity: .25;
+  -webkit-mask-image: linear-gradient(to right, #000 0%, transparent 100%);
+          mask-image: linear-gradient(to right, #000 0%, transparent 100%);
 }
 
 .mission__inner {
@@ -4031,44 +4533,58 @@ body > footer {
   }
 }
 
-.mission__intro { max-width: 28ch; }
+.mission__intro {
+  max-width: 32ch;
+  position: relative;
+  padding-left: 1.25rem;
+}
+.mission__intro::before {
+  content: "";
+  position: absolute;
+  left: 0; top: .25rem; bottom: .25rem;
+  width: 3px;
+  background: var(--c-green);
+  border-radius: 2px;
+}
 .mission__title {
-  margin: 0 0 .75rem;
-  font-size: clamp(1.75rem, 4vw, 2.5rem);
-  font-weight: 400;
-  line-height: 1.1;
-  letter-spacing: -.01em;
+  margin: 0 0 1rem;
+  font-size: clamp(2rem, 4.5vw, 3rem);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -.015em;
   color: var(--c-white);
 }
 .mission__lede {
   margin: 0;
-  font-size: 1.125rem;
-  line-height: 1.5;
-  color: rgba(255,255,255,.88);
-}
-
-/* Accordion override for dark backdrop — translucent pills, white text. */
-.mission__accordion.accordion--pill .accordion__item {
-  background: rgba(255,255,255,.08);
-  border: 1px solid rgba(255,255,255,.14);
+  font-size: clamp(1.4rem, 2.2vw, 1.875rem);
+  line-height: 1.35;
+  font-weight: 400;
+  font-style: italic;
   color: var(--c-white);
 }
-.mission__accordion.accordion--pill .accordion__item[open] {
-  background: rgba(255,255,255,.12);
+
+/* Accordion override for dark backdrop — solid white pills with
+   dark text, fully opaque so they read as called-out shelves. */
+.mission__accordion.accordion--pill .accordion__item {
+  background: var(--c-white);
+  border: 0;
+  color: var(--c-text);
 }
-.mission__accordion.accordion--pill .accordion__summary { color: var(--c-white); }
+.mission__accordion.accordion--pill .accordion__item[open] {
+  background: var(--c-white);
+}
+.mission__accordion.accordion--pill .accordion__summary { color: var(--c-text); }
 .mission__accordion.accordion--pill .accordion__icon {
   background: var(--c-green);
   color: var(--c-white);
 }
 .mission__accordion.accordion--pill .accordion__body {
-  color: rgba(255,255,255,.86);
+  color: var(--c-text-muted);
 }
 
-/* Card hover lift, dark-friendly */
+/* Card hover lift */
 .mission__accordion.accordion--pill .accordion__item:hover {
-  background: rgba(255,255,255,.14);
-  border-color: rgba(255,255,255,.22);
+  background: var(--c-cream-lt);
 }
 
 /* ============================================================
@@ -4093,13 +4609,13 @@ body > footer {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: brightness(.35) saturate(.85);
+  filter: brightness(.8) saturate(.9);
 }
 .opps__bg::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(0,0,0,.25) 0%, rgba(0,0,0,.55) 100%);
+  background: linear-gradient(180deg, rgba(0,0,0,.15) 0%, rgba(0,0,0,.35) 100%);
 }
 
 .opps__heading {
@@ -4518,6 +5034,36 @@ body > footer {
 }
 .article__body a:hover { color: var(--c-green-dark); }
 .article__body strong { color: var(--c-black); }
+
+/* Inline image floated alongside the article body. Stacks above the
+   text on narrow viewports; on desktop it floats so the prose wraps
+   around it. 4:3 aspect ratio. */
+.article__float {
+  margin: 0 0 1.25rem;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.article__float img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+@media (min-width: 48em) {
+  .article__float--right {
+    float: right;
+    width: 50%;
+    margin: .25rem 0 1.25rem 1.75rem;
+    shape-outside: margin-box;
+  }
+  .article__float--left {
+    float: left;
+    width: 50%;
+    margin: .25rem 1.75rem 1.25rem 0;
+    shape-outside: margin-box;
+  }
+}
 
 .article__heading {
   margin: 2.25rem 0 .85rem;

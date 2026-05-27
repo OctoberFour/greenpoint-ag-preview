@@ -350,4 +350,98 @@
     });
   }
 
+  /* -------- Horizontal timeline arrows + custom scrollbar --------
+     Wires up prev/next buttons and a narrower centered custom scrollbar.
+     The native scrollbar is hidden via CSS; this controller keeps the
+     custom thumb's width/position in sync with track.scrollLeft and
+     supports click-to-page and drag-to-scrub. */
+  (function initHorizontalTimeline() {
+    const track = document.querySelector('[data-timeline-scroll]');
+    if (!track) return;
+    const prev = document.querySelector('[data-timeline-prev]');
+    const next = document.querySelector('[data-timeline-next]');
+    const bar = document.querySelector('[data-timeline-scrollbar]');
+    const thumb = document.querySelector('[data-timeline-thumb]');
+
+    function step() {
+      /* Scroll by the width of two items (a top + bottom pair). */
+      const item = track.querySelector('.timeline-h__item');
+      const w = item ? item.getBoundingClientRect().width : 240;
+      return Math.round(w * 2);
+    }
+    function syncDisabled() {
+      const max = track.scrollWidth - track.clientWidth - 1;
+      if (prev) prev.disabled = track.scrollLeft <= 0;
+      if (next) next.disabled = track.scrollLeft >= max;
+    }
+    function syncThumb() {
+      if (!bar || !thumb) return;
+      const trackW = bar.clientWidth;
+      const ratio = track.clientWidth / track.scrollWidth;
+      const thumbW = Math.max(28, Math.min(trackW, trackW * ratio));
+      const maxScroll = track.scrollWidth - track.clientWidth;
+      const maxThumb = trackW - thumbW;
+      const left = maxScroll > 0 ? (track.scrollLeft / maxScroll) * maxThumb : 0;
+      thumb.style.width = thumbW + 'px';
+      thumb.style.transform = 'translateX(' + left + 'px)';
+      /* Hide the whole bar when there's nothing to scroll. */
+      bar.style.visibility = maxScroll > 1 ? 'visible' : 'hidden';
+    }
+    function refresh() { syncDisabled(); syncThumb(); }
+
+    if (prev) prev.addEventListener('click', function () {
+      track.scrollBy({ left: -step(), behavior: 'smooth' });
+    });
+    if (next) next.addEventListener('click', function () {
+      track.scrollBy({ left: step(), behavior: 'smooth' });
+    });
+
+    /* Drag-to-scrub on the custom thumb. */
+    let dragging = false;
+    let dragStartX = 0;
+    let dragStartScroll = 0;
+    if (thumb && bar) {
+      thumb.addEventListener('pointerdown', function (e) {
+        dragging = true;
+        dragStartX = e.clientX;
+        dragStartScroll = track.scrollLeft;
+        try { thumb.setPointerCapture(e.pointerId); } catch (err) {}
+        e.preventDefault();
+      });
+      thumb.addEventListener('pointermove', function (e) {
+        if (!dragging) return;
+        const trackW = bar.clientWidth;
+        const ratio = track.clientWidth / track.scrollWidth;
+        const thumbW = Math.max(28, Math.min(trackW, trackW * ratio));
+        const maxScroll = track.scrollWidth - track.clientWidth;
+        const maxThumb = trackW - thumbW;
+        if (maxThumb <= 0) return;
+        const dx = e.clientX - dragStartX;
+        const scrollDelta = (dx / maxThumb) * maxScroll;
+        track.scrollLeft = dragStartScroll + scrollDelta;
+      });
+      function endDrag(e) {
+        if (!dragging) return;
+        dragging = false;
+        try { thumb.releasePointerCapture(e.pointerId); } catch (err) {}
+      }
+      thumb.addEventListener('pointerup', endDrag);
+      thumb.addEventListener('pointercancel', endDrag);
+
+      /* Click on the bar (not the thumb) page-jumps in that direction. */
+      bar.addEventListener('click', function (e) {
+        if (e.target === thumb) return;
+        const barRect = bar.getBoundingClientRect();
+        const thumbRect = thumb.getBoundingClientRect();
+        const clickX = e.clientX - barRect.left;
+        const thumbCenter = (thumbRect.left - barRect.left) + (thumbRect.width / 2);
+        track.scrollBy({ left: clickX > thumbCenter ? step() : -step(), behavior: 'smooth' });
+      });
+    }
+
+    track.addEventListener('scroll', refresh, { passive: true });
+    window.addEventListener('resize', refresh);
+    refresh();
+  })();
+
 })();

@@ -4942,6 +4942,12 @@ body > footer {
     border-radius: var(--radius-md) var(--radius-md) 0 0;
     box-shadow: 0 -8px 24px -12px rgba(0,0,0,.18);
   }
+  /* Drop the wide desktop inset so the story text + photo fill the
+     screen to the same width as the related/CTA content below. */
+  .article__inner {
+    padding-left: var(--gutter);
+    padding-right: var(--gutter);
+  }
 }
 
 /* ----- Breadcrumb ----- */

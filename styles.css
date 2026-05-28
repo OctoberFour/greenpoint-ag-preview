@@ -4904,6 +4904,9 @@ body > footer {
   height: clamp(280px, 42vw, 480px);
   overflow: hidden;
   background: var(--c-black);
+  /* Contain the gradient pseudo's z-index inside this stacking context
+     so the overlapping article card hides the bottom 16px of the bar. */
+  isolation: isolate;
 }
 .article__hero img {
   width: 100%;

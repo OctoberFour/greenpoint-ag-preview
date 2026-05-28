@@ -854,7 +854,7 @@ body > footer {
 @media (min-width: 48em) {
   .services__grid {
     grid-template-columns: 1fr 1fr;
-    gap: 0;
+    gap: 1rem;
   }
 }
 
@@ -869,7 +869,7 @@ body > footer {
   gap: 2rem;
   min-height: 320px;
   padding: 1.5rem clamp(1.25rem, 4vw, 4rem);
-  background: transparent;
+  background: var(--c-cream-lt);
   border-radius: var(--radius-md);
   transition:
     background-color .35s var(--ease-out-quart),
@@ -1225,6 +1225,27 @@ body > footer {
           mask-image: none;
 }
 .cta-topo-full > .section__inner { position: relative; z-index: 1; }
+
+/* Top-band variant — pattern spans the top 35% of a section, fading
+   downward into the section background. Reusable across pages so every
+   interior intro text section carries the same accent. */
+.has-topo-bg--top {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+.has-topo-bg--top::after {
+  top: 0;
+  bottom: auto;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 35%;
+  opacity: .25;
+  z-index: -1;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 100%);
+          mask-image: linear-gradient(to bottom, #000 0%, transparent 100%);
+}
 
 /* Bottom-corner variants — pattern anchored in a bottom corner of a
    section, fading diagonally (45°) toward the opposite top corner.
@@ -4238,6 +4259,25 @@ body > footer {
           mask-image: linear-gradient(to left, #000 0%, transparent 100%);
 }
 
+/* Services "Expert Insights" — pattern band across the BOTTOM of
+   the section, sitting behind the cards. Fades upward. */
+.expert-insights.has-topo-bg {
+  isolation: isolate;
+  overflow: hidden;
+}
+.expert-insights.has-topo-bg::after {
+  top: auto;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 35%;
+  opacity: .25;
+  z-index: -1;
+  -webkit-mask-image: linear-gradient(to top, #000 0%, transparent 100%);
+          mask-image: linear-gradient(to top, #000 0%, transparent 100%);
+}
+
 /* About "Milestones at a Glance" — pattern band across the top of
    the section, sitting behind the heading and lede. Fades downward. */
 .history-glance.has-topo-bg {
@@ -4279,31 +4319,24 @@ body > footer {
 /* ============================================================
    ABOUT page — story section (left text + right content image)
    ============================================================ */
-/* Thin gradient bar at the top of an intro section — dark green on
-   the left, fading through brand green to transparent on the right,
-   about 3/4 of the screen wide. Reusable across pages. */
+/* Thin gradient bar pinned to the bottom-right of an element — dark
+   green at the right edge, fading through brand green to transparent
+   on the left, about 3/4 of the element wide. Used on every interior
+   page banner so the gradient anchors the photo at the bottom edge. */
 .has-intro-gradient::before {
   content: "";
   position: absolute;
-  top: 0;
-  left: 0;
+  bottom: 0;
+  right: 0;
+  left: auto;
   width: 75%;
   height: 16px;
-  background: linear-gradient(to right,
-    var(--c-green-dark) 0%,
-    var(--c-green) 55%,
-    rgba(93,151,65,0) 100%);
-  pointer-events: none;
-}
-/* Right-anchored variant — dark green on the right edge, fading
-   through brand green to transparent on the left. */
-.has-intro-gradient--right::before {
-  left: auto;
-  right: 0;
   background: linear-gradient(to left,
     var(--c-green-dark) 0%,
     var(--c-green) 55%,
     rgba(93,151,65,0) 100%);
+  pointer-events: none;
+  z-index: 2; /* sit above .page-hero__overlay so the green stays vivid */
 }
 
 .about-story__inner {

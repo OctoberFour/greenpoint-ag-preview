@@ -314,6 +314,21 @@
 
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', onResize, { passive: true });
+
+  /* Watch the announcement bar's height directly. Its text rotates on a
+     timer, and on narrow screens a longer message wraps to a second
+     line — growing the bar after the initial measure. A ResizeObserver
+     re-measures the instant that happens so the fixed topbar always
+     sits below the announcement (no logo overlap). */
+  if (announceEl && 'ResizeObserver' in window) {
+    const annoRO = new ResizeObserver(function () {
+      announceHeight = announceEl.offsetHeight;
+      publishAnnounceHeight();
+      updateNav();
+    });
+    annoRO.observe(announceEl);
+  }
+
   /* Initial paint */
   updateHeroProgress();
   updateNav();

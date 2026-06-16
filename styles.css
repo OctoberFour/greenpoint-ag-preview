@@ -4648,7 +4648,7 @@ body > footer {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(0,0,0,.5) 0%, rgba(0,0,0,.68) 100%);
+  background: linear-gradient(180deg, rgba(0,0,0,.66) 0%, rgba(0,0,0,.82) 100%);
 }
 
 .opps__heading {

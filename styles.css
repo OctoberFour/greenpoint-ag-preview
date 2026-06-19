@@ -4596,6 +4596,21 @@ body > footer {
   color: var(--c-white);
 }
 
+/* Centered, shallower variant — single full-width statement, no accordion */
+.mission--center {
+  padding-block: clamp(2.5rem, 5vw, 3.75rem);
+}
+.mission--center .mission__inner {
+  grid-template-columns: 1fr;
+  justify-items: center;
+  text-align: center;
+}
+.mission--center .mission__intro {
+  max-width: none;
+  padding-left: 0;
+}
+.mission--center .mission__intro::before { content: none; }
+
 /* Accordion override for dark backdrop — solid white pills with
    dark text, fully opaque so they read as called-out shelves. */
 .mission__accordion.accordion--pill .accordion__item {

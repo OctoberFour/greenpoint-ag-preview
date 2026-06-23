@@ -13,20 +13,25 @@
 </head>
 <body>
 
+  <!-- CMS INCLUDE: site header — currently injected by partials.js; in PHP replace with e.g. <?php include 'partials/header.php'; ?> -->
   <div data-partial="header"></div>
 
   <main id="main" tabindex="-1">
+    <!-- CMS PAGE: About — dynamic regions: hero (title + image), intro story (heading, paragraphs, states-map image), mission statement, core values (loop), history timeline milestones (loop). Header / fixed nav bar / footer are shared includes (see partials). -->
 
+    <!-- CMS INCLUDE: fixed nav bar — currently injected by partials.js; in PHP replace with e.g. <?php include 'partials/topbar.php'; ?> -->
     <div data-partial="topbar"></div>
 
     <!-- Page hero -->
     <section class="page-hero page-hero--dark has-intro-gradient" aria-labelledby="page-title">
       <div class="page-hero__media">
+        <!-- CMS field: page.hero_image (src + alt) -->
         <img src="images/team-tractor-watching.jpg"
              alt="GreenPoint Ag team members watching equipment work a field." />
       </div>
       <div class="page-hero__overlay page-hero__overlay--strong" aria-hidden="true"></div>
       <div class="page-hero__inner page-hero__inner--lead">
+        <!-- CMS field: page.hero_title -->
         <h1 class="page-hero__title" id="page-title">About Us</h1>
       </div>
     </section>
@@ -35,7 +40,9 @@
     <section class="section about-story" aria-labelledby="values-h">
       <div class="section__inner about-story__inner about-story__inner--even">
         <div class="about-story__text">
+          <!-- CMS field: page.intro_title -->
           <h2 id="values-h" class="section__title">Centered On Rural American Values</h2>
+          <!-- CMS field: page.intro_body (rich text / WYSIWYG — the paragraphs below) -->
           <div class="about-intro__text">
             <p>
               At GreenPoint Ag, we are a farmer&#x2011;owned agricultural input supplier &mdash; financially
@@ -59,6 +66,7 @@
           </div>
         </div>
         <figure class="about-story__media about-story__media--multiply">
+          <!-- CMS field: page.states_map_image (src + alt) -->
           <img src="images/about-states-map.svg" alt="Map highlighting the ten Southeastern states GreenPoint Ag serves" loading="lazy" />
         </figure>
       </div>
@@ -71,7 +79,9 @@
       </div>
       <div class="section__inner mission__inner">
         <div class="mission__intro">
+          <!-- CMS field: page.mission_title -->
           <h2 id="mission-h" class="mission__title">Our Mission</h2>
+          <!-- CMS field: page.mission_statement -->
           <p class="mission__lede">
             To Help Our Customers Succeed In An Ever-Changing World.
           </p>
@@ -85,16 +95,21 @@
         <h2 id="core-values-h" class="core-values__title">Our Core Values</h2>
         <div class="core-values__grid">
 
+          <!-- CMS LOOP: core values — repeat the following block for each value -->
           <article class="core-value">
             <span class="core-value__icon" aria-hidden="true">
+              <!-- CMS field: value.icon (inline SVG) -->
               <svg viewBox="0 0 640 640" fill="currentColor" aria-hidden="true" focusable="false">
                 <path d="M128 78.5C128 158.9 193.1 224 273.5 224L288 224L288 288C288 305.7 302.3 320 320 320C337.7 320 352 305.7 352 288L352 224L366.5 224C446.9 224 512 158.9 512 78.5C512 70.5 505.5 64 497.5 64L448 64C395.7 64 349.2 89.1 320 128C290.8 89.1 244.3 64 192 64L142.5 64C134.5 64 128 70.5 128 78.5zM141.3 405.4L98.7 448L64 448C46.3 448 32 462.3 32 480L32 544C32 561.7 46.3 576 64 576L384.5 576C413.5 576 441.8 566.7 465.2 549.5L591.8 456.2C609.6 443.1 613.4 418.1 600.3 400.3C587.2 382.5 562.2 378.7 544.4 391.8L424.6 480L312 480C298.7 480 288 469.3 288 456C288 442.7 298.7 432 312 432L384 432C401.7 432 416 417.7 416 400C416 382.3 401.7 368 384 368L231.8 368C197.9 368 165.3 381.5 141.3 405.5z"/>
               </svg>
             </span>
+            <!-- CMS field: value.title -->
             <h3 class="core-value__title">Safety &amp; Stewardship</h3>
+            <!-- CMS field: value.body -->
             <p class="core-value__body">We take care of each other, our communities, and the land and water, which sustain us all.</p>
           </article>
 
+          <!-- CMS item: core value -->
           <article class="core-value">
             <span class="core-value__icon" aria-hidden="true">
               <svg viewBox="0 0 640 640" fill="currentColor" aria-hidden="true" focusable="false">
@@ -105,6 +120,7 @@
             <p class="core-value__body">We partner to innovate and create value.</p>
           </article>
 
+          <!-- CMS item: core value -->
           <article class="core-value">
             <span class="core-value__icon" aria-hidden="true">
               <svg viewBox="0 0 640 640" fill="currentColor" aria-hidden="true" focusable="false">
@@ -115,6 +131,7 @@
             <p class="core-value__body">We work together to achieve more.</p>
           </article>
 
+          <!-- CMS item: core value -->
           <article class="core-value">
             <span class="core-value__icon" aria-hidden="true">
               <svg viewBox="0 0 640 640" fill="currentColor" aria-hidden="true" focusable="false">
@@ -124,6 +141,7 @@
             <h3 class="core-value__title">Pursuit of Excellence</h3>
             <p class="core-value__body">We constantly strive to improve our performance and ourselves.</p>
           </article>
+          <!-- CMS END LOOP: core values -->
 
         </div>
       </div>
@@ -146,15 +164,20 @@
           <div class="timeline-h-scroll" data-timeline-scroll role="region" aria-label="Horizontal timeline of company milestones" tabindex="0">
             <ol class="timeline-h">
 
+            <!-- CMS LOOP: history milestones — repeat the following <li> for each milestone -->
             <li class="timeline-h__item timeline-h__item--top">
               <div class="timeline-h__card">
+                <!-- CMS field: milestone.year -->
                 <span class="timeline-h__year">1936</span>
+                <!-- CMS field: milestone.title -->
                 <h3 class="timeline-h__title">Cooperative Roots</h3>
+                <!-- CMS field: milestone.body -->
                 <p class="timeline-h__body">Alabama Farmers Cooperative is founded so growers can secure dependable, quality seed and supplies.</p>
               </div>
               <span class="timeline-h__dot" aria-hidden="true"></span>
             </li>
 
+            <!-- CMS item: milestone (alternates top/bottom placement) -->
             <li class="timeline-h__item timeline-h__item--bottom">
               <span class="timeline-h__dot" aria-hidden="true"></span>
               <div class="timeline-h__card">
@@ -164,6 +187,7 @@
               </div>
             </li>
 
+            <!-- CMS item: milestone -->
             <li class="timeline-h__item timeline-h__item--top">
               <div class="timeline-h__card">
                 <span class="timeline-h__year">2018</span>
@@ -173,6 +197,7 @@
               <span class="timeline-h__dot" aria-hidden="true"></span>
             </li>
 
+            <!-- CMS item: milestone -->
             <li class="timeline-h__item timeline-h__item--bottom">
               <span class="timeline-h__dot" aria-hidden="true"></span>
               <div class="timeline-h__card">
@@ -182,6 +207,7 @@
               </div>
             </li>
 
+            <!-- CMS item: milestone -->
             <li class="timeline-h__item timeline-h__item--top">
               <div class="timeline-h__card">
                 <span class="timeline-h__year">2024</span>
@@ -191,6 +217,7 @@
               <span class="timeline-h__dot" aria-hidden="true"></span>
             </li>
 
+            <!-- CMS item: milestone -->
             <li class="timeline-h__item timeline-h__item--bottom">
               <span class="timeline-h__dot" aria-hidden="true"></span>
               <div class="timeline-h__card">
@@ -199,6 +226,7 @@
                 <p class="timeline-h__body">A top-7 wholesale and retail agronomy company &mdash; investing in precision tools, automation, and the next generation of growers.</p>
               </div>
             </li>
+            <!-- CMS END LOOP: history milestones -->
 
             </ol>
           </div>
@@ -216,6 +244,7 @@
 
   </main>
 
+  <!-- CMS INCLUDE: site footer — currently injected by partials.js; in PHP replace with e.g. <?php include 'partials/footer.php'; ?> -->
   <div data-partial="footer"></div>
 
   <script src="partials.js"></script>

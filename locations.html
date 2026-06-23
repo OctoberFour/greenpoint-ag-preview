@@ -15,20 +15,26 @@
 </head>
 <body>
 
+  <!-- CMS INCLUDE: site header (announcement strip) — currently injected by partials.js; in PHP replace with e.g. <?php include 'partials/header.php'; ?> -->
   <div data-partial="header"></div>
 
   <main id="main" tabindex="-1">
 
+    <!-- CMS PAGE SUMMARY (locations) — dynamic regions: hero (title/subtext/image), category filter select (loop), location results list (loop), map markers (driven by JS `locations` array below). Header, fixed nav bar, and footer are shared includes (see data-partial markers). -->
+
+    <!-- CMS INCLUDE: fixed nav bar — currently injected by partials.js; in PHP replace with e.g. <?php include 'partials/topbar.php'; ?> -->
     <div data-partial="topbar"></div>
 
     <section class="page-hero page-hero--dark has-intro-gradient" aria-labelledby="page-title">
       <div class="page-hero__media">
+        <!-- CMS field: hero image (src + alt) -->
         <img src="images/combine-golden-dust.jpg"
              alt="Aerial of farm fields and a road heading to a country town" />
       </div>
       <div class="page-hero__overlay page-hero__overlay--strong" aria-hidden="true"></div>
       <div class="page-hero__inner page-hero__inner--lead">
-        <h1 class="page-hero__title" id="page-title">Meet Your Local Agronomy Team</h1>
+        <h1 class="page-hero__title" id="page-title">Meet Your Local Agronomy Team</h1><!-- CMS field: hero title -->
+        <!-- CMS field: hero subtext (body paragraph) -->
         <p class="page-hero__body">
           Every acre comes with different challenges. Connect with your local GreenPoint Ag
           team for practical recommendations, proven products, and support tailored to your
@@ -43,7 +49,8 @@
     <!-- Search by zip + filter -->
     <section class="section section--tight" aria-labelledby="find-h" id="find">
       <div class="section__inner">
-        <h2 id="find-h" class="section__title section__title--dark" style="margin-bottom:.25rem;">Find A Location</h2>
+        <h2 id="find-h" class="section__title section__title--dark" style="margin-bottom:.25rem;">Find A Location</h2><!-- CMS field: find section heading -->
+        <!-- CMS field: find section intro paragraph -->
         <p class="section__lede" style="margin-top: .5rem;">
           Connect with a GreenPoint Ag team near your operation.
         </p>
@@ -54,6 +61,7 @@
           </label>
           <label class="loc-search__field">
             <span class="loc-search__label">Category</span>
+            <!-- CMS LOOP: category filter options — repeat one <option> per category record; "All Categories" stays as a static first entry. CMS field: category.name -->
             <select id="loc-search-category">
               <option>All Categories</option>
               <option>Retail Location</option>
@@ -72,30 +80,34 @@
       <h2 id="map-h" class="visually-hidden">Map and locations</h2>
       <div class="section__inner">
         <div class="loc-layout">
+          <!-- CMS LOOP: location results list — repeat one .loc-result block per location record (same data source as the JS `locations` array below). Fields labelled inside the first item; subsequent items marked with CMS item. -->
           <aside class="loc-results" aria-label="Search results">
             <div class="loc-result">
-              <p class="loc-result__category">Retail Location</p>
-              <h3 class="loc-result__name">GreenPoint Ag &mdash; Decatur</h3>
-              <p class="loc-result__line">1025 GreenPoint Drive</p>
-              <p class="loc-result__line">Decatur, AL 35601</p>
-              <p class="loc-result__phone">(256) 555&#x2011;0100</p>
+              <p class="loc-result__category">Retail Location</p><!-- CMS field: location.category -->
+              <h3 class="loc-result__name">GreenPoint Ag &mdash; Decatur</h3><!-- CMS field: location.name -->
+              <p class="loc-result__line">1025 GreenPoint Drive</p><!-- CMS field: location.street -->
+              <p class="loc-result__line">Decatur, AL 35601</p><!-- CMS field: location.city -->
+              <p class="loc-result__phone">(256) 555&#x2011;0100</p><!-- CMS field: location.phone -->
               <div class="loc-result__actions">
+                <!-- CMS field: location.directions_url (Directions link) and location.detail_url (Details link) -->
                 <a href="#" class="btn btn--green btn--sm">Directions</a>
                 <a href="location.html" class="btn btn--outline-dark btn--sm">Details</a>
               </div>
             </div>
+            <!-- CMS item: location result #2 -->
             <div class="loc-result">
               <p class="loc-result__category">Wholesale</p>
               <h3 class="loc-result__name">Simple Grower Solutions</h3>
               <p class="loc-result__line">230 Highbank Road</p>
               <p class="loc-result__line">Urban, AL 36345</p>
               <p class="loc-result__phone">(256) 555&#x2011;0200</p>
-              <p class="loc-result__hours">Open &middot; Closes 5:00 PM</p>
+              <p class="loc-result__hours">Open &middot; Closes 5:00 PM</p><!-- CMS field: location.hours (optional — only render when present) -->
               <div class="loc-result__actions">
                 <a href="#" class="btn btn--green btn--sm">Directions</a>
                 <a href="location.html" class="btn btn--outline-dark btn--sm">Details</a>
               </div>
             </div>
+            <!-- CMS item: location result #3 -->
             <div class="loc-result">
               <p class="loc-result__category">Pro Products</p>
               <h3 class="loc-result__name">GreenPoint Ag &mdash; Florence</h3>
@@ -109,6 +121,7 @@
             </div>
           </aside>
 
+          <!-- CMS field: map embed — markers rendered by the JS `locations` array below (same data source as the results list). -->
           <div class="loc-map">
             <div id="loc-map" role="region" aria-label="Map of GreenPoint Ag locations across the Southeast"></div>
           </div>
@@ -118,6 +131,7 @@
 
   </main>
 
+  <!-- CMS INCLUDE: site footer — currently injected by partials.js; in PHP replace with e.g. <?php include 'partials/footer.php'; ?> -->
   <div data-partial="footer"></div>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
@@ -138,6 +152,7 @@
       }).addTo(map);
 
       // All locations are in Alabama
+      // CMS DATA: locations array — each object is one location record (name, category/cat, street, city, phone, lat, lng, optional active flag). This is the CMS-driven source for both the map markers and the results list above; in PHP, generate this array (or a JSON endpoint) from the same location records.
       var locations = [
         { name: 'GreenPoint Ag — Decatur',       cat: 'Retail Location', street: '1025 GreenPoint Drive',  city: 'Decatur, AL 35601',      phone: '(256) 555-0100', lat: 34.6059, lng: -86.9833, active: true },
         { name: 'Simple Grower Solutions — Urban', cat: 'Wholesale',     street: '230 Highbank Road',      city: 'Urban, AL 36345',         phone: '(256) 555-0200', lat: 31.2350, lng: -85.4390 },

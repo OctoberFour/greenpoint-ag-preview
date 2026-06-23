@@ -13,19 +13,25 @@
 </head>
 <body>
 
+  <!-- CMS INCLUDE: site header — currently injected by partials.js; in PHP replace with e.g. <?php include 'partials/header.php'; ?> -->
   <div data-partial="header"></div>
 
   <main id="main" tabindex="-1">
 
+    <!-- CMS PAGE SUMMARY: dynamic regions on this page = hero (title/image), category sidebar links (repeating), resource media-cards grid (repeating). Header, fixed nav bar, and footer are shared includes (see data-partial markers). -->
+
+    <!-- CMS INCLUDE: fixed nav bar — currently injected by partials.js; in PHP replace with e.g. <?php include 'partials/topbar.php'; ?> -->
     <div data-partial="topbar"></div>
 
     <section class="page-hero has-intro-gradient" aria-labelledby="page-title">
       <div class="page-hero__media">
+        <!-- CMS field: page.hero_image (src) + page.hero_image_alt (alt) -->
         <img src="images/combine-golden-dust.jpg"
              alt="Cotton boll close-up" />
       </div>
       <div class="page-hero__overlay" aria-hidden="true"></div>
       <div class="page-hero__inner">
+        <!-- CMS field: page.hero_title -->
         <h1 class="page-hero__title" id="page-title">Resources</h1>
       </div>
     </section>
@@ -35,19 +41,30 @@
       <div class="section__inner with-sidebar">
         <aside aria-labelledby="cat-h">
           <p id="cat-h" class="sidebar__heading">By Category</p>
+          <!-- CMS LOOP: category sidebar links — repeat one <a> per category (first/active = selected category) -->
           <nav class="sidebar__list" aria-label="Filter by category">
+            <!-- CMS field: category.name (+ category.url on href) -->
             <a href="#" class="is-active">Sustainability</a>
+            <!-- CMS item: category link -->
             <a href="#">Farm Finances</a>
+            <!-- CMS item: category link -->
             <a href="#">Technology</a>
           </nav>
+          <!-- CMS END LOOP: category sidebar links -->
         </aside>
 
+        <!-- CMS LOOP: resource cards — repeat the following <a class="media-card"> block for each resource -->
         <div class="card-grid">
+          <!-- CMS field: resource.url (href) -->
           <a href="#" class="media-card">
+            <!-- CMS field: resource.image (src) + resource.image_alt (alt) -->
             <div class="media-card__media"><img src="images/drone-field-team.jpg" alt="" loading="lazy" /></div>
             <div class="media-card__body">
+              <!-- CMS field: resource.category -->
               <p class="media-card__subtitle">Sustainability</p>
+              <!-- CMS field: resource.title -->
               <h3 class="media-card__title">2025 Seed Guide</h3>
+              <!-- CMS field: resource.description -->
               <p>Complete guide to our seed selection for the current growing season.</p>
               <span class="article-list-item__more" style="margin-top:.5rem;">
                 View
@@ -55,6 +72,7 @@
               </span>
             </div>
           </a>
+          <!-- CMS item: resource card (#2) -->
           <a href="#" class="media-card">
             <div class="media-card__media"><img src="images/soil-sensor-pipe.jpg" alt="" loading="lazy" /></div>
             <div class="media-card__body">
@@ -67,6 +85,7 @@
               </span>
             </div>
           </a>
+          <!-- CMS item: resource card (#3) -->
           <a href="#" class="media-card">
             <div class="media-card__media"><img src="images/night-harvest-watching.jpg" alt="" loading="lazy" /></div>
             <div class="media-card__body">
@@ -79,6 +98,7 @@
               </span>
             </div>
           </a>
+          <!-- CMS item: resource card (#4) -->
           <a href="#" class="media-card">
             <div class="media-card__media"><img src="images/handshake-sunset-truck.jpg" alt="" loading="lazy" /></div>
             <div class="media-card__body">
@@ -91,6 +111,7 @@
               </span>
             </div>
           </a>
+          <!-- CMS item: resource card (#5) -->
           <a href="#" class="media-card">
             <div class="media-card__media"><img src="images/seed-drill-group.jpg" alt="" loading="lazy" /></div>
             <div class="media-card__body">
@@ -103,6 +124,7 @@
               </span>
             </div>
           </a>
+          <!-- CMS item: resource card (#6) -->
           <a href="#" class="media-card">
             <div class="media-card__media"><img src="images/corn-scouting-walk.jpg" alt="" loading="lazy" /></div>
             <div class="media-card__body">
@@ -116,11 +138,13 @@
             </div>
           </a>
         </div>
+        <!-- CMS END LOOP: resource cards -->
       </div>
     </section>
 
   </main>
 
+  <!-- CMS INCLUDE: site footer — currently injected by partials.js; in PHP replace with e.g. <?php include 'partials/footer.php'; ?> -->
   <div data-partial="footer"></div>
 
   <script src="partials.js"></script>

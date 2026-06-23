@@ -13,20 +13,25 @@
 </head>
 <body>
 
+  <!-- CMS INCLUDE: site header (announcement strip) — currently injected by partials.js; in PHP replace with e.g. <?php include 'partials/header.php'; ?> -->
   <div data-partial="header"></div>
 
   <main id="main" tabindex="-1">
 
+    <!-- CMS PAGE SUMMARY (person profile) — driven by ONE person record. Dynamic singular fields: hero (title/image), person name, role, email, bio paragraphs, profile photo. Header, fixed nav bar, and footer are shared includes (see data-partial markers). -->
+
+    <!-- CMS INCLUDE: fixed nav bar — currently injected by partials.js; in PHP replace with e.g. <?php include 'partials/topbar.php'; ?> -->
     <div data-partial="topbar"></div>
 
     <section class="page-hero has-intro-gradient" aria-labelledby="page-title">
       <div class="page-hero__media">
+        <!-- CMS field: hero image (src + alt) -->
         <img src="images/farmer-portrait-smiling.jpg"
              alt="Two agronomists consulting beside a sprayer" />
       </div>
       <div class="page-hero__overlay" aria-hidden="true"></div>
       <div class="page-hero__inner">
-        <h1 class="page-hero__title" id="page-title">About GreenPoint Ag</h1>
+        <h1 class="page-hero__title" id="page-title">About GreenPoint Ag</h1><!-- CMS field: hero title -->
       </div>
     </section>
 
@@ -34,16 +39,19 @@
       <div class="section__inner">
         <div class="feature-media" style="align-items:start;">
           <div class="feature-media__body">
+            <!-- CMS field: person.name -->
             <h2 id="profile-h" class="section__title section__title--dark" style="font-size:clamp(1.875rem,3.4vw,2.5rem); margin-bottom:.25rem;">
               John Smith
             </h2>
-            <p style="margin:0 0 1rem; font-weight:600;">Regional Agronomist</p>
+            <p style="margin:0 0 1rem; font-weight:600;">Regional Agronomist</p><!-- CMS field: person.role -->
             <p style="margin:0 0 1.5rem;">
+              <!-- CMS field: person.email (href mailto + visible text) -->
               <a href="mailto:jsmith@greenpointag.com" class="card-link" style="font-size:.8125rem; text-transform:none; letter-spacing:0; font-weight:600; color:var(--c-green);">
                 jsmith@greenpointag.com
               </a>
             </p>
 
+            <!-- CMS field: person.bio (one or more paragraphs) -->
             <p class="section__lede">
               At GreenPoint Ag, we are a farmer&#x2011;owned agricultural input supplier, resulting
               from three financially strong businesses coming together to better serve farmers and
@@ -77,6 +85,7 @@
           </div>
 
           <div class="feature-media__media" style="aspect-ratio:4 / 5;">
+            <!-- CMS field: person.photo (src + alt) -->
             <img src="images/agronomists-soil-sampling.jpg"
                  alt="Portrait of John Smith" />
           </div>
@@ -86,6 +95,7 @@
 
   </main>
 
+  <!-- CMS INCLUDE: site footer — currently injected by partials.js; in PHP replace with e.g. <?php include 'partials/footer.php'; ?> -->
   <div data-partial="footer"></div>
 
   <script src="partials.js"></script>

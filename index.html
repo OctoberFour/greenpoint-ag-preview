@@ -20,6 +20,8 @@
   <!-- =========================================================
        HEADER
   ========================================================== -->
+  <!-- CMS INCLUDE: site header — announcement strip; in PHP replace with e.g. <?php include 'partials/header.php'; ?> -->
+  <!-- CMS LOOP: announcements — rotate the following text for each announcement item -->
   <header class="site-header" id="site-header">
 
     <!-- Announcement strip -->
@@ -27,7 +29,8 @@
       <button type="button" class="announcement__nav" aria-label="Previous announcement" data-direction="prev">
         <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 12 6 8l4-4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
-      <p class="announcement__text" id="announcement-text">This is an announcement section</p>
+      <p class="announcement__text" id="announcement-text">This is an announcement section</p><!-- CMS field: announcement.text -->
+      <!-- CMS END LOOP: announcements -->
       <button type="button" class="announcement__nav" aria-label="Next announcement" data-direction="next">
         <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 4 4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
@@ -36,11 +39,23 @@
 
   <main id="main" tabindex="-1">
 
+    <!-- ============================================================
+         CMS TEMPLATE: Homepage
+         Dynamic regions on this page:
+           - Hero (headline, subtext, background video/poster, CTA)
+           - Services grid (loop: service cards)
+           - Expert Insights (loop: news/story cards)
+           - Find A Location band (heading, CTA)
+           - GreenPoint Ag Connect band (heading, body, background image, CTA)
+         Site header/announcement and footer are include points (see CMS INCLUDE markers).
+         ============================================================ -->
+
     <!-- =========================================================
          HERO
     ========================================================== -->
     <section class="hero" aria-labelledby="hero-heading">
       <div class="hero__media">
+        <!-- CMS field: hero.video (src) + hero.poster (poster) + hero.video_alt (aria-label) -->
         <video class="hero__video" id="hero-video"
                src="video/banner.mp4"
                autoplay muted loop playsinline preload="auto"
@@ -134,16 +149,20 @@
       </svg>
 
       <div class="hero__content">
+        <!-- CMS field: hero.heading_solid (line 1) + hero.heading_light (line 2) -->
         <h1 id="hero-heading" class="hero__heading">
           <span class="hero__heading--solid">Local Agronomists</span>
           <span class="hero__heading--light">Real Farm Expertise</span>
         </h1>
+        <!-- CMS field: hero.body -->
         <p class="hero__body">
           We believe strong farms build strong communities. Our agronomists are part of the same towns and co&#x2011;ops we serve. We take ownership, work as a team, and pursue excellence in every recommendation we make. We&rsquo;re not here for the short haul.
         </p>
+        <!-- CMS field: hero.body_bold -->
         <p class="hero__body hero__body--bold">
           We&rsquo;re here to help you succeed &mdash; year after year.
         </p>
+        <!-- CMS field: hero.cta_text + hero.cta_url (href) -->
         <a href="about.html" class="btn btn--outline-dark">Who We Are</a>
       </div>
     </section>
@@ -158,17 +177,19 @@
       <h2 id="services-heading" class="visually-hidden">Our services</h2>
       <div class="services__grid">
 
+        <!-- CMS LOOP: service cards — repeat the following block for each service -->
         <article class="service-card">
           <div class="service-card__inner">
-            <h3 class="service-card__title">Seed Solutions</h3>
-            <p class="service-card__body">We provide deep knowledge of local crops based on unbiased research and in&#x2011;field experience. Recommendations are backed by 100+ regional variety crop trials led by agronomists.</p>
+            <h3 class="service-card__title">Seed Solutions</h3><!-- CMS field: service.title -->
+            <p class="service-card__body">We provide deep knowledge of local crops based on unbiased research and in&#x2011;field experience. Recommendations are backed by 100+ regional variety crop trials led by agronomists.</p><!-- CMS field: service.body -->
           </div>
-          <a href="services.html" class="card-link">
+          <a href="services.html" class="card-link"><!-- CMS field: service.url (href) + service.link_text -->
             Explore
             <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M3 7h8m0 0L7.5 3.5M11 7l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
         </article>
 
+        <!-- CMS item: service card -->
         <article class="service-card">
           <div class="service-card__inner">
             <h3 class="service-card__title">Crop Protection</h3>
@@ -180,6 +201,7 @@
           </a>
         </article>
 
+        <!-- CMS item: service card -->
         <article class="service-card">
           <div class="service-card__inner">
             <h3 class="service-card__title">Crop Nutrition</h3>
@@ -191,6 +213,7 @@
           </a>
         </article>
 
+        <!-- CMS item: service card -->
         <article class="service-card">
           <div class="service-card__inner">
             <h3 class="service-card__title">Agronomy</h3>
@@ -201,6 +224,7 @@
             <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M3 7h8m0 0L7.5 3.5M11 7l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
         </article>
+        <!-- CMS END LOOP: service cards -->
 
       </div>
     </section>
@@ -210,8 +234,8 @@
     ========================================================== -->
     <section class="insights" aria-labelledby="insights-heading">
       <div class="insights__head">
-        <h2 id="insights-heading" class="insights__title">Expert Insights</h2>
-        <a href="news.html" class="card-link card-link--end">
+        <h2 id="insights-heading" class="insights__title">Expert Insights</h2><!-- CMS field: insights.heading -->
+        <a href="news.html" class="card-link card-link--end"><!-- CMS field: insights.see_all_url (href) + insights.see_all_text -->
           See all insights
           <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M3 7h8m0 0L7.5 3.5M11 7l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
@@ -219,25 +243,28 @@
 
       <div class="insights__grid">
 
+        <!-- CMS LOOP: insight stories — repeat the following block for each news story -->
         <article class="story">
           <!-- IMAGE: Swap for real GreenPoint Ag editorial imagery -->
+          <!-- CMS field: story.image (src) + story.image_alt (alt) -->
           <img class="story__bg"
                src="images/night-harvest-watching.jpg"
                alt="" loading="lazy" />
           <div class="story__shade" aria-hidden="true"></div>
           <div class="story__body">
-            <h3 class="story__title">Why Missouri agriculture needs urgent Action from Congress to survive today&rsquo;s economic crisis</h3>
-            <p class="story__date">December 10, 2025</p>
-            <p class="story__excerpt">
+            <h3 class="story__title">Why Missouri agriculture needs urgent Action from Congress to survive today&rsquo;s economic crisis</h3><!-- CMS field: story.title -->
+            <p class="story__date">December 10, 2025</p><!-- CMS field: story.date -->
+            <p class="story__excerpt"><!-- CMS field: story.excerpt -->
               Missouri&rsquo;s farmers face mounting pressure from rising input costs, volatile commodity markets, and uncertain trade conditions. Without timely intervention from Congress, the state&rsquo;s agricultural economy and the rural communities it sustains could face lasting damage&hellip;
             </p>
-            <a href="news-story.html" class="card-link story__link">
+            <a href="news-story.html" class="card-link story__link"><!-- CMS field: story.url (href) -->
               Explore
               <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M3 7h8m0 0L7.5 3.5M11 7l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </a>
           </div>
         </article>
 
+        <!-- CMS item: insight story -->
         <article class="story">
           <img class="story__bg"
                src="images/handshake-sunset-truck.jpg"
@@ -256,6 +283,7 @@
           </div>
         </article>
 
+        <!-- CMS item: insight story -->
         <article class="story">
           <img class="story__bg"
                src="images/team-thumbsup.jpg"
@@ -273,6 +301,7 @@
             </a>
           </div>
         </article>
+        <!-- CMS END LOOP: insight stories -->
 
       </div>
     </section>
@@ -283,22 +312,23 @@
          FIND A LOCATION TAG
     ========================================================== -->
     <section class="locator" aria-labelledby="locator-heading">
-      <h2 id="locator-heading" class="locator__heading">Find A Location Near Your Farm</h2>
-      <a href="locations.html" class="btn btn--green">See Our Locations</a>
+      <h2 id="locator-heading" class="locator__heading">Find A Location Near Your Farm</h2><!-- CMS field: locator.heading -->
+      <a href="locations.html" class="btn btn--green">See Our Locations</a><!-- CMS field: locator.cta_text + locator.cta_url (href) -->
     </section>
 
     <!-- =========================================================
          GREENPOINT AG CONNECT
     ========================================================== -->
     <section class="connect" aria-labelledby="connect-heading">
+      <!-- CMS field: connect.image (src) + connect.image_alt (alt) -->
       <img class="connect__bg"
            src="img/connect.jpg"
            alt="" loading="lazy" />
       <div class="connect__overlay"></div>
       <div class="connect__inner">
-        <h2 id="connect-heading" class="connect__heading">GreenPoint Ag Connect</h2>
-        <p class="connect__body">Connecting to your account with our all&#x2011;in&#x2011;one platform makes administrative tasks like paying bills and viewing invoices simpler and faster.</p>
-        <a href="#" class="btn btn--outline-light">Create Your Account</a>
+        <h2 id="connect-heading" class="connect__heading">GreenPoint Ag Connect</h2><!-- CMS field: connect.heading -->
+        <p class="connect__body">Connecting to your account with our all&#x2011;in&#x2011;one platform makes administrative tasks like paying bills and viewing invoices simpler and faster.</p><!-- CMS field: connect.body -->
+        <a href="#" class="btn btn--outline-light">Create Your Account</a><!-- CMS field: connect.cta_text + connect.cta_url (href) -->
       </div>
     </section>
 
@@ -307,6 +337,7 @@
   <!-- =========================================================
        FOOTER
   ========================================================== -->
+  <!-- CMS INCLUDE: site footer — currently inline markup; in PHP replace with e.g. <?php include 'partials/footer.php'; ?> -->
   <footer class="footer">
     <div class="footer__inner">
 
@@ -338,17 +369,20 @@
       </div>
 
       <div class="footer__links">
+        <!-- CMS LOOP: footer link columns — repeat <ul> for each column, and <li> for each link -->
         <ul class="footer__col">
-          <li><a href="about.html">About Us</a></li>
+          <li><a href="about.html">About Us</a></li><!-- CMS field: footer_link.url (href) + footer_link.text -->
           <li><a href="contact.html">Contact Us</a></li>
           <li><a href="careers.html">Careers</a></li>
           <li><a href="locations.html">Find Your Location</a></li>
         </ul>
+        <!-- CMS item: footer link column -->
         <ul class="footer__col">
           <li><a href="#">Customer Login</a></li>
           <li><a href="#">Privacy &amp; Terms</a></li>
           <li><a href="#">Accessibility Statement</a></li>
         </ul>
+        <!-- CMS END LOOP: footer link columns -->
       </div>
 
       <ul class="footer__social" aria-label="Social media">

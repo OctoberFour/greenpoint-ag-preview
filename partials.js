@@ -9,6 +9,14 @@
      <div data-partial="topbar"></div>      <!-- fixed nav overlay -->
      ... main content ...
      <div data-partial="footer"></div>
+
+   CMS NOTE (PHP handoff): the three template strings below — header,
+   topbar, and footer — are the shared site chrome. When wiring up a
+   PHP CMS, lift each into its own include (e.g. partials/header.php,
+   partials/topbar.php, partials/footer.php) and replace the matching
+   <div data-partial="..."></div> placeholder in each page with a
+   <?php include ?>. The nav links and announcement messages are the
+   editable, CMS-driven parts.
 ========================================================== */
 
 (function () {

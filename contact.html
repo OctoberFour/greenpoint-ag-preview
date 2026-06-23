@@ -13,20 +13,26 @@
 </head>
 <body>
 
+  <!-- CMS INCLUDE: site header (announcement strip) — currently injected by partials.js; in PHP replace with e.g. <?php include 'partials/header.php'; ?> -->
   <div data-partial="header"></div>
 
   <main id="main" tabindex="-1">
 
+    <!-- CMS PAGE SUMMARY (contact) — dynamic regions: hero (title/subtext/image), message form (each field labelled below; submission handled server-side), contact info cards (HQ address, get-in-touch phone/fax/email, office hours, social links — repeatable cards). Header, fixed nav bar, and footer are shared includes (see data-partial markers). -->
+
+    <!-- CMS INCLUDE: fixed nav bar — currently injected by partials.js; in PHP replace with e.g. <?php include 'partials/topbar.php'; ?> -->
     <div data-partial="topbar"></div>
 
     <section class="page-hero page-hero--dark has-intro-gradient" aria-labelledby="page-title">
       <div class="page-hero__media">
+        <!-- CMS field: hero image (src + alt) -->
         <img src="images/handshake-sunset-truck.jpg"
              alt="Combine at work at golden hour" />
       </div>
       <div class="page-hero__overlay page-hero__overlay--strong" aria-hidden="true"></div>
       <div class="page-hero__inner page-hero__inner--lead">
-        <h1 class="page-hero__title" id="page-title">Contact Us</h1>
+        <h1 class="page-hero__title" id="page-title">Contact Us</h1><!-- CMS field: hero title -->
+        <!-- CMS field: hero subtext (body paragraph) -->
         <p class="page-hero__body">
           Send us a message and our local team will reach out within one business day.
         </p>
@@ -39,18 +45,22 @@
 
           <!-- LEFT — message form -->
           <div>
-            <h2 id="form-h" class="section__title section__title--dark" style="margin-bottom:.25rem;">Send Us a Message</h2>
+            <h2 id="form-h" class="section__title section__title--dark" style="margin-bottom:.25rem;">Send Us a Message</h2><!-- CMS field: form heading -->
+            <!-- CMS field: form intro paragraph -->
             <p class="section__lede" style="margin-bottom:1.5rem;">
               Tell us a bit about your operation and we&rsquo;ll connect you with the right team.
             </p>
 
+            <!-- CMS FORM: contact message form — submission target/handler is set server-side (PHP action). Each field labelled below by its name attribute. -->
             <form class="form" novalidate>
               <div class="form__row">
                 <div class="form__field">
+                  <!-- CMS field: form field "firstName" -->
                   <label class="form__label" for="first-name">First Name *</label>
                   <input class="form__input" type="text" id="first-name" name="firstName" required />
                 </div>
                 <div class="form__field">
+                  <!-- CMS field: form field "lastName" -->
                   <label class="form__label" for="last-name">Last Name *</label>
                   <input class="form__input" type="text" id="last-name" name="lastName" required />
                 </div>
@@ -58,21 +68,25 @@
 
               <div class="form__row">
                 <div class="form__field">
+                  <!-- CMS field: form field "email" -->
                   <label class="form__label" for="email">Email *</label>
                   <input class="form__input" type="email" id="email" name="email" required />
                 </div>
                 <div class="form__field">
+                  <!-- CMS field: form field "phone" -->
                   <label class="form__label" for="phone">Phone</label>
                   <input class="form__input" type="tel" id="phone" name="phone" />
                 </div>
               </div>
 
               <div class="form__field">
+                <!-- CMS field: form field "farm" -->
                 <label class="form__label" for="farm">Farm Name or Customer ID</label>
                 <input class="form__input" type="text" id="farm" name="farm" />
               </div>
 
               <div class="form__field">
+                <!-- CMS field: form field "location" — option list (location names) can be CMS-driven, e.g. from the same location records as the locations page -->
                 <label class="form__label" for="location">Location you do business with</label>
                 <select class="form__select" id="location" name="location">
                   <option value="">Select a location</option>
@@ -85,10 +99,12 @@
               </div>
 
               <div class="form__field">
+                <!-- CMS field: form field "message" -->
                 <label class="form__label" for="message">Message</label>
                 <textarea class="form__textarea" id="message" name="message" rows="5"></textarea>
               </div>
 
+              <!-- CMS field: form field "newsletter" (checkbox) -->
               <label class="form__field" style="grid-template-columns:auto 1fr; align-items:center; gap:.625rem;">
                 <input type="checkbox" id="newsletter" name="newsletter" style="width:1rem; height:1rem; accent-color:var(--c-green);" />
                 <span style="font-size:.9375rem;">Sign me up for the newsletter.</span>
@@ -101,14 +117,16 @@
           </div>
 
           <!-- RIGHT — info + social -->
+          <!-- CMS LOOP: contact method cards — repeat one .contact-card per contact-info block (CMS field: card.title + card.lines[]). Fields labelled inside the first card; subsequent cards marked with CMS item. The "Follow Us" card holds the social links loop (see below). -->
           <aside class="contact-aside" aria-label="Contact info">
             <div class="contact-card">
-              <p class="contact-card__title">Headquarters</p>
-              <p class="contact-card__line"><strong>GreenPoint Ag</strong></p>
-              <p class="contact-card__line">1025 GreenPoint Drive</p>
-              <p class="contact-card__line">Decatur, AL 35601</p>
+              <p class="contact-card__title">Headquarters</p><!-- CMS field: card.title -->
+              <p class="contact-card__line"><strong>GreenPoint Ag</strong></p><!-- CMS field: card.line (company name) -->
+              <p class="contact-card__line">1025 GreenPoint Drive</p><!-- CMS field: card.line (street) -->
+              <p class="contact-card__line">Decatur, AL 35601</p><!-- CMS field: card.line (city/state/zip) -->
             </div>
 
+            <!-- CMS item: contact card #2 (Get in Touch) — phone, fax, email -->
             <div class="contact-card">
               <p class="contact-card__title">Get in Touch</p>
               <p class="contact-card__line">Phone: <a href="tel:2565550100">(256) 555&#x2011;0100</a></p>
@@ -116,14 +134,17 @@
               <p class="contact-card__line">Email: <a href="mailto:info@greenpointag.com">info@greenpointag.com</a></p>
             </div>
 
+            <!-- CMS item: contact card #3 (Office Hours) -->
             <div class="contact-card">
               <p class="contact-card__title">Office Hours</p>
               <p class="contact-card__line">Mon &ndash; Fri: 8:00am &ndash; 5:00pm</p>
               <p class="contact-card__line">Sat &ndash; Sun: Closed</p>
             </div>
 
+            <!-- CMS item: contact card #4 (Follow Us) -->
             <div class="contact-card">
               <p class="contact-card__title">Follow Us</p>
+              <!-- CMS LOOP: social links — repeat one <a> per social account (CMS field: social.url + social.platform/aria-label); icon mapped per platform. -->
               <div class="social-row" aria-label="Social media links">
                 <a href="#" aria-label="Facebook">
                   <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 22v-8h3l.5-4H13V7.5c0-1.1.4-2 2-2H17V2.1C16.5 2 15.3 2 14.2 2c-2.6 0-4.2 1.5-4.2 4.4V10H7v4h3v8h3z"/></svg>
@@ -150,6 +171,7 @@
 
   </main>
 
+  <!-- CMS INCLUDE: site footer — currently injected by partials.js; in PHP replace with e.g. <?php include 'partials/footer.php'; ?> -->
   <div data-partial="footer"></div>
 
   <script src="partials.js"></script>

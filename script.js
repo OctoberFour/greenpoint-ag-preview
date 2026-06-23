@@ -198,7 +198,7 @@
       '.form__field, .form .btn, ' +
       /* New modules from page-changes PDF */
       '.icon-card, .insight-card, .photo-tile, ' +
-      '.timeline__item, .value-card, .core-value, .role-tile, .opps-tile, .celebrate__item, .video-card, ' +
+      '.value-card, .core-value, .role-tile, .opps-tile, .celebrate__item, .video-card, ' +
       '.contact-card, .loc-result, ' +
       '.page-hero__body, .page-hero__cta'
     );

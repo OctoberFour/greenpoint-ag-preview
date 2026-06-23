@@ -1282,22 +1282,6 @@ body > footer {
           mask-image: linear-gradient(45deg, #000 0%, transparent 70%);
 }
 
-/* News hero variant — pattern enters from the right at full height
-   and fades out toward the left. Overrides the default bottom-band
-   placement above for any .page-hero that carries this modifier. */
-.page-hero--topo-right.has-topo-bg::after {
-  top: 0;
-  bottom: 0;
-  left: auto;
-  right: 0;
-  width: 55%;
-  height: 100%;
-  z-index: 1;
-  opacity: .3;
-  -webkit-mask-image: linear-gradient(to left, #000 0%, transparent 100%);
-          mask-image: linear-gradient(to left, #000 0%, transparent 100%);
-}
-
 
 /* =========================================================
    CONNECT (Sustain section)
@@ -2132,72 +2116,6 @@ body > footer {
 }
 .body-list--green::marker { color: var(--c-green); }
 
-/* ---------- Article body (News Story etc.) ---------- */
-.article-body {
-  max-width: 44rem;
-  margin: 0 auto;
-  display: grid;
-  gap: 1.25rem;
-}
-.article-body p,
-.article-body li {
-  font-size: 1.0625rem;
-  line-height: 1.75;
-  color: var(--c-text);
-}
-.article-body h2 {
-  margin: 1.5rem 0 .25rem;
-  font-size: clamp(1.5rem, 2.4vw, 1.875rem);
-  font-weight: 500;
-  letter-spacing: -.015em;
-  color: var(--c-black);
-}
-.article-body h3 {
-  margin: 1rem 0 0;
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: var(--c-black);
-}
-.article-body figure {
-  margin: 1rem 0;
-}
-.article-body figure img {
-  width: 100%;
-  border-radius: var(--radius-md);
-}
-.article-body figcaption {
-  margin-top: .5rem;
-  font-size: .8125rem;
-  color: var(--c-text-muted);
-  text-align: center;
-}
-.article-body blockquote {
-  margin: 1rem 0;
-  padding: .5rem 0 .5rem 1.25rem;
-  border-left: 3px solid var(--c-green);
-  font-size: 1.1875rem;
-  font-style: italic;
-  line-height: 1.55;
-  color: var(--c-black);
-}
-
-/* ---------- Article meta strip (date / category / read time) ---------- */
-.article-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  margin: 0 auto clamp(1.5rem, 3vw, 2.5rem);
-  max-width: 44rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid var(--c-cream);
-  font-size: .75rem;
-  font-weight: 700;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  color: var(--c-text-muted);
-}
-.article-meta__tag { color: var(--c-green); }
-
 /* ---------- Profile detail header ---------- */
 .profile-header {
   display: grid;
@@ -2396,67 +2314,7 @@ body > footer {
   color: var(--c-text);
 }
 
-/* ---------- Article list (thumbnail + text) ---------- */
-.article-list {
-  display: grid;
-  gap: clamp(1.5rem, 3vw, 2rem);
-}
-.article-list-item {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1rem;
-  padding-bottom: clamp(1.5rem, 3vw, 2rem);
-  border-bottom: 1px solid var(--c-cream);
-}
-.article-list-item:last-child { border-bottom: 0; }
-@media (min-width: 40em) {
-  .article-list-item {
-    grid-template-columns: 220px 1fr;
-    gap: 1.5rem;
-  }
-}
-@media (min-width: 64em) {
-  .article-list-item { grid-template-columns: 260px 1fr; }
-}
-.article-list-item__media {
-  aspect-ratio: 4 / 3;
-  background: var(--c-beige);
-  border-radius: var(--radius-md);
-  overflow: hidden;
-}
-.article-list-item__media img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform .6s var(--ease-out-quart);
-}
-.article-list-item:hover .article-list-item__media img { transform: scale(1.04); }
-.article-list-item__category {
-  margin: 0 0 .5rem;
-  font-size: .75rem;
-  font-weight: 700;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  color: var(--c-green);
-}
-.article-list-item__title {
-  margin: 0 0 .5rem;
-  font-size: clamp(1.25rem, 2vw, 1.5rem);
-  font-weight: 400;
-  line-height: 1.25;
-  letter-spacing: -.015em;
-  color: var(--c-black);
-}
-.article-list-item__title a {
-  color: inherit;
-  transition: color .2s var(--ease-out);
-}
-.article-list-item__title a:hover { color: var(--c-green); }
-.article-list-item__meta {
-  font-size: .8125rem;
-  color: var(--c-text-muted);
-  margin: 0 0 1rem;
-}
+/* ---------- "View more" link — reused as a standalone control on resources.html ---------- */
 .article-list-item__more {
   font-size: .75rem;
   font-weight: 700;
@@ -3087,106 +2945,6 @@ body > footer {
   font-weight: 700;
 }
 
-/* ---------- Animated mission timeline ---------- */
-.timeline {
-  position: relative;
-  display: grid;
-  gap: 2rem;
-  padding: 1rem 0 0;
-  margin-top: 1.5rem;
-  list-style: none;
-}
-.timeline::before {
-  content: "";
-  position: absolute;
-  top: 0; bottom: 0;
-  left: 12px;
-  width: 2px;
-  background: linear-gradient(180deg, var(--c-green) 0%, rgba(93,151,65,.15) 100%);
-  transform-origin: top center;
-}
-@media (min-width: 48em) {
-  .timeline::before { left: 50%; transform-origin: top center; }
-}
-@media (prefers-reduced-motion: no-preference) {
-  /* Vertical spine draws downward as the section enters view. */
-  .timeline::before {
-    transform: translateX(0) scaleY(0);
-    transition: transform 1.4s var(--ease-out-quart);
-  }
-  .timeline:has(.timeline__item.is-visible)::before { transform: translateX(0) scaleY(1); }
-  @media (min-width: 48em) {
-    .timeline::before { transform: translateX(-1px) scaleY(0); }
-    .timeline:has(.timeline__item.is-visible)::before { transform: translateX(-1px) scaleY(1); }
-  }
-}
-.timeline__item {
-  position: relative;
-  padding-left: 40px;
-}
-@media (min-width: 48em) {
-  .timeline__item {
-    width: calc(50% - 28px);
-    padding-left: 0;
-  }
-  .timeline__item:nth-child(odd) {
-    text-align: right;
-    padding-right: 28px;
-  }
-  .timeline__item:nth-child(even) {
-    margin-left: calc(50% + 28px);
-    padding-left: 0;
-  }
-}
-.timeline__dot {
-  position: absolute;
-  top: .3rem;
-  left: 4px;
-  width: 18px; height: 18px;
-  background: var(--c-green);
-  border: 4px solid var(--c-white);
-  border-radius: 50%;
-  box-shadow: 0 0 0 2px var(--c-green);
-  transform-origin: center;
-}
-@media (prefers-reduced-motion: no-preference) {
-  .timeline__item.is-pending .timeline__dot {
-    transform: scale(0);
-    opacity: 0;
-  }
-  .timeline__item .timeline__dot {
-    transition: transform .55s cubic-bezier(.34, 1.56, .64, 1) .12s,
-                opacity .35s var(--ease-out) .12s;
-  }
-  .timeline__item.is-visible .timeline__dot { transform: scale(1); opacity: 1; }
-}
-@media (min-width: 48em) {
-  .timeline__item:nth-child(odd) .timeline__dot {
-    left: auto;
-    right: -37px;
-  }
-  .timeline__item:nth-child(even) .timeline__dot {
-    left: -37px;
-  }
-}
-.timeline__year {
-  display: block;
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--c-green);
-  margin-bottom: .25rem;
-}
-.timeline__title {
-  margin: 0 0 .35rem;
-  font-size: 1.0625rem;
-  font-weight: 600;
-}
-.timeline__body {
-  margin: 0;
-  font-size: .9375rem;
-  line-height: 1.55;
-  color: var(--c-text-muted);
-}
 
 /* ---------- Horizontal "at a glance" timeline ----------
    Same visual vocabulary as the vertical timeline above:
@@ -4240,8 +3998,7 @@ body > footer {
 }
 
 /* Services "Innovation in Practice" — pattern on the right side at
-   full height, fading toward the left. Matches the page-hero--topo-right
-   treatment used on the About and Careers banners. */
+   full height, fading toward the left. */
 .innovation.has-topo-bg {
   isolation: isolate;
   overflow: hidden;
@@ -4397,14 +4154,6 @@ body > footer {
 }
 @media (max-width: 56em) {
   .about-story__media--multiply { aspect-ratio: auto; max-width: 100%; }
-}
-
-/* Timeline reveal — slide each event in from its side at ≥48em,
-   stagger via the existing transition-delay rules. */
-@media (prefers-reduced-motion: no-preference) and (min-width: 48em) {
-  .timeline__item.reveal.is-pending:nth-child(odd)  { transform: translateX(-40px); }
-  .timeline__item.reveal.is-pending:nth-child(even) { transform: translateX(40px); }
-  .timeline__item.reveal.is-visible { transform: translateX(0); }
 }
 
 /* ============================================================
@@ -4615,30 +4364,6 @@ body > footer {
   width: 100%;
   -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 22%, #000 78%, transparent 100%);
           mask-image: linear-gradient(to right, transparent 0%, #000 22%, #000 78%, transparent 100%);
-}
-
-/* Accordion override for dark backdrop — solid white pills with
-   dark text, fully opaque so they read as called-out shelves. */
-.mission__accordion.accordion--pill .accordion__item {
-  background: var(--c-white);
-  border: 0;
-  color: var(--c-text);
-}
-.mission__accordion.accordion--pill .accordion__item[open] {
-  background: var(--c-white);
-}
-.mission__accordion.accordion--pill .accordion__summary { color: var(--c-text); }
-.mission__accordion.accordion--pill .accordion__icon {
-  background: var(--c-green);
-  color: var(--c-white);
-}
-.mission__accordion.accordion--pill .accordion__body {
-  color: var(--c-text-muted);
-}
-
-/* Card hover lift */
-.mission__accordion.accordion--pill .accordion__item:hover {
-  background: var(--c-cream-lt);
 }
 
 /* ============================================================

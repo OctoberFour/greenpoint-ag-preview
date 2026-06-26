@@ -129,7 +129,20 @@
         <ul class="primary-nav__list" id="primary-nav-list">
           <li><a href="about.html">About</a></li>
           <li><a href="services.html">Agronomy</a></li>
-          <li><a href="services.html">Pro Products</a></li>
+          <!-- CMS: nav item with dropdown — the <li> items in .primary-nav__submenu are a loop -->
+          <li class="primary-nav__item primary-nav__item--has-menu">
+            <a href="services.html">
+              Pro Products
+              <svg class="primary-nav__chev" viewBox="0 0 16 16" fill="none" aria-hidden="true" focusable="false"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <ul class="primary-nav__submenu" aria-label="Pro Products">
+              <li><a href="services.html">Golf &amp; Sports Turf</a></li>
+              <li><a href="services.html">Greenhouse &amp; Nursery</a></li>
+              <li><a href="services.html">Lawn Care</a></li>
+              <li><a href="services.html">Sod</a></li>
+              <li><a href="locations.html">Locations &amp; Contacts</a></li>
+            </ul>
+          </li>
           <li><a href="services.html">Services</a></li>
           <li><a href="news.html">News</a></li>
           <li><a href="#">Events</a></li>

@@ -2520,6 +2520,99 @@ body > footer {
 }
 .gallery__cell:hover img { transform: scale(1.03); }
 
+/* ---------- Photo Album — uniform thumbnail grid (photo-album.html) ---------- */
+.album-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: .75rem;
+}
+@media (min-width: 48em) {
+  .album-grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+}
+.album-grid__cell {
+  margin: 0;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background: var(--c-beige);
+}
+.album-grid__cell img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .6s var(--ease-out-quart);
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .album-grid__cell:hover img { transform: scale(1.05); }
+}
+
+/* ---------- Sorted List — sortable directory rows (sorted-list.html) ---------- */
+.sort-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.sort-bar__label {
+  margin: 0 .5rem 0 0;
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--c-text-muted);
+}
+.sort-bar__count { font-size: .8125rem; color: var(--c-text-muted); }
+
+.sorted-list { border-top: 1px solid var(--c-cream); }
+.sorted-list__item {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: baseline;
+  gap: .35rem;
+  padding: 1.15rem .5rem;
+  border-bottom: 1px solid var(--c-cream);
+  transition: background-color .2s var(--ease-out);
+}
+@media (min-width: 44em) {
+  .sorted-list__item { grid-template-columns: 1fr auto; gap: .35rem 1.5rem; }
+}
+.sorted-list__item:hover { background: var(--c-cream-lt); }
+.sorted-list__cat {
+  margin: 0 0 .15rem;
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--c-green);
+}
+.sorted-list__title {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  letter-spacing: -.01em;
+  line-height: 1.3;
+  color: var(--c-black);
+}
+.sorted-list__title a { color: inherit; transition: color .2s var(--ease-out); }
+.sorted-list__title a:hover { color: var(--c-green); }
+.sorted-list__desc {
+  margin: .3rem 0 0;
+  font-size: .875rem;
+  line-height: 1.6;
+  color: var(--c-text-muted);
+  max-width: 62ch;
+}
+.sorted-list__meta {
+  font-size: .8125rem;
+  color: var(--c-text-muted);
+  white-space: nowrap;
+}
+@media (min-width: 44em) {
+  .sorted-list__meta { text-align: right; padding-top: .2rem; }
+}
+
 /* ---------- Benefit card (text-only, used on Careers) ---------- */
 .benefit-grid {
   display: grid;

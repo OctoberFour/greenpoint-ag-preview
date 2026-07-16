@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sorted List — GreenPoint Ag</title>
+  <meta name="description" content="A sortable directory of resources, guides, and documents from GreenPoint Ag." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- CMS INCLUDE: site header — currently injected by partials.js; in PHP replace with e.g. <?php include 'partials/header.php'; ?> -->
+  <div data-partial="header"></div>
+
+  <main id="main" tabindex="-1">
+    <!-- CMS PAGE: Sorted List — a sortable directory template. Dynamic regions: hero (title + image), sort/filter bar, list rows (loop). The sort controls (Newest / Oldest / A–Z) are wired by the CMS or a small JS handler that reorders the list. Header / fixed nav bar / footer are shared includes (see partials.js). -->
+
+    <!-- CMS INCLUDE: fixed nav bar — currently injected by partials.js; in PHP replace with e.g. <?php include 'partials/topbar.php'; ?> -->
+    <div data-partial="topbar"></div>
+
+    <!-- Page hero -->
+    <section class="page-hero page-hero--dark has-intro-gradient" aria-labelledby="page-title">
+      <div class="page-hero__media">
+        <!-- CMS field: page.hero_image (src + alt) -->
+        <img src="images/wheat-sunrise-field.jpg" alt="Wheat field at sunrise." />
+      </div>
+      <div class="page-hero__overlay page-hero__overlay--strong" aria-hidden="true"></div>
+      <div class="page-hero__inner page-hero__inner--lead">
+        <!-- CMS field: page.hero_title -->
+        <h1 class="page-hero__title" id="page-title">Sorted List</h1>
+        <!-- CMS field: page.hero_body -->
+        <p class="page-hero__body">
+          A sortable directory template &mdash; resources, guides, or any listed content,
+          ordered the way visitors need it.
+        </p>
+      </div>
+    </section>
+
+    <!-- Directory list -->
+    <section class="section has-topo-bg has-topo-bg--top" aria-labelledby="list-h">
+      <div class="section__inner">
+        <h2 id="list-h" class="section__title section__title--dark">Agronomy Resource Library</h2>
+        <p class="section__lede">Field guides, handbooks, and toolkits &mdash; sort to find what you need.</p>
+
+        <!-- Sort / filter bar. CMS: the active chip reflects the current sort order. -->
+        <div class="sort-bar" style="margin-top:2.5rem;" role="group" aria-label="Sort the list">
+          <div>
+            <span class="sort-bar__label">Sort by</span>
+            <a href="#" class="chip is-active">Newest</a><!-- CMS field: sort option (active) -->
+            <a href="#" class="chip">Oldest</a>
+            <a href="#" class="chip">A&ndash;Z</a>
+          </div>
+          <p class="sort-bar__count">8 results</p><!-- CMS field: results count -->
+        </div>
+
+        <!-- CMS LOOP: list items — repeat one <li.sorted-list__item> per entry, in the chosen sort order -->
+        <ul class="sorted-list" style="list-style:none; margin:0; padding:0;">
+
+          <li class="sorted-list__item">
+            <div>
+              <p class="sorted-list__cat">Sustainability</p><!-- CMS field: item.category -->
+              <h3 class="sorted-list__title"><a href="#">2025 Seed Guide</a></h3><!-- CMS field: item.title + item.url -->
+              <p class="sorted-list__desc">Complete guide to our seed selection for the current growing season.</p><!-- CMS field: item.description -->
+            </div>
+            <p class="sorted-list__meta">Updated Jun 2, 2025</p><!-- CMS field: item.date (sort key) -->
+          </li>
+
+          <!-- CMS item: list entry -->
+          <li class="sorted-list__item">
+            <div>
+              <p class="sorted-list__cat">Crop Protection</p>
+              <h3 class="sorted-list__title"><a href="#">Crop Protection Manual</a></h3>
+              <p class="sorted-list__desc">Detailed information on crop protection products and application rates.</p>
+            </div>
+            <p class="sorted-list__meta">Updated May 19, 2025</p>
+          </li>
+
+          <li class="sorted-list__item">
+            <div>
+              <p class="sorted-list__cat">Soil Health</p>
+              <h3 class="sorted-list__title"><a href="#">Soil Health Handbook</a></h3>
+              <p class="sorted-list__desc">Best practices for maintaining healthy soils and improving yields.</p>
+            </div>
+            <p class="sorted-list__meta">Updated May 6, 2025</p>
+          </li>
+
+          <li class="sorted-list__item">
+            <div>
+              <p class="sorted-list__cat">Technology</p>
+              <h3 class="sorted-list__title"><a href="#">Precision Ag Setup Guide</a></h3>
+              <p class="sorted-list__desc">Step-by-step guide to setting up precision agriculture equipment.</p>
+            </div>
+            <p class="sorted-list__meta">Updated Apr 28, 2025</p>
+          </li>
+
+          <li class="sorted-list__item">
+            <div>
+              <p class="sorted-list__cat">Farm Finances</p>
+              <h3 class="sorted-list__title"><a href="#">Farm Financial Planning Toolkit</a></h3>
+              <p class="sorted-list__desc">Resources to help plan and manage your farm&rsquo;s financial health.</p>
+            </div>
+            <p class="sorted-list__meta">Updated Apr 11, 2025</p>
+          </li>
+
+          <li class="sorted-list__item">
+            <div>
+              <p class="sorted-list__cat">Sustainability</p>
+              <h3 class="sorted-list__title"><a href="#">Sustainability Best Practices</a></h3>
+              <p class="sorted-list__desc">Our commitment to sustainable farming and how you can participate.</p>
+            </div>
+            <p class="sorted-list__meta">Updated Mar 30, 2025</p>
+          </li>
+
+          <li class="sorted-list__item">
+            <div>
+              <p class="sorted-list__cat">Crop Nutrition</p>
+              <h3 class="sorted-list__title"><a href="#">Nutrient Management Playbook</a></h3>
+              <p class="sorted-list__desc">Building variable-rate prescriptions that match each field&rsquo;s needs.</p>
+            </div>
+            <p class="sorted-list__meta">Updated Mar 12, 2025</p>
+          </li>
+
+          <li class="sorted-list__item">
+            <div>
+              <p class="sorted-list__cat">Agronomy</p>
+              <h3 class="sorted-list__title"><a href="#">Scouting &amp; Pest Identification Handbook</a></h3>
+              <p class="sorted-list__desc">Spot problems earlier with a field-ready reference for common pests and diseases.</p>
+            </div>
+            <p class="sorted-list__meta">Updated Feb 24, 2025</p>
+          </li>
+
+        </ul>
+        <!-- CMS END LOOP: list items -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- CMS INCLUDE: site footer — currently injected by partials.js; in PHP replace with e.g. <?php include 'partials/footer.php'; ?> -->
+  <div data-partial="footer"></div>
+
+  <script src="partials.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

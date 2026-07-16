@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Photo Gallery — GreenPoint Ag</title>
+  <meta name="description" content="Browse photo albums from GreenPoint Ag events, harvests, teams, and the communities we serve." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- CMS INCLUDE: site header — currently injected by partials.js; in PHP replace with e.g. <?php include 'partials/header.php'; ?> -->
+  <div data-partial="header"></div>
+
+  <main id="main" tabindex="-1">
+    <!-- CMS PAGE: Photo Gallery — an index of albums. Dynamic regions: hero (title + image), albums grid (loop). Each album links to a Photo Album page. Header / fixed nav bar / footer are shared includes (see partials.js). -->
+
+    <!-- CMS INCLUDE: fixed nav bar — currently injected by partials.js; in PHP replace with e.g. <?php include 'partials/topbar.php'; ?> -->
+    <div data-partial="topbar"></div>
+
+    <!-- Page hero -->
+    <section class="page-hero page-hero--dark has-intro-gradient" aria-labelledby="page-title">
+      <div class="page-hero__media">
+        <!-- CMS field: page.hero_image (src + alt) -->
+        <img src="images/farmers-straw-hats.jpg" alt="GreenPoint Ag team members together in the field." />
+      </div>
+      <div class="page-hero__overlay page-hero__overlay--strong" aria-hidden="true"></div>
+      <div class="page-hero__inner page-hero__inner--lead">
+        <!-- CMS field: page.hero_title -->
+        <h1 class="page-hero__title" id="page-title">Photo Gallery</h1>
+        <!-- CMS field: page.hero_body -->
+        <p class="page-hero__body">
+          A look at life across GreenPoint Ag &mdash; our events, our teams, and the fields
+          we work alongside growers every day.
+        </p>
+      </div>
+    </section>
+
+    <!-- Albums grid -->
+    <section class="section section--center has-topo-bg has-topo-bg--top" aria-labelledby="albums-h">
+      <div class="section__inner">
+        <!-- CMS field: section.title -->
+        <h2 id="albums-h" class="section__title section__title--dark">Browse Albums</h2>
+        <!-- CMS field: section.lede -->
+        <p class="section__lede">
+          Pick an album to see the full set of photos.
+        </p>
+
+        <!-- CMS LOOP: albums — repeat the following media-card for each album -->
+        <div class="card-grid" style="margin-top:2.5rem; text-align:left;">
+
+          <a href="photo-album.html" class="media-card"><!-- CMS field: album.url -->
+            <div class="media-card__media">
+              <img src="images/combine-golden-dust.jpg" alt="" loading="lazy" /><!-- CMS field: album.cover_image (src) + album.cover_alt (alt) -->
+            </div>
+            <div class="media-card__body">
+              <p class="media-card__subtitle">Events</p><!-- CMS field: album.category -->
+              <h3 class="media-card__title">2025 Southern Agronomy Summit</h3><!-- CMS field: album.title -->
+              <p>Highlights from three days of education and connection in Nashville.</p><!-- CMS field: album.description -->
+              <span class="article-list-item__more" style="margin-top:.5rem;">
+                View album &middot; 18 photos<!-- CMS field: album.photo_count -->
+                <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M3 7h8m0 0L7.5 3.5M11 7l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </div>
+          </a>
+
+          <!-- CMS item: album -->
+          <a href="photo-album.html" class="media-card">
+            <div class="media-card__media">
+              <img src="images/corn-harvest-night.jpg" alt="" loading="lazy" />
+            </div>
+            <div class="media-card__body">
+              <p class="media-card__subtitle">Harvest</p>
+              <h3 class="media-card__title">Harvest Season 2025</h3>
+              <p>Long days and late nights bringing in the crop across our footprint.</p>
+              <span class="article-list-item__more" style="margin-top:.5rem;">
+                View album &middot; 24 photos
+                <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M3 7h8m0 0L7.5 3.5M11 7l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </div>
+          </a>
+
+          <!-- CMS item: album -->
+          <a href="photo-album.html" class="media-card">
+            <div class="media-card__media">
+              <img src="images/corn-scouting-walk.jpg" alt="" loading="lazy" />
+            </div>
+            <div class="media-card__body">
+              <p class="media-card__subtitle">In the Field</p>
+              <h3 class="media-card__title">Life in the Field</h3>
+              <p>Scouting, sampling, and side-by-side planning with the growers we serve.</p>
+              <span class="article-list-item__more" style="margin-top:.5rem;">
+                View album &middot; 16 photos
+                <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M3 7h8m0 0L7.5 3.5M11 7l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </div>
+          </a>
+
+          <!-- CMS item: album -->
+          <a href="photo-album.html" class="media-card">
+            <div class="media-card__media">
+              <img src="images/team-thumbsup.jpg" alt="" loading="lazy" />
+            </div>
+            <div class="media-card__body">
+              <p class="media-card__subtitle">Our Team</p>
+              <h3 class="media-card__title">Our Team at Work</h3>
+              <p>The people behind the plans &mdash; agronomists, drivers, and operations crews.</p>
+              <span class="article-list-item__more" style="margin-top:.5rem;">
+                View album &middot; 20 photos
+                <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M3 7h8m0 0L7.5 3.5M11 7l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </div>
+          </a>
+
+          <!-- CMS item: album -->
+          <a href="photo-album.html" class="media-card">
+            <div class="media-card__media">
+              <img src="images/soil-sensor-drilling.jpg" alt="" loading="lazy" />
+            </div>
+            <div class="media-card__body">
+              <p class="media-card__subtitle">Technology</p>
+              <h3 class="media-card__title">Precision Ag in Action</h3>
+              <p>Sensors, imagery, and data turning field questions into confident calls.</p>
+              <span class="article-list-item__more" style="margin-top:.5rem;">
+                View album &middot; 14 photos
+                <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M3 7h8m0 0L7.5 3.5M11 7l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </div>
+          </a>
+
+          <!-- CMS item: album -->
+          <a href="photo-album.html" class="media-card">
+            <div class="media-card__media">
+              <img src="images/handshake-sunset-truck.jpg" alt="" loading="lazy" />
+            </div>
+            <div class="media-card__body">
+              <p class="media-card__subtitle">Community</p>
+              <h3 class="media-card__title">Community &amp; Giving Back</h3>
+              <p>Supporting the local schools, programs, and neighbors that keep rural America strong.</p>
+              <span class="article-list-item__more" style="margin-top:.5rem;">
+                View album &middot; 12 photos
+                <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M3 7h8m0 0L7.5 3.5M11 7l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </div>
+          </a>
+
+        </div>
+        <!-- CMS END LOOP: albums -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- CMS INCLUDE: site footer — currently injected by partials.js; in PHP replace with e.g. <?php include 'partials/footer.php'; ?> -->
+  <div data-partial="footer"></div>
+
+  <script src="partials.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

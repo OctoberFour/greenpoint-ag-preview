@@ -427,6 +427,12 @@ body > footer {
 
 .primary-nav__cta { display: none; }
 
+/* Secondary links + login live inside the markup so the mobile menu is
+   self-contained. Hidden everywhere by default; only the mobile overlay
+   media query reveals them. */
+.primary-nav__secondary { display: none; }
+.primary-nav__mobile-login { display: none; }
+
 /* Mobile menu toggle */
 .primary-nav__toggle {
   display: inline-flex;
@@ -492,10 +498,12 @@ body > footer {
   .primary-nav__list {
     flex-direction: column;
     align-items: stretch;
-    justify-content: center;
     gap: 0;
-    height: 100%;
-    padding: 6rem var(--gutter) 4rem;
+    /* Top padding clears the fixed logo + toggle; the list flows from the
+       top (not vertically centred) so a tall menu never has its first
+       items clipped above the screen edge, and the secondary group can
+       follow naturally below it. */
+    padding: 6rem var(--gutter) 0;
   }
   .primary-nav__list li {
     /* Stagger items in from below as the panel opens. */
@@ -534,6 +542,39 @@ body > footer {
      invisible until hover. Force white inside the open overlay. */
   .hero__topbar.is-stuck .primary-nav__nav .primary-nav__list a { color: var(--c-white); }
   .hero__topbar.is-stuck .primary-nav__nav .primary-nav__list a:hover { color: var(--c-green); }
+
+  /* Secondary (utility) links — the Community / Locations / Contact / Careers
+     set that lives in the desktop utility pill. Reproduced inside the mobile
+     menu as a smaller, quieter group so nothing is missing on a phone. */
+  .primary-nav__secondary {
+    display: block;
+    list-style: none;
+    margin: 1.75rem 0 0;
+    padding: 0 var(--gutter);
+  }
+  .primary-nav__secondary a {
+    display: block;
+    padding: .85rem 0;
+    font-size: .8rem;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, .7);
+    border-top: 1px solid rgba(255, 255, 255, .14);
+    transition: color .2s var(--ease-out);
+  }
+  .primary-nav__secondary a:hover { color: var(--c-green); }
+
+  /* Customer Login — the desktop CTA, surfaced as a full-width button
+     at the foot of the menu. */
+  .primary-nav__mobile-login {
+    display: inline-flex;
+    justify-content: center;
+    margin: 1.75rem var(--gutter) 3rem;
+  }
+  .hero__topbar.is-stuck .primary-nav__nav .primary-nav__secondary a { color: rgba(255, 255, 255, .7); }
+  .hero__topbar.is-stuck .primary-nav__nav .primary-nav__secondary a:hover { color: var(--c-green); }
+
   /* Lock body scroll while the overlay is open. */
   body:has(.primary-nav__nav.is-open) { overflow: hidden; }
 }

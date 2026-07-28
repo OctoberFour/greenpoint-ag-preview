@@ -504,6 +504,10 @@ body > footer {
     flex-direction: column;
     align-items: stretch;
     gap: 0;
+    /* Override the desktop height:100% so the list sizes to its content;
+       otherwise it stays viewport-tall and its items overflow onto the
+       secondary group below. */
+    height: auto;
     /* Top padding clears the fixed logo + close (X) button with a
        comfortable gap, and lets the list flow from the top (not vertically
        centred) so a tall menu never has its first items clipped above the

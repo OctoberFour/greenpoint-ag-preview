@@ -543,11 +543,6 @@ body > footer {
     color: var(--c-white);
     border-top: 1px solid rgba(255, 255, 255, .14);
   }
-  /* Direct child only — otherwise this also matched the submenu's last
-     item and drew a stray line beneath the Pro Products sub-links. */
-  .primary-nav__list > li:last-child > a {
-    border-bottom: 1px solid rgba(255, 255, 255, .14);
-  }
   .primary-nav__list a::after { display: none; }
   /* The is-stuck topbar normally flips link color to black for the
      light desktop bar; on the dark mobile overlay that turns links
@@ -697,9 +692,6 @@ body > footer {
   .primary-nav__submenu a:hover { background: transparent; color: var(--c-green); }
   /* Keep the parent item visually grouped with its children. */
   .primary-nav__item--has-menu > a { border-bottom: 0; }
-  /* Drop the divider directly beneath the submenu so it reads as one
-     continuous group rather than a stray line under the sub-items. */
-  .primary-nav__item--has-menu + li > a { border-top: 0; }
 }
 
 /* =========================================================

@@ -429,9 +429,11 @@ body > footer {
 
 /* Secondary links + login live inside the markup so the mobile menu is
    self-contained. Hidden everywhere by default; only the mobile overlay
-   media query reveals them. */
+   media query reveals them. The Home link is likewise mobile-only (the
+   logo is the home link on desktop). */
 .primary-nav__secondary { display: none; }
 .primary-nav__mobile-login { display: none; }
+.primary-nav__item--home { display: none; }
 
 /* Mobile menu toggle */
 .primary-nav__toggle {
@@ -495,15 +497,18 @@ body > footer {
     transform: none;
     pointer-events: auto;
   }
+  /* Home shows only inside the mobile menu. */
+  .primary-nav__item--home { display: block; }
+
   .primary-nav__list {
     flex-direction: column;
     align-items: stretch;
     gap: 0;
-    /* Top padding clears the fixed logo + toggle; the list flows from the
-       top (not vertically centred) so a tall menu never has its first
-       items clipped above the screen edge, and the secondary group can
-       follow naturally below it. */
-    padding: 6rem var(--gutter) 0;
+    /* Top padding clears the fixed logo + close (X) button with a
+       comfortable gap, and lets the list flow from the top (not vertically
+       centred) so a tall menu never has its first items clipped above the
+       screen edge. The secondary group follows naturally below it. */
+    padding: 7.5rem var(--gutter) 0;
   }
   .primary-nav__list li {
     /* Stagger items in from below as the panel opens. */
@@ -523,6 +528,7 @@ body > footer {
   .primary-nav__nav.is-open .primary-nav__list li:nth-child(4) { transition-delay: 200ms; }
   .primary-nav__nav.is-open .primary-nav__list li:nth-child(5) { transition-delay: 240ms; }
   .primary-nav__nav.is-open .primary-nav__list li:nth-child(6) { transition-delay: 280ms; }
+  .primary-nav__nav.is-open .primary-nav__list li:nth-child(7) { transition-delay: 320ms; }
   .primary-nav__list a {
     width: 100%;
     height: auto;
@@ -533,7 +539,9 @@ body > footer {
     color: var(--c-white);
     border-top: 1px solid rgba(255, 255, 255, .14);
   }
-  .primary-nav__list li:last-child a {
+  /* Direct child only — otherwise this also matched the submenu's last
+     item and drew a stray line beneath the Pro Products sub-links. */
+  .primary-nav__list > li:last-child > a {
     border-bottom: 1px solid rgba(255, 255, 255, .14);
   }
   .primary-nav__list a::after { display: none; }
@@ -685,6 +693,9 @@ body > footer {
   .primary-nav__submenu a:hover { background: transparent; color: var(--c-green); }
   /* Keep the parent item visually grouped with its children. */
   .primary-nav__item--has-menu > a { border-bottom: 0; }
+  /* Drop the divider directly beneath the submenu so it reads as one
+     continuous group rather than a stray line under the sub-items. */
+  .primary-nav__item--has-menu + li > a { border-top: 0; }
 }
 
 /* =========================================================
